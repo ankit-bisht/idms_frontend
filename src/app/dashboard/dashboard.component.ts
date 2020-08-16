@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  username: string;
+
   constructor() { }
 
   ngOnInit() {
+    this.username = localStorage.getItem('username') ? localStorage.getItem('username') : 'user';
   }
 
 }

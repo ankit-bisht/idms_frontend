@@ -17,6 +17,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from './services/api.service';
 import { Configuration } from './configuration/config';
+import { GroupsComponent } from './groups/groups.component';
+import { IndividualsComponent } from './individuals/individuals.component';
+import { PoliciesComponent } from './policies/policies.component';
+import { AgentsComponent } from './agents/agents.component';
+import { CarriersComponent } from './carriers/carriers.component';
+import { ReportsComponent } from './reports/reports.component';
+import { CommisionComponent } from './commision/commision.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { NewIndividualComponent } from './new-individual/new-individual.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { Constants } from './configuration/constants';
+import { JwPaginationModule } from 'jw-angular-pagination';
 
 
 @NgModule({
@@ -28,18 +40,29 @@ import { Configuration } from './configuration/config';
     SidebarComponent,
     FooterComponent,
     SpinnerComponent,
-    ContentAnimateDirective
+    ContentAnimateDirective,
+    GroupsComponent,
+    IndividualsComponent,
+    PoliciesComponent,
+    AgentsComponent,
+    CarriersComponent,
+    ReportsComponent,
+    CommisionComponent,
+    NewIndividualComponent
   ],
   imports: [
+    NgxSpinnerModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    JwPaginationModule,
+    BsDatepickerModule.forRoot()
   ],
-  providers: [LoginGuard, CommonService,ApiService,Configuration],
+  providers: [LoginGuard, CommonService, ApiService, Configuration, Constants],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

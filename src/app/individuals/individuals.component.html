@@ -1,0 +1,140 @@
+<style>
+    .tab-content {
+        padding: 0px;
+    }
+</style>
+<div class="page-header">
+    <h3 class="page-title">
+        Individuals
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <button type="button" class="btn btn-gradient-primary btn-sm" (click)="newIndividual()">New
+                Individual</button>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <!-- <h4 class="card-title">Basic form elements</h4> -->
+                <!-- <p class="card-description">
+            Basic form elements
+          </p> -->
+                <div class="search-field d-md-block">
+                    <form class="form-inline" [formGroup]="searchForm">
+                        <label class="sr-only" for="inlineFormInputName2">Name</label>
+                        <select class="form-control mb-2 mr-sm-2 rounded-left" formControlName="type">
+                            <option value="">Select Type</option>
+                            <option value="client_id">Client Id</option>
+                            <option value="first_name">First name</option>
+                            <option value="middle_name">Middle Name</option>
+                            <option value="last_name">Last Name</option>
+                            <option value="phone">Phone</option>
+                            <option value="email">Email</option>
+                            <option value="sex">Sex</option>
+                            <option value="DOB">DOB</option>
+                        </select>
+                        <div *ngIf="searchForm.get('type').invalid && (searchForm.get('type').touched)"
+                            class="text-danger">
+                            <p *ngIf="searchForm.get('type').errors.required">
+                                Type is Required.
+                            </p>
+                        </div>
+                        <label class="sr-only" for="inlineFormInputGroupUsername2">Search</label>
+                        <div class="input-group mb-2 mr-sm-2">
+                            <input type="text" formControlName="search" required class="form-control rounded-left"
+                                placeholder="Search..">
+                            <div *ngIf="searchForm.get('search').invalid && (searchForm.get('search').touched)"
+                                class="text-danger">
+                                <p *ngIf="searchForm.get('search').errors.required">
+                                    Value is Required.
+                                </p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary mb-2 btn-sm"
+                            (click)="getIndividuals()">Reset</button>
+                        <button type="submit" class="btn btn-gradient-primary mb-2 btn-sm" (click)="search()"
+                            [disabled]="!searchForm.valid">Search</button>
+                    </form>
+                </div>
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered">
+                        <!-- LOADER -->
+                        <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box"
+                            [fullScreen]="false">
+                            <p style="color: white"> Loading... </p>
+                        </ngx-spinner>
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    Sno.
+                                </th>
+                                <th>
+                                    Client Id
+                                </th>
+                                <th>
+                                    First name
+                                </th>
+                                <th>
+                                    Middle Name
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Sex
+                                </th>
+                                <th>
+                                    DOB
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of pageOfItems">
+                            <tr>
+                                <td>
+                                    {{item.id}}
+                                </td>
+                                <td>
+                                    {{item.client_id}}
+                                </td>
+                                <td>
+                                    {{item.first_name}}
+                                </td>
+                                <td>
+                                    {{item.middle_name}}
+                                </td>
+                                <td>
+                                    {{item.last_name}}
+                                </td>
+                                <td>
+                                    {{item.phone}}
+                                </td>
+                                <td>
+                                    {{item.email}}
+                                </td>
+                                <td>
+                                    {{item.sex}}
+                                </td>
+                                <td>
+                                    {{item.DOB}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br />
+                <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+            </div>
+        </div>
+    </div>
+</div>

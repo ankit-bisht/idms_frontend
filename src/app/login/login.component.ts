@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  FormError:string;
+  FormError: string;
   loginForm: FormGroup;
   errorMessage: string;
   placeholder: string;
@@ -47,13 +47,14 @@ export class LoginComponent implements OnInit {
     };
     this.api.loginApi(loginObj).subscribe((data: any) => {
       if (data.responseCode === 200) {
-        localStorage.setItem('token', data.result.Auth_token);
+        localStorage.setItem('token', data.result.authorizationToken);
+        localStorage.setItem('userId', data.result.userDetails.user_id);
         localStorage.setItem('username', data.result.userDetails.username);
         this.Router.navigate(['/dashboard']);
-      }else{
-        this.FormError= data.error;
+      } else {
+        this.FormError = data.error;
       }
-    })
+    });
   }
 
 }
