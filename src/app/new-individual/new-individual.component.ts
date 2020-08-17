@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
 import { Constants } from '../configuration/constants';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { element } from 'protractor';
-import { LOADIPHLPAPI } from 'dns';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -16,6 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class NewIndividualComponent implements OnInit {
 
+  @ViewChild('mediumModalContent', { static: true }) modal: TemplateRef<any>;
+
   clientType: any;
   contactype: any;
   addresstype: any;
@@ -25,11 +25,15 @@ export class NewIndividualComponent implements OnInit {
   showContacts: boolean = false;
   showPayment: boolean = false;
   showRelations: boolean = false;
-  showAttachment: boolean = true;
+  showAttachment: boolean = false;
   showEmployemment: boolean = false;
   showAddress: boolean = false;
 
   FormError: string;
+  hideSubmit: boolean = false;
+  modalMessage: string = "Do you want to save details?";
+  confirmModal: boolean = true;
+  successModal: boolean = false;
 
   contactError: Boolean = false;
   contactFormError: string;
@@ -40,6 +44,21 @@ export class NewIndividualComponent implements OnInit {
   successMessage: string;
   success: boolean = false;
   individualForm: FormGroup;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  DOB: string;
+  sex: string;
+  ssn: string;
+  weight: string;
+  feet: string;
+  inches: string;
+  mpUserId: string;
+  mpPassword: string;
+  driverState: string;
+  driverNumber: string;
+  clienttype: string
+  notes: string;
 
   addressForm: FormGroup;
   addressError: Boolean = false;
@@ -75,6 +94,27 @@ export class NewIndividualComponent implements OnInit {
   ngOnInit() {
     this.getConstants();
     this.buildIndividualForm();
+
+    const getClientDetail = JSON.parse(localStorage.getItem('ClientDetails'));
+    if (getClientDetail) {
+      const Client = getClientDetail.clientDetails[0];
+      this.firstName = Client.first_name;
+      this.middleName = Client.middle_name;
+      this.lastName = Client.last_name;
+      this.DOB = Client.DOB;
+      this.sex = Client.sex;
+      this.ssn = Client.ssn;
+      this.weight = Client.weight;
+      this.feet = Client.height_feet;
+      this.inches = Client.height_inches;
+      this.mpUserId = Client.mp_user_id;
+      this.mpPassword = Client.mp_password;
+      this.driverState = Client.driver_license_state;
+      this.driverNumber = Client.driver_license_number;
+      this.clienttype = Client.client_type;
+      this.notes = Client.notes;
+      this.hideSubmit = true;
+    }
 
 
     this.contactForm = this.fb.group({
@@ -132,6 +172,11 @@ export class NewIndividualComponent implements OnInit {
       })])
     });
   }
+
+  redirect() {
+    this.Router.navigate(['/individuals']);
+  }
+
 
   openMediumModal(mediumModalContent) {
     this.modalService.open(mediumModalContent);
@@ -214,6 +259,9 @@ export class NewIndividualComponent implements OnInit {
    * INDIVIDUALS
    */
   saveIndividualDetails() {
+    this.individualForm.value.height_inches = this.individualForm.value.height_inches.toString();
+    this.individualForm.value.height_feet = this.individualForm.value.height_feet.toString();
+    this.individualForm.value.weight = this.individualForm.value.weight.toString();
     this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
     this.individualForm.value.userId = localStorage.getItem('userId');
     localStorage.setItem('individualDetails', JSON.stringify(this.individualForm.value));
@@ -244,14 +292,15 @@ export class NewIndividualComponent implements OnInit {
 
   saveDocument() {
     this.document.value.map(
-      element => {
+      (element, i) => {
         if (element.document_type_id === '' || element.due_date === '' || element.date_submitted === '' || element.status === '') {
           this.documentError = true;
           return this.documentFormError = 'Please fill all fields!!';
         } else {
+          const id = i + 1;
+          element.document_id = id.toString();
           element.date_submitted = new Date(element.date_submitted).toISOString().split('T')[0];
           element.due_date = new Date(element.due_date).toISOString().split('T')[0];
-
           this.documentError = false;
         }
 
@@ -272,6 +321,11 @@ export class NewIndividualComponent implements OnInit {
           this.spinner.hide();
           this.documentSuccess = true;
           this.documentMessage = data.message;
+          this.modalMessage = data.message;
+          this.modalService.open(this.modal);
+          this.hideSubmit = true;
+          this.successModal = true;
+          this.confirmModal = false;
         } else {
           this.spinner.hide();
           this.documentError = true;
@@ -309,12 +363,18 @@ export class NewIndividualComponent implements OnInit {
 
   savePayment() {
     this.payment.value.map(
-      element => {
+      (element, i) => {
         if (element.payment_type === '' || element.account_number === '' || element.account_name === '' || element.routing_number === ''
           || element.cvv === '' || element.expiry_month === '' || element.expiry_year === '' || element.valid === '') {
           this.paymentError = true;
           return this.paymentFormError = 'Please fill all fields!!';
         } else {
+          const id = i + 1;
+          element.cvv = element.cvv.toString();
+          element.expiry_year = element.expiry_year.toString();
+          element.account_number = element.account_number.toString();
+          element.valid = element.valid.toString();
+          element.payment_method_id = id.toString();
           this.paymentError = false;
         }
 
@@ -355,12 +415,16 @@ export class NewIndividualComponent implements OnInit {
 
   saveEmployer() {
     this.employer.value.map(
-      element => {
+      (element, i) => {
         if (element.employer_name === '' || element.employer_phone === '' || element.income_amount === '' || element.income_frequency === ''
           || element.start_date === '' || element.end_date === '') {
           this.employerError = true;
           return this.employerFormError = 'Please fill all fields!!';
         } else {
+          const id = i + 1;
+          element.employment_id = id.toString();
+          element.income_amount = element.income_amount.toString();
+          element.employer_phone = element.employer_phone.toString();
           element.start_date = new Date(element.start_date).toISOString().split('T')[0];
           element.end_date = new Date(element.end_date).toISOString().split('T')[0];
           this.employerError = false;
@@ -415,12 +479,15 @@ export class NewIndividualComponent implements OnInit {
 
   saveAddress() {
     this.address.value.map(
-      element => {
+      (element, i) => {
         if (element.number === '' || element.street === '' || element.suite === '' || element.city === ''
           || element.state === '' || element.zip === '' || element.address_type === '' || element.from_date === '' || element.to_date === '') {
           this.addressError = true;
           return this.addressFormError = 'Please fill all fields!!';
         } else {
+          const id = i + 1;
+          element.address_id = id.toString();
+          element.zip = element.zip.toString();
           element.from_date = new Date(element.from_date).toISOString().split('T')[0];
           element.to_date = new Date(element.to_date).toISOString().split('T')[0];
           this.addressError = false;
@@ -459,7 +526,7 @@ export class NewIndividualComponent implements OnInit {
 
   saveContacts() {
     this.contacts.value.map(
-      element => {
+      (element, i) => {
         if (element.phone_no === '' || element.email === '' || element.contact_type === '') {
           this.contactError = true;
           return this.contactFormError = 'Please fill all fields!!';
@@ -469,6 +536,9 @@ export class NewIndividualComponent implements OnInit {
           this.contactError = true;
           return this.contactFormError = 'Please enter correct Email Format!';
         } else {
+          const id = i + 1;
+          element.phone_no = element.phone_no.toString();
+          element.contact_id = id.toString();
           this.contactError = false;
         }
       }

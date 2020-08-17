@@ -23,7 +23,7 @@ export class IndividualsComponent implements OnInit {
       'search': new FormControl('', [
         Validators.required
       ]),
-      'type':new FormControl('', [
+      'type': new FormControl('', [
         Validators.required
       ]),
     });
@@ -32,6 +32,7 @@ export class IndividualsComponent implements OnInit {
 
   ngOnInit() {
     this.getIndividuals();
+    localStorage.removeItem('ClientDetails')
   }
 
   getIndividuals() {
@@ -56,7 +57,7 @@ export class IndividualsComponent implements OnInit {
   }
 
   search() {
-    const Obj={
+    const Obj = {
       userId: localStorage.getItem('userId'),
       searchParameter:this.searchForm.value.type,
       parameterValue:this.searchForm.value.search
@@ -82,6 +83,21 @@ export class IndividualsComponent implements OnInit {
 
   newIndividual() {
     this.Router.navigate(['/newIndividual']);
+  }
+
+  getSingleIndividual(clientId) {
+    const Obj = {
+      userId: localStorage.getItem('userId'),
+      clientId: clientId
+    }
+    this.api.getClientAllDetails(Obj).subscribe((data: any) => {
+      this.spinner.show();
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        localStorage.setItem('ClientDetails', JSON.stringify(data.result));
+        this.Router.navigate(['/newIndividual']);
+      }
+    });
   }
 
 }

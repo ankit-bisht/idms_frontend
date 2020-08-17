@@ -97,6 +97,9 @@
                                 <th>
                                     DOB
                                 </th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody *ngFor="let item of pageOfItems">
@@ -127,6 +130,9 @@
                                 </td>
                                 <td>
                                     {{item.DOB}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-gradient-primary mb-2 btn-sm" (click)="getSingleIndividual(item.client_id)">More</button>
                                 </td>
                             </tr>
                         </tbody>
