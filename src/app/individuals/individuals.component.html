@@ -25,42 +25,70 @@
           </p> -->
                 <div class="search-field d-md-block">
                     <form class="form-inline" [formGroup]="searchForm">
-                        <label class="sr-only" for="inlineFormInputName2">Name</label>
-                        <select class="form-control mb-2 mr-sm-2 rounded-left" formControlName="type">
-                            <option value="">Select Type</option>
-                            <option value="client_id">Client Id</option>
-                            <option value="first_name">First name</option>
-                            <option value="middle_name">Middle Name</option>
-                            <option value="last_name">Last Name</option>
-                            <option value="phone">Phone</option>
-                            <option value="email">Email</option>
-                            <option value="sex">Sex</option>
-                            <option value="DOB">DOB</option>
-                        </select>
-                        <div *ngIf="searchForm.get('type').invalid && (searchForm.get('type').touched)"
-                            class="text-danger">
-                            <p *ngIf="searchForm.get('type').errors.required">
-                                Type is Required.
-                            </p>
+                        <!-- <label class="sr-only" for="inlineFormInputName2">Name</label>
+                        <div class="input-group mb-2 mr-sm-2 ">
+                            <select class="form-control rounded-left" formControlName="type">
+                                <option value="">Select Type</option>
+                                <option value="client_id">Client Id</option>
+                                <option value="first_name">First name</option>
+                                <option value="middle_name">Middle Name</option>
+                                <option value="last_name">Last Name</option>
+                                <option value="phone">Phone</option>
+                                <option value="email">Email</option>
+                                <option value="sex">Sex</option>
+                                <option value="DOB">DOB</option>
+                            </select>
+                            <small class="form-text text-muted">
+                                <span *ngIf="searchForm.get('type').invalid && (searchForm.get('type').touched)"
+                                    class=" text-danger">
+                                    <span *ngIf="searchForm.get('type').errors.required">
+                                        Type is Required.
+                                    </span>
+                                </span>
+                            </small> -->
+                        <!-- </div>  -->
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <select class="form-control form-control-sm input-group-text" style="height: fit-content;color: black;background-color:white" formControlName="type">
+                                        <option value="">select type</option>
+                                        <option class="dropdown-item" value="client_id">Client Id</option>
+                                        <option class="dropdown-item" value="first_name">First name</option>
+                                        <option class="dropdown-item" value="middle_name">Middle Name</option>
+                                        <option class="dropdown-item" value="last_name">Last Name</option>
+                                        <option class="dropdown-item" value="phone">Phone</option>
+                                        <option class="dropdown-item" value="email">Email</option>
+                                        <option class="dropdown-item" value="sex">Sex</option>
+                                        <option class="dropdown-item" value="DOB">DOB</option>
+                                    </select>
+                                </div>
+                                <input type="text" formControlName="search" class="col-md-5 form-control" style="height: 36px;"
+                                    aria-label="Text input with dropdown button">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-gradient-primary mb-2 btn-sm" style="height:35px"
+                                        (click)="getIndividuals()">Reset</button>
+                                    <button type="submit" class="btn btn-gradient-primary mb-2 btn-sm" style="height: 35px;"
+                                        (click)="search()" [disabled]="!searchForm.valid">Search</button>
+                                </div>
+                            </div>
                         </div>
-                        <label class="sr-only" for="inlineFormInputGroupUsername2">Search</label>
+                        <!-- <label class="sr-only" for="inlineFormInputGroupUsername2">Search</label>
                         <div class="input-group mb-2 mr-sm-2">
                             <input type="text" formControlName="search" required class="form-control rounded-left"
                                 placeholder="Search..">
-                            <div *ngIf="searchForm.get('search').invalid && (searchForm.get('search').touched)"
-                                class="text-danger">
-                                <p *ngIf="searchForm.get('search').errors.required">
-                                    Value is Required.
-                                </p>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-gradient-primary mb-2 btn-sm"
-                            (click)="getIndividuals()">Reset</button>
-                        <button type="submit" class="btn btn-gradient-primary mb-2 btn-sm" (click)="search()"
-                            [disabled]="!searchForm.valid">Search</button>
+                             <small class="form-text text-muted">
+                                <span *ngIf="searchForm.get('search').invalid && (searchForm.get('search').touched)"
+                                    class="text-danger">
+                                    <span *ngIf="searchForm.get('search').errors.required">
+                                        Value is Required.
+                                    </span>
+                                </span>
+                            </small> -->
+                        <!-- </div>  -->
                     </form>
                 </div>
-                <div class="table-responsive pt-3">
+                <br/>
+                <div style="overflow:auto">
                     <table class="table table-bordered">
                         <!-- LOADER -->
                         <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box"
@@ -70,40 +98,43 @@
 
                         <thead>
                             <tr>
-                                <th>
-                                    Sno.
+                                <th class="font-weight-bold"> 
+                                    S.no.
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     Client Id
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     First name
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     Middle Name
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     Last Name
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     Phone
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     Email
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     Sex
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     DOB
                                 </th>
-                                <th>
+                                <th class="font-weight-bold">
                                     Actions
                                 </th>
                             </tr>
                         </thead>
                         <tbody *ngFor="let item of pageOfItems">
                             <tr>
+                                <td style="text-align: center;" *ngIf="!pageOfItems?.length > 1 || pageOfItems.length === 1">{{pageOfItems[0]}}</td>
+                            </tr>
+                            <tr *ngIf="pageOfItems.length > 1">
                                 <td>
                                     {{item.id}}
                                 </td>
@@ -132,7 +163,8 @@
                                     {{item.DOB}}
                                 </td>
                                 <td>
-                                    <button class="btn btn-gradient-primary mb-2 btn-sm" (click)="getSingleIndividual(item.client_id)">More</button>
+                                    <button class="btn btn-gradient-primary mb-2 btn-sm"
+                                        (click)="getSingleIndividual(item.client_id)">More</button>
                                 </td>
                             </tr>
                         </tbody>

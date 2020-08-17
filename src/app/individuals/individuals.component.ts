@@ -42,7 +42,9 @@ export class IndividualsComponent implements OnInit {
     this.api.getIndividuals(Obj).subscribe((data: any) => {
       this.spinner.show();
       if (data.responseCode === 200) {
-        this.spinner.hide();
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000);
         this.items = data.result;
         this.items.map((item, i) => {
           item.id = i + 1;
@@ -54,6 +56,10 @@ export class IndividualsComponent implements OnInit {
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;
+    if(this.pageOfItems.length ==0){
+      this.pageOfItems[0]= "No Records Found!";
+    }
+    
   }
 
   search() {
@@ -65,20 +71,16 @@ export class IndividualsComponent implements OnInit {
     this.api.searchIndividuals(Obj).subscribe((data: any) => {
       this.spinner.show();
       if (data.responseCode === 200) {
-        this.spinner.hide();
-        this.items = data.result;
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000);
+
+        this.items = data.result;        
         this.items.map((item, i) => {
           item.id = i + 1;
         });
       }
     });
-    // /** spinner starts on init */
-    // this.spinner.show();
-
-    // setTimeout(() => {
-    //   /** spinner ends after 5 seconds */
-    //   this.spinner.hide();
-    // }, 5000);
   }
 
   newIndividual() {

@@ -414,7 +414,7 @@ export class NewIndividualComponent implements OnInit {
       //createClient
       const Obj = JSON.parse(localStorage.getItem('individualDetails'));
       this.api.createClient(Obj).subscribe((data: any) => {
-        this.spinner.show();
+        setTimeout(function(){ this.spinner.show(); }, 3000);
         if (data.responseCode === 200) {
           this.spinner.hide();
           this.documentSuccess = true;
