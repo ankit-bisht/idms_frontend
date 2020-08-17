@@ -59,8 +59,8 @@ export class IndividualsComponent implements OnInit {
   search() {
     const Obj = {
       userId: localStorage.getItem('userId'),
-      searchParameter:this.searchForm.value.type,
-      parameterValue:this.searchForm.value.search
+      searchParameter: this.searchForm.value.type,
+      parameterValue: this.searchForm.value.search
     }
     this.api.searchIndividuals(Obj).subscribe((data: any) => {
       this.spinner.show();

@@ -286,6 +286,34 @@
         </ngb-tab>
         <ngb-tab title="Contacts" [disabled]="!showContacts">
           <ng-template ngbTabContent>
+            <div  *ngIf="contactsArray" >
+            <div class="card mb-3" *ngFor="let item of contactsArray; let pointIndex=index">
+              <div class="card-header">Contact {{pointIndex+1}}</div>
+              <div class="card-body">
+                <div class="card-text">
+                  <div class="form-group row">
+                    <label for="" class="col-sm-3 col-form-label">Mobile No</label>
+                    <div class="col-sm-8">
+                      <input type="text" readonly class="form-control-plaintext" id="" value="{{item.phone}}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-8">
+                      <input type="text" readonly class="form-control-plaintext" id="" value="{{item.email}}">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="" class="col-sm-3 col-form-label">Contact type</label>
+                    <div class="col-sm-8">
+                      <input type="text" readonly class="form-control-plaintext" id="" value="{{item.contact_type}}">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div *ngIf="contactsArray.length==0">
             <div class="card-title">
               <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addContacts()">Add
                 Contacts
@@ -311,7 +339,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Mobile No</label>
                         <div class="col-sm-8">
-                          <input type="number" maxlength="10" class="form-control" formControlName="phone_no"
+                          <input type="number" maxlength="10" class="form-control" formControlName="phone"
                             placeholder="Mobile No" />
                         </div>
                       </div>
@@ -345,135 +373,235 @@
               <button type="submit" *ngIf="!hideSubmit" (click)="saveContacts()"
                 class="btn btn-gradient-primary mr-2">Submit</button>
             </form>
+          </div>
           </ng-template>
         </ngb-tab>
         <ngb-tab title="Address" [disabled]="!showAddress">
           <ng-template ngbTabContent>
-            <div class="card-title">
-              <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addAddress()">Add
-                Address
-              </button>
-            </div>
-            <form class="form-sample" [formGroup]="addressForm">
-              <ngb-alert *ngIf="addressError" [dismissible]="false" class="d-block mt-3" type="danger">
-                {{addressFormError}}
-              </ngb-alert>
-              <ngb-alert *ngIf="addressSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                {{addressMessage}}
-              </ngb-alert>
-              <div formArrayName="address">
-                <section class="container border mb-4 p-3" *ngFor="let item of address.controls; let pointIndex=index"
-                  [formGroupName]="pointIndex">
-                  <div class="card-title">Address {{pointIndex + 1}}</div>
-                  <div class="card-description text-right">
-                    <button type="button" class="btn btn-gradient-danger btn-sm"
-                      (click)="deleteAddress(pointIndex)">Delete Address</button>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Address Type</label>
-                        <div class="col-sm-8">
-                          <select class="form-control" formControlName="address_type">
-                            <option value="">Select Type</option>
-                            <option *ngFor="let item of addresstype | keyvalue" value={{item.key}}>{{item.value}}
-                            </option>
-                          </select>
-                        </div>
+            <div  *ngIf="addressArray" >
+              <div class="card mb-3" *ngFor="let item of addressArray; let pointIndex=index">
+                <div class="card-header">Address {{pointIndex+1}}</div>
+                <div class="card-body">
+                  <div class="card-text">
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Address Type</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.address_type}}">
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Number</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" formControlName="number" placeholder="Number" />
-                        </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Number</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.number}}">
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Street</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" formControlName="street" placeholder="street" />
-                        </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Street</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.street}}">
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">suite</label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" formControlName="suite" placeholder="suite" />
-                        </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Suite</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.suite}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Zip</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.zip}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">From Date</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.from_date}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">To Date</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.to_date}}">
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">State</label>
-                        <div class="col-sm-8">
-                          <select class="form-control" formControlName="state" (click)="setCity()">
-                            <option value="">Select State</option>
-                            <option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">City</label>
-                        <div class="col-sm-8">
-                          <select class="form-control" formControlName="city">
-                            <option value="">Select Type</option>
-                            <option *ngFor="let item of city" value={{item}}>{{item}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Zip</label>
-                        <div class="col-sm-8">
-                          <input type="number" class="form-control" formControlName="zip" placeholder="Zip" />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">From Date</label>
-                        <div class="col-sm-8">
-                          <input type="text" placeholder="YYYY-DD-MM" formControlName="from_date"
-                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                            class="form-control " bsDatepicker>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">To Date</label>
-                        <div class="col-sm-8">
-                          <input type="text" placeholder="YYYY-DD-MM" formControlName="to_date"
-                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                            class="form-control " bsDatepicker>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
+                </div>
               </div>
-              <button type="submit" *ngIf="!hideSubmit" (click)="saveAddress()"
-                class="btn btn-gradient-primary mr-2">Submit</button>
-            </form>
+            </div>
+            <div *ngIf="addressArray.length==0">
+              <div class="card-title">
+                <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addAddress()">Add
+                  Address
+                </button>
+              </div>
+              <form class="form-sample" [formGroup]="addressForm">
+                <ngb-alert *ngIf="addressError" [dismissible]="false" class="d-block mt-3" type="danger">
+                  {{addressFormError}}
+                </ngb-alert>
+                <ngb-alert *ngIf="addressSuccess" [dismissible]="false" class="d-block mt-3" type="success">
+                  {{addressMessage}}
+                </ngb-alert>
+                <div formArrayName="address">
+                  <section class="container border mb-4 p-3" *ngFor="let item of address.controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
+                    <div class="card-title">Address {{pointIndex + 1}}</div>
+                    <div class="card-description text-right">
+                      <button type="button" class="btn btn-gradient-danger btn-sm"
+                        (click)="deleteAddress(pointIndex)">Delete Address</button>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Address Type</label>
+                          <div class="col-sm-8">
+                            <select class="form-control" formControlName="address_type">
+                              <option value="">Select Type</option>
+                              <option *ngFor="let item of addresstype | keyvalue" value={{item.key}}>{{item.value}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Number</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" formControlName="number" placeholder="Number" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Street</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" formControlName="street" placeholder="street" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">suite</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" formControlName="suite" placeholder="suite" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">State</label>
+                          <div class="col-sm-8">
+                            <select class="form-control" formControlName="state" (click)="setCity()">
+                              <option value="">Select State</option>
+                              <option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">City</label>
+                          <div class="col-sm-8">
+                            <select class="form-control" formControlName="city">
+                              <option value="">Select Type</option>
+                              <option *ngFor="let item of city" value={{item}}>{{item}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Zip</label>
+                          <div class="col-sm-8">
+                            <input type="number" class="form-control" formControlName="zip" placeholder="Zip" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">From Date</label>
+                          <div class="col-sm-8">
+                            <input type="text" placeholder="YYYY-DD-MM" formControlName="from_date"
+                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
+                              class="form-control " bsDatepicker>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">To Date</label>
+                          <div class="col-sm-8">
+                            <input type="text" placeholder="YYYY-DD-MM" formControlName="to_date"
+                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
+                              class="form-control " bsDatepicker>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <button type="submit" *ngIf="!hideSubmit" (click)="saveAddress()"
+                  class="btn btn-gradient-primary mr-2">Submit</button>
+              </form>
+            </div>
           </ng-template>
         </ngb-tab>
         <ngb-tab title="Employment" [disabled]="!showEmployemment">
           <ng-template ngbTabContent>
+            <div  *ngIf="employerArray" >
+              <div class="card mb-3" *ngFor="let item of employerArray; let pointIndex=index">
+                <div class="card-header">Employer {{pointIndex+1}}</div>
+                <div class="card-body">
+                  <div class="card-text">
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Employer Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.employer_name}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Employer Phone</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.employer_phone}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Income Amount</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.income_amount}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Income Frequency</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.income_frequency}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Start Date</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.start_date}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">End Date</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.end_date}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="employerArray.length==0">
             <div class="card-title">
               <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addEmployer()">Add
                 Employer
@@ -566,10 +694,63 @@
               <button type="submit" *ngIf="!hideSubmit" (click)="saveEmployer()"
                 class="btn btn-gradient-primary mr-2">Submit</button>
             </form>
+          </div>
           </ng-template>
         </ngb-tab>
         <ngb-tab title="Payment" [disabled]="!showPayment">
           <ng-template ngbTabContent>
+            <div  *ngIf="paymentArray" >
+              <div class="card mb-3" *ngFor="let item of paymentArray; let pointIndex=index">
+                <div class="card-header">Payment {{pointIndex+1}}</div>
+                <div class="card-body">
+                  <div class="card-text">
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Payment Type</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.payment_type}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Account Number</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.account_number}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Account Name</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.account_name}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Routing Number</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.routing_number}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Expiry Month</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.expiry_month}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Expiry Year</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.expiry_year}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Valid</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.valid}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="paymentArray.length==0">
             <div class="card-title">
               <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addPayment()">Add
                 Payment Method
@@ -682,7 +863,11 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Valid</label>
                         <div class="col-sm-8">
-                          <input type="number" class="form-control" formControlName="valid" placeholder="valid" />
+                          <select class="form-control" formControlName="valid">
+                            <option value="">Select Type</option>
+                            <option selected value='1'>Yes</option>
+                            <option value='2'>No</option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -692,6 +877,7 @@
               <button type="submit" *ngIf="!hideSubmit" (click)="savePayment()"
                 class="btn btn-gradient-primary mr-2">Submit</button>
             </form>
+          </div>
           </ng-template>
         </ngb-tab>
         <ngb-tab title="Relationships" [disabled]="true">
@@ -701,6 +887,40 @@
         </ngb-tab>
         <ngb-tab title="Attachments" [disabled]="!showAttachment">
           <ng-template ngbTabContent>
+            <div  *ngIf="documnetArray.length>0" >
+              <div class="card mb-3" *ngFor="let item of documnetArray; let pointIndex=index">
+                <div class="card-header">Document {{pointIndex+1}}</div>
+                <div class="card-body">
+                  <div class="card-text">
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Document Type Id</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.document_type_id}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Due Date</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.due_date}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Date Submitted</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.date_submitted}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-3 col-form-label">Status</label>
+                      <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.status}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="documnetArray.length==0">
             <div class="card-title">
               <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addDocument()">Add
                 Documents
@@ -776,6 +996,7 @@
               <button type="submit" (click)="openMediumModal(mediumModalContent)" *ngIf="!hideSubmit"
                 class="btn btn-gradient-primary mr-2">Submit</button>
             </form>
+          </div>
           </ng-template>
         </ngb-tab>
       </ngb-tabset>

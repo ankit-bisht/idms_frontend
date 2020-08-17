@@ -11,15 +11,7 @@ export class ApiService {
     constructor(
         public httpClient: HttpClient,
         public urlObject: Configuration,
-    ) {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
-        });
-        this.options = {
-            headers: headers
-        }
-    }
+    ) { }
 
     /**
     * @method loginApi()
@@ -34,6 +26,14 @@ export class ApiService {
    * @desc get constants
    */
     getConstants(Obj) {
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
+        this.options = {
+            headers: headers
+        }
         return this.httpClient.post(this.urlObject.UrlObj.clientDropDownValues, Obj, this.options);
     }
 
@@ -42,6 +42,14 @@ export class ApiService {
    * @desc get drop doen constants for document
    */
     documentDropDownValues(Obj) {
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
+        this.options = {
+            headers: headers
+        }
         return this.httpClient.post(this.urlObject.UrlObj.documentDropDownValues, Obj, this.options);
     }
 
@@ -50,6 +58,14 @@ export class ApiService {
    * @desc create client 
    */
     createClient(Obj) {
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
+        this.options = {
+            headers: headers
+        }
         return this.httpClient.post(this.urlObject.UrlObj.createClient, Obj, this.options);
     }
 
@@ -58,6 +74,14 @@ export class ApiService {
    * @desc create client 
    */
     getIndividuals(Obj) {
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
+        this.options = {
+            headers: headers
+        }
         return this.httpClient.post(this.urlObject.UrlObj.clients, Obj, this.options);
     }
 
@@ -66,6 +90,14 @@ export class ApiService {
    * @desc create client 
    */
     searchIndividuals(Obj) {
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
+        this.options = {
+            headers: headers
+        }
         return this.httpClient.post(this.urlObject.UrlObj.searchClientDetails, Obj, this.options);
     }
 
@@ -74,6 +106,14 @@ export class ApiService {
    * @desc create client 
    */
     getClientAllDetails(Obj) {
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
+        this.options = {
+            headers: headers
+        }
         return this.httpClient.post(this.urlObject.UrlObj.getClientAllDetails, Obj, this.options);
     }
 
