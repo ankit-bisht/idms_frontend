@@ -9,6 +9,7 @@ export class Configuration {
         documentDropDownValues: this.baseUrl + "clientDocumentTypeDropDownValues",
         createClient: this.baseUrl + "createClient",
         clients: this.baseUrl + "clients",
+        upload : this.baseUrl + "upload",
         searchClientDetails: this.baseUrl + "searchClientDetails",
         getClientAllDetails: this.baseUrl + "getClientAllDetails",
     }

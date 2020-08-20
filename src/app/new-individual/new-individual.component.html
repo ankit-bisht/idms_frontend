@@ -1,4 +1,10 @@
-<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+<style>
+  ::ng-deep.mat-tab-link,
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    min-width: 97px !important;
+  }
+</style>
 <div class="page-header">
   <h3 class="page-title">
     Client Details
@@ -13,299 +19,80 @@
 <div class="grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
-        <p style="color: white"> Loading... </p>
-      </ngx-spinner>
-      <ngb-tabset>
-        <ngb-tab title="Individual Details" class="title">
-          <ng-template ngbTabContent>
-            <form class="form-sample" [formGroup]="individualForm">
-              <ngb-alert *ngIf="FormError" [dismissible]="false" class="d-block mt-3" type="danger">
-                This tab content DOM will de destroyed when not active
-              </ngb-alert>
-              <ngb-alert *ngIf="success" [dismissible]="false" class="d-block mt-3" type="success">
-                {{successMessage}}
-              </ngb-alert>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">First Name</label>
-                    <div class="col-sm-8">
-                      <input class="form-control " formControlName="first_name" placeholder="first name"
-                        [(ngModel)]="firstName" />
-                      <div
-                        *ngIf="individualForm.get('first_name').invalid && (individualForm.get('first_name').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('first_name').errors.required">
-                          First Name is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Middle Name</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" formControlName="middle_name" placeholder="middle name"
-                        [(ngModel)]="middleName" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Last Name</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" formControlName="last_name" placeholder="last name"
-                        [(ngModel)]="lastName" />
-                      <div *ngIf="individualForm.get('last_name').invalid && (individualForm.get('last_name').touched)"
-                        class="text-danger" [(ngModel)]="firstName">
-                        <p *ngIf="individualForm.get('last_name').errors.required">
-                          Last Name is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Date of Birth</label>
-                    <div class="col-sm-8">
-                      <input type="text" placeholder="YYYY-DD-MM" formControlName="DOB" [(ngModel)]="DOB"
-                        [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                        class="form-control " bsDatepicker>
-                      <div *ngIf="individualForm.get('DOB').invalid && (individualForm.get('DOB').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('DOB').errors.required">
-                          Date Of Birth is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Gender</label>
-                    <div class="col-sm-8">
-                      <select class="form-control" formControlName="sex" [(ngModel)]="sex">
-                        <option value="">Select gender</option>
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                      </select>
-                      <div *ngIf="individualForm.get('sex').invalid && (individualForm.get('sex').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('sex').errors.required">
-                          Gender is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">SSN</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" placeholder="ssn" formControlName="ssn" [(ngModel)]="ssn" />
-                      <div *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('ssn').errors.required">
-                          SSn is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Weight</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" type="number" placeholder="weight" formControlName="weight"
-                        [(ngModel)]="weight" />
-                      <div *ngIf="individualForm.get('weight').invalid && (individualForm.get('weight').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('weight').errors.required">
-                          Weight is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Height Inches</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" type="number" placeholder="height in inches"
-                        formControlName="height_inches" [(ngModel)]="inches" />
-                      <div
-                        *ngIf="individualForm.get('height_inches').invalid && (individualForm.get('height_inches').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('height_inches').errors.required">
-                          Height is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Height Feet</label>
-                    <div class="col-sm-8">
-                      <input class="form-control" type="number" placeholder="height in feets"
-                        formControlName="height_feet" [(ngModel)]="feet" />
-                      <div
-                        *ngIf="individualForm.get('height_feet').invalid && (individualForm.get('height_feet').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('height_feet').errors.required">
-                          Height is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">MP User Id</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" placeholder="mp user id" formControlName="mp_user_id"
-                        [(ngModel)]="mpUserId" />
-                      <div
-                        *ngIf="individualForm.get('mp_user_id').invalid && (individualForm.get('mp_user_id').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('mp_user_id').errors.required">
-                          MP User Id is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">MP Password</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" placeholder="mp password" formControlName="mp_password"
-                        [(ngModel)]="mpPassword" />
-                      <div
-                        *ngIf="individualForm.get('mp_password').invalid && (individualForm.get('mp_password').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('mp_password').errors.required">
-                          MP Password is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Driver License State</label>
-                    <div class="col-sm-8">
-                      <select class="form-control" formControlName="driver_license_state" [(ngModel)]="driverState">
-                        <option value="">Select State</option>
-                        <option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}</option>
-                      </select>
-                      <div
-                        *ngIf="individualForm.get('driver_license_state').invalid && (individualForm.get('driver_license_state').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('driver_license_state').errors.required">
-                          State is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Driver License Number</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" placeholder="License no"
-                        formControlName="driver_license_number" [(ngModel)]="driverNumber" />
-                      <div
-                        *ngIf="individualForm.get('driver_license_number').invalid && (individualForm.get('driver_license_number').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('driver_license_number').errors.required">
-                          Driver License Number is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Client Type</label>
-                    <div class="col-sm-8">
-                      <select class="form-control" formControlName="client_type" [(ngModel)]="clienttype">
-                        <option value="">Select Type</option>
-                        <option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}</option>
-                      </select>
-                      <div
-                        *ngIf="individualForm.get('client_type').invalid && (individualForm.get('client_type').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('client_type').errors.required">
-                          Client Type is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Notes</label>
-                    <div class="col-sm-8">
-                      <textarea class="form-control" placeholder="notes" formControlName="notes"
-                        [(ngModel)]="notes"></textarea>
-                      <div *ngIf="individualForm.get('notes').invalid && (individualForm.get('notes').touched)"
-                        class="text-danger">
-                        <p *ngIf="individualForm.get('notes').errors.required">
-                          Notes is Required.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button type="submit" *ngIf="!hideSubmit" (click)="saveIndividualDetails()"
-                [disabled]="!individualForm.valid" class="btn btn-gradient-primary mr-2">Submit</button>
-            </form>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Contacts" [disabled]="!showContacts">
-          <ng-template ngbTabContent>
-            <div *ngIf="contactsArray">
-              <div class="card-title">
-                <!-- <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addContacts()">Add
-                  Contacts
-                </button> -->
-              </div>
-              <form class="form-sample">
-                <div class="container border mb-4 p-3" *ngFor="let item of contactsArray; let pointIndex=index">
-                  <div class="card-title">Contact {{pointIndex+1}}</div>
+      <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box"
+                            [fullScreen]="false">
+                            <p style="color: white"> Loading... </p>
+                        </ngx-spinner>
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Individual Details">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <form class="form-sample" [formGroup]="individualForm">
+                  <ngb-alert *ngIf="FormError" [dismissible]="false" class="d-block mt-3" type="danger">
+                    This tab content DOM will de destroyed when not active
+                  </ngb-alert>
+                  <ngb-alert *ngIf="success" [dismissible]="false" class="d-block mt-3" type="success">
+                    {{successMessage}}
+                  </ngb-alert>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Mobile No:</label>
+                        <label class="col-sm-4 col-form-label">First Name</label>
                         <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.phone}}">
+                          <input class="form-control " formControlName="first_name" placeholder="first name"
+                            [(ngModel)]="firstName" />
+                          <div
+                            *ngIf="individualForm.get('first_name').invalid && (individualForm.get('first_name').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('first_name').errors.required">
+                              First Name is Required.
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Email:</label>
+                        <label class="col-sm-4 col-form-label">Middle Name</label>
                         <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.email}}">
+                          <input class="form-control" formControlName="middle_name" placeholder="middle name"
+                            maxlength="10" [(ngModel)]="middleName" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Last Name</label>
+                        <div class="col-sm-8">
+                          <input class="form-control" formControlName="last_name" placeholder="last name" maxlength="10"
+                            [(ngModel)]="lastName" />
+                          <div
+                            *ngIf="individualForm.get('last_name').invalid && (individualForm.get('last_name').touched)"
+                            class="text-danger" [(ngModel)]="firstName">
+                            <p *ngIf="individualForm.get('last_name').errors.required">
+                              Last Name is Required.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Date of Birth</label>
+                        <div class="col-sm-8">
+                          <input type="text" placeholder="YYYY-DD-MM" formControlName="DOB" [(ngModel)]="DOB"
+                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
+                            class="form-control " bsDatepicker>
+                          <div *ngIf="individualForm.get('DOB').invalid && (individualForm.get('DOB').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('DOB').errors.required">
+                              Date Of Birth is Required.
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -313,813 +100,1040 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Contact type:</label>
+                        <label class="col-sm-3 col-form-label">Gender</label>
+                        <div class="col-sm-4">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" class="form-check-input" id="membershipRadios1" formControlName="sex"
+                                value="male" [(ngModel)]="sex">
+                              Male
+                              <i class="input-helper"></i>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-5">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" class="form-check-input" id="membershipRadios2" formControlName="sex"
+                                value="female" [(ngModel)]="sex">
+                              Female
+                              <i class="input-helper"></i>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">SSN</label>
                         <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.contact_type}}">
+                          <input class="form-control" placeholder="ssn" formControlName="ssn" maxlength="10"
+                            [(ngModel)]="ssn" />
+                          <div *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('ssn').errors.required">
+                              SSn is Required.
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </form>
-              <!-- <div class="card mb-3" *ngFor="let item of contactsArray; let pointIndex=index">
-                <div class="card-header">Contact {{pointIndex+1}}</div>
-                <div class="card-body">
-                  <div class="card-text">
-                    <div class="form-group row">
-                      <label for="" class="col-sm-3 col-form-label">Mobile No</label>
-                      <div class="col-sm-8">
-                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.phone}}">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Weight</label>
+                        <div class="col-sm-8">
+                          <input class="form-control" type="number" oninput="if(value.length>16)value=value.slice(0,3)"
+                            placeholder="weight" formControlName="weight" [(ngModel)]="weight" />
+                          <div *ngIf="individualForm.get('weight').invalid && (individualForm.get('weight').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('weight').errors.required">
+                              Weight is Required.
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label for="" class="col-sm-3 col-form-label">Email</label>
-                      <div class="col-sm-8">
-                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.email}}">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Height Inches</label>
+                        <div class="col-sm-8">
+                          <input class="form-control" type="number" placeholder="height in inches"
+                            oninput="if(value.length>16)value=value.slice(0,3)" formControlName="height_inches"
+                            [(ngModel)]="inches" />
+                          <div
+                            *ngIf="individualForm.get('height_inches').invalid && (individualForm.get('height_inches').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('height_inches').errors.required">
+                              Height is Required.
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label for="" class="col-sm-3 col-form-label">Contact type</label>
-                      <div class="col-sm-8">
-                        <input type="text" readonly class="form-control-plaintext" id="" value="{{item.contact_type}}">
+                    <div class="col-md-4">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Height Feet</label>
+                        <div class="col-sm-8">
+                          <input class="form-control" type="number" placeholder="height in feets"
+                            oninput="if(value.length>16)value=value.slice(0,3)" formControlName="height_feet"
+                            [(ngModel)]="feet" />
+                          <div
+                            *ngIf="individualForm.get('height_feet').invalid && (individualForm.get('height_feet').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('height_feet').errors.required">
+                              Height is Required.
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div> -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">MP User Id</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" placeholder="mp user id" formControlName="mp_user_id"
+                            [(ngModel)]="mpUserId" maxlength="10" />
+                          <div
+                            *ngIf="individualForm.get('mp_user_id').invalid && (individualForm.get('mp_user_id').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('mp_user_id').errors.required">
+                              MP User Id is Required.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">MP Password</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" placeholder="mp password" maxlength="10"
+                            formControlName="mp_password" [(ngModel)]="mpPassword" />
+                          <div
+                            *ngIf="individualForm.get('mp_password').invalid && (individualForm.get('mp_password').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('mp_password').errors.required">
+                              MP Password is Required.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Driver License State</label>
+                        <div class="col-sm-8">
+                          <select class="form-control" formControlName="driver_license_state" [(ngModel)]="driverState">
+                            <option class="dropdown-item" *ngFor="let item of states | keyvalue" value={{item.key}}>
+                              {{item.value}}</option>
+                          </select>
+                          <div
+                            *ngIf="individualForm.get('driver_license_state').invalid && (individualForm.get('driver_license_state').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('driver_license_state').errors.required">
+                              State is Required.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Driver License Number</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control" placeholder="License no" maxlength="15"
+                            formControlName="driver_license_number" [(ngModel)]="driverNumber" />
+                          <div
+                            *ngIf="individualForm.get('driver_license_number').invalid && (individualForm.get('driver_license_number').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('driver_license_number').errors.required">
+                              Driver License Number is Required.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Client Type</label>
+                        <div class="col-sm-8">
+                          <select class="form-control" formControlName="client_type" [(ngModel)]="clienttype">
+                            <option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}
+                            </option>
+                          </select>
+                          <div
+                            *ngIf="individualForm.get('client_type').invalid && (individualForm.get('client_type').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('client_type').errors.required">
+                              Client Type is Required.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Notes</label>
+                        <div class="col-sm-8">
+                          <textarea class="form-control" placeholder="notes" formControlName="notes" rows="2"
+                            [(ngModel)]="notes"></textarea>
+                          <div *ngIf="individualForm.get('notes').invalid && (individualForm.get('notes').touched)"
+                            class="text-danger">
+                            <p *ngIf="individualForm.get('notes').errors.required">
+                              Notes is Required.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveIndividualDetails()"
+                    [disabled]="!individualForm.valid" class="btn btn-primary mr-2">Submit</button> -->
+                </form>
+              </div>
             </div>
-            <div *ngIf="contactsArray.length==0">
-              <div class="card-title">
-                <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addContacts()">Add
-                  Contacts
-                </button>
+          </div>
+        </mat-tab>
+        <mat-tab label="Contacts">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="contactsArray">
+                  <div class="card-title">
+                    <!-- <button type="button" class="btn btn-primary btn-sm" (click)="addContacts()">Add
+                      Contacts
+                    </button> -->
+                  </div>
+                  <form class="form-sample">
+                    <div class="container border mb-4 p-3" *ngFor="let item of contactsArray; let pointIndex=index">
+                      <div class="card-title">Contact {{pointIndex+1}}</div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Mobile No:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.phone}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Email:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.email}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Contact type:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.contact_type}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div *ngIf="contactsArray.length==0">
+                  <div class="card-title">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addContacts()">Add
+                      Contacts
+                    </button>
+                  </div>
+                  <form class="form-sample" [formGroup]="contactForm">
+                    <ngb-alert *ngIf="contactError" [dismissible]="false" class="d-block mt-3" type="danger">
+                      {{contactFormError}}
+                    </ngb-alert>
+                    <ngb-alert *ngIf="contactSuccess" [dismissible]="false" class="d-block mt-3" type="success">
+                      {{contactMessage}}
+                    </ngb-alert>
+                    <div formArrayName="contacts">
+                      <section class="container border mb-4 p-3"
+                        *ngFor="let item of contacts.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <div class="card-title">Contact {{pointIndex + 1}}</div>
+                        <div class="card-description text-right">
+                          <button type="button" class="btn btn-danger btn-sm"
+                            (click)="deleteContacts(pointIndex)">Delete Contacts</button>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Mobile No</label>
+                              <div class="col-sm-8">
+                                <input type="number" maxlength="10" class="form-control" formControlName="phone"
+                                  placeholder="Mobile No" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Email Id</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="email"
+                                  placeholder="Email Id" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Contact type</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="contact_type">
+                                  <option *ngFor="let item of contactype | keyvalue" value={{item.key}}>{{item.value}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveContacts()"
+                      class="btn btn-primary mr-2">Submit</button> -->
+                  </form>
+                </div>
               </div>
-              <form class="form-sample" [formGroup]="contactForm">
-                <ngb-alert *ngIf="contactError" [dismissible]="false" class="d-block mt-3" type="danger">
-                  {{contactFormError}}
-                </ngb-alert>
-                <ngb-alert *ngIf="contactSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                  {{contactMessage}}
-                </ngb-alert>
-                <div formArrayName="contacts">
-                  <section class="container border mb-4 p-3"
-                    *ngFor="let item of contacts.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                    <div class="card-title">Contact {{pointIndex + 1}}</div>
-                    <div class="card-description text-right">
-                      <button type="button" class="btn btn-gradient-danger btn-sm"
-                        (click)="deleteContacts(pointIndex)">Delete Contacts</button>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Mobile No</label>
-                          <div class="col-sm-8">
-                            <input type="number" maxlength="10" class="form-control" formControlName="phone"
-                              placeholder="Mobile No" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Email Id</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" formControlName="email" placeholder="Email Id" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Contact type</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="contact_type">
-                              <option value="">Select Type</option>
-                              <option *ngFor="let item of contactype | keyvalue" value={{item.key}}>{{item.value}}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-                <button type="submit" *ngIf="!hideSubmit" (click)="saveContacts()"
-                  class="btn btn-gradient-primary mr-2">Submit</button>
-              </form>
             </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Address" [disabled]="!showAddress">
-          <ng-template ngbTabContent>
-            <div *ngIf="addressArray">
-              <div class="card-title">
-                <!-- <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addContacts()">Add
-                  Contacts
-                </button> -->
+          </div>
+        </mat-tab>
+        <mat-tab label="Address">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="addressArray">
+                  <div class="card-title">
+                    <!-- <button type="button" class="btn btn-primary btn-sm" (click)="addContacts()">Add
+              Contacts
+            </button> -->
+                  </div>
+                  <form class="form-sample">
+                    <div class="container border mb-4 p-3" *ngFor="let item of addressArray; let pointIndex=index">
+                      <div class="card-title">Address {{pointIndex+1}}</div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Address Type:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.address_type}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Number:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.number}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Street:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.street}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Suite:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.suite}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Zip:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.zip}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">From Date:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.from_date}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">To Date:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.to_date}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div *ngIf="addressArray.length==0">
+                  <div class="card-title">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addAddress()">Add
+                      Address
+                    </button>
+                  </div>
+                  <form class="form-sample" [formGroup]="addressForm">
+                    <ngb-alert *ngIf="addressError" [dismissible]="false" class="d-block mt-3" type="danger">
+                      {{addressFormError}}
+                    </ngb-alert>
+                    <ngb-alert *ngIf="addressSuccess" [dismissible]="false" class="d-block mt-3" type="success">
+                      {{addressMessage}}
+                    </ngb-alert>
+                    <div formArrayName="address">
+                      <section class="container border mb-4 p-3"
+                        *ngFor="let item of address.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <div class="card-title">Address {{pointIndex + 1}}</div>
+                        <div class="card-description text-right">
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteAddress(pointIndex)">Delete
+                            Address</button>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Address Type</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="address_type">
+                                  <option *ngFor="let item of addresstype | keyvalue" value={{item.key}}>{{item.value}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Number</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="number" placeholder="Number" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Street</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="street" placeholder="street" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">suite</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="suite" placeholder="suite" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">State</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="state">
+                                  <option value="">Select State</option>
+                                  <option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">City</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="city">
+                                  <option *ngFor="let item of city" value={{item}}>{{item}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Zip</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" formControlName="zip" placeholder="Zip" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">From Date</label>
+                              <div class="col-sm-8">
+                                <input type="text" placeholder="YYYY-DD-MM" formControlName="from_date"
+                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
+                                  class="form-control " bsDatepicker>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">To Date</label>
+                              <div class="col-sm-8">
+                                <input type="text" placeholder="YYYY-DD-MM" formControlName="to_date"
+                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
+                                  class="form-control " bsDatepicker>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveAddress()"
+                      class="btn btn-primary mr-2">Submit</button> -->
+                  </form>
+                </div>
               </div>
-              <form class="form-sample">
-                <div class="container border mb-4 p-3" *ngFor="let item of addressArray; let pointIndex=index">
-                  <div class="card-title">Address {{pointIndex+1}}</div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Address Type:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.address_type}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Number:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.number}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Street:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.street}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Suite:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.suite}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Zip:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.zip}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">From Date:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.from_date}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">To Date:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.to_date}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
             </div>
-            <div *ngIf="addressArray.length==0">
-              <div class="card-title">
-                <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addAddress()">Add
-                  Address
-                </button>
+          </div>
+        </mat-tab>
+        <mat-tab label="Employment">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="employerArray">
+                  <form class="form-sample">
+                    <div class="container border mb-4 p-3" *ngFor="let item of employerArray; let pointIndex=index">
+                      <div class="card-title">Employer {{pointIndex+1}}</div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Employer Name:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.employer_name}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Employer Phone:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.employer_phone}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Income Amount:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.income_amount}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Income Frequency:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.income_frequency}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Start Date:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.start_date}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">End Date:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.end_date}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div *ngIf="employerArray.length==0">
+                  <div class="card-title">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addEmployer()">Add
+                      Employer
+                    </button>
+                  </div>
+                  <form class="form-sample" [formGroup]="employerForm">
+                    <ngb-alert *ngIf="employerError" [dismissible]="false" class="d-block mt-3" type="danger">
+                      {{employerFormError}}
+                    </ngb-alert>
+                    <ngb-alert *ngIf="employerSuccess" [dismissible]="false" class="d-block mt-3" type="success">
+                      {{employerMessage}}
+                    </ngb-alert>
+                    <div formArrayName="employer">
+                      <section class="container border mb-4 p-3"
+                        *ngFor="let item of employer.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <div class="card-title">Employer {{pointIndex + 1}}</div>
+                        <div class="card-description text-right">
+                          <button type="button" class="btn btn-danger btn-sm"
+                            (click)="deleteEmployer(pointIndex)">Delete Employer</button>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Employer Name</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="employer_name"
+                                  placeholder="employer name" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Employer Phone</label>
+                              <div class="col-sm-8">
+                                <input type="number" maxlength="10" class="form-control"
+                                  formControlName="employer_phone" placeholder="employer phone" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Income Amount</label>
+                              <div class="col-sm-8">
+                                <input type="number" class="form-control" formControlName="income_amount"
+                                  placeholder="income amount" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Income Frequency</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="income_frequency">
+                                  <option *ngFor="let item of incomeFrequency | keyvalue" value={{item.key}}>
+                                    {{item.value}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Start Date</label>
+                              <div class="col-sm-8">
+                                <input type="text" placeholder="DD-MM-YYYY" formControlName="start_date"
+                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-default' }"
+                                  class="form-control " bsDatepicker>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">End Date</label>
+                              <div class="col-sm-8">
+                                <input type="text" placeholder="DD-MM-YYYY" formControlName="end_date"
+                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-default' }"
+                                  class="form-control " bsDatepicker>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveEmployer()"
+                      class="btn btn-primary mr-2">Submit</button> -->
+                  </form>
+                </div>
               </div>
-              <form class="form-sample" [formGroup]="addressForm">
-                <ngb-alert *ngIf="addressError" [dismissible]="false" class="d-block mt-3" type="danger">
-                  {{addressFormError}}
-                </ngb-alert>
-                <ngb-alert *ngIf="addressSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                  {{addressMessage}}
-                </ngb-alert>
-                <div formArrayName="address">
-                  <section class="container border mb-4 p-3" *ngFor="let item of address.controls; let pointIndex=index"
-                    [formGroupName]="pointIndex">
-                    <div class="card-title">Address {{pointIndex + 1}}</div>
-                    <div class="card-description text-right">
-                      <button type="button" class="btn btn-gradient-danger btn-sm"
-                        (click)="deleteAddress(pointIndex)">Delete Address</button>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Payment">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="paymentArray">
+                  <form class="form-sample">
+                    <div class="container border mb-4 p-3" *ngFor="let item of paymentArray; let pointIndex=index">
+                      <div class="card-title">Payment {{pointIndex+1}}</div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Payment Type:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.payment_type}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Account Number:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.account_number}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Account Name:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.account_name}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Routing Number:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.routing_number}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Expiry Month:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.expiry_month}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Expiry Year:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.expiry_year}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Valid:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.valid}}">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Address Type</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="address_type">
-                              <option value="">Select Type</option>
-                              <option *ngFor="let item of addresstype | keyvalue" value={{item.key}}>{{item.value}}
-                              </option>
-                            </select>
+                  </form>
+                </div>
+                <div *ngIf="paymentArray.length==0">
+                  <div class="card-title">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addPayment()">Add
+                      Payment Method
+                    </button>
+                  </div>
+                  <form class="form-sample" [formGroup]="paymentForm">
+                    <ngb-alert *ngIf="paymentError" [dismissible]="false" class="d-block mt-3" type="danger">
+                      {{paymentFormError}}
+                    </ngb-alert>
+                    <ngb-alert *ngIf="paymentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
+                      {{paymentMessage}}
+                    </ngb-alert>
+                    <div formArrayName="payment">
+                      <section class="container border mb-4 p-3"
+                        *ngFor="let item of payment.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <div class="card-title">Payment Method {{pointIndex + 1}}</div>
+                        <div class="card-description text-right">
+                          <button type="button" class="btn btn-danger btn-sm" (click)="deletePayment(pointIndex)">Delete
+                            Payment</button>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Payment Type</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="payment_type"
+                                  (click)="disableField(pointIndex)">
+                                  <option *ngFor="let item of paymentType | keyvalue" value={{item.key}}>{{item.value}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Account Number</label>
+                              <div class="col-sm-8">
+                                <input type="number" maxlength="19" class="form-control"
+                                  formControlName="account_number" placeholder="account number" />
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Number</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" formControlName="number" placeholder="Number" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Street</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" formControlName="street" placeholder="street" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">suite</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" formControlName="suite" placeholder="suite" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">State</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="state" (click)="setCity()">
-                              <option value="">Select State</option>
-                              <option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">City</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="city">
-                              <option value="">Select Type</option>
-                              <option *ngFor="let item of city" value={{item}}>{{item}}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
 
-                    <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Zip</label>
-                          <div class="col-sm-8">
-                            <input type="number" class="form-control" formControlName="zip" placeholder="Zip" />
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Account Name</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="account_name"
+                                  placeholder="account name" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Routing Number</label>
+                              <div class="col-sm-8">
+                                <input type="text" class="form-control" formControlName="routing_number"
+                                  placeholder="routing number" />
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">From Date</label>
-                          <div class="col-sm-8">
-                            <input type="text" placeholder="YYYY-DD-MM" formControlName="from_date"
-                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                              class="form-control " bsDatepicker>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">CVV</label>
+                              <div class="col-sm-8">
+                                <input type="number" maxlength="3" placeholder="cvv" formControlName="cvv"
+                                  class="form-control ">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Expiry Month</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="expiry_month">
+                                  <option selected value='1'>Janaury</option>
+                                  <option value='2'>February</option>
+                                  <option value='3'>March</option>
+                                  <option value='4'>April</option>
+                                  <option value='5'>May</option>
+                                  <option value='6'>June</option>
+                                  <option value='7'>July</option>
+                                  <option value='8'>August</option>
+                                  <option value='9'>September</option>
+                                  <option value='10'>October</option>
+                                  <option value='11'>November</option>
+                                  <option value='12'>December</option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">To Date</label>
-                          <div class="col-sm-8">
-                            <input type="text" placeholder="YYYY-DD-MM" formControlName="to_date"
-                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                              class="form-control " bsDatepicker>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Expiry Year</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="expiry_year">
+                                  <option *ngFor="let item of range | keyvalue" value={{item.key}}>{{item.value}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Valid</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="valid">
+                                  <option selected value='1'>Yes</option>
+                                  <option value='2'>No</option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </section>
                     </div>
-                  </section>
+                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="savePayment()"
+                      class="btn btn-primary mr-2">Submit</button> -->
+                  </form>
                 </div>
-                <button type="submit" *ngIf="!hideSubmit" (click)="saveAddress()"
-                  class="btn btn-gradient-primary mr-2">Submit</button>
-              </form>
-            </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Employment" [disabled]="!showEmployemment">
-          <ng-template ngbTabContent>
-            <div *ngIf="employerArray">
-              <form class="form-sample">
-                <div class="container border mb-4 p-3" *ngFor="let item of employerArray; let pointIndex=index">
-                  <div class="card-title">Employer {{pointIndex+1}}</div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Employer Name:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.employer_name}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Employer Phone:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.employer_phone}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Income Amount:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.income_amount}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Income Frequency:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.income_frequency}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Start Date:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.start_date}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">End Date:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.end_date}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div *ngIf="employerArray.length==0">
-              <div class="card-title">
-                <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addEmployer()">Add
-                  Employer
-                </button>
               </div>
-              <form class="form-sample" [formGroup]="employerForm">
-                <ngb-alert *ngIf="employerError" [dismissible]="false" class="d-block mt-3" type="danger">
-                  {{employerFormError}}
-                </ngb-alert>
-                <ngb-alert *ngIf="employerSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                  {{employerMessage}}
-                </ngb-alert>
-                <div formArrayName="employer">
-                  <section class="container border mb-4 p-3"
-                    *ngFor="let item of employer.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                    <div class="card-title">Employer {{pointIndex + 1}}</div>
-                    <div class="card-description text-right">
-                      <button type="button" class="btn btn-gradient-danger btn-sm"
-                        (click)="deleteEmployer(pointIndex)">Delete Employer</button>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Employer Name</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" formControlName="employer_name"
-                              placeholder="employer name" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Employer Phone</label>
-                          <div class="col-sm-8">
-                            <input type="number" maxlength="10" class="form-control" formControlName="employer_phone"
-                              placeholder="employer phone" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Income Amount</label>
-                          <div class="col-sm-8">
-                            <input type="number" class="form-control" formControlName="income_amount"
-                              placeholder="income amount" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Income Frequency</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="income_frequency">
-                              <option value="">Select Type</option>
-                              <option *ngFor="let item of incomeFrequency | keyvalue" value={{item.key}}>{{item.value}}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Start Date</label>
-                          <div class="col-sm-8">
-                            <input type="text" placeholder="DD-MM-YYYY" formControlName="start_date"
-                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-default' }"
-                              class="form-control " bsDatepicker>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">End Date</label>
-                          <div class="col-sm-8">
-                            <input type="text" placeholder="DD-MM-YYYY" formControlName="end_date"
-                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-default' }"
-                              class="form-control " bsDatepicker>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-                <button type="submit" *ngIf="!hideSubmit" (click)="saveEmployer()"
-                  class="btn btn-gradient-primary mr-2">Submit</button>
-              </form>
             </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Payment" [disabled]="!showPayment">
-          <ng-template ngbTabContent>
-            <div *ngIf="paymentArray">
-
-              <form class="form-sample">
-                <div class="container border mb-4 p-3" *ngFor="let item of paymentArray; let pointIndex=index">
-                  <div class="card-title">Payment {{pointIndex+1}}</div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Payment Type:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.payment_type}}">
+          </div>
+        </mat-tab>
+        <mat-tab label="Attachments">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="documnetArray">
+                  <form class="form-sample">
+                    <div class="container border mb-4 p-3" *ngFor="let item of documnetArray; let pointIndex=index">
+                      <div class="card-title">Document {{pointIndex+1}}</div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Attachement Type:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.attachment_type}}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Attachement Description:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.attachment_description}}">
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Account Number:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.account_number}}">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Attachement Upload:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id=""
+                                value="{{item.attachment_location}}">
+                            </div>
+                          </div>
                         </div>
+                        <!-- <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Status:</label>
+                            <div class="col-sm-8">
+                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.status}}">
+                            </div>
+                          </div>
+                        </div> -->
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Account Name:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.account_name}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Routing Number:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.routing_number}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Expiry Month:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.expiry_month}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Expiry Year:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.expiry_year}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Valid:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.valid}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-            <div *ngIf="paymentArray.length==0">
-              <div class="card-title">
-                <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addPayment()">Add
-                  Payment Method
-                </button>
+                <div *ngIf="documnetArray.length==0">
+                  <div class="card-title">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addDocument()">Add
+                      Documents
+                    </button>
+                  </div>
+                  <form class="form-sample" [formGroup]="documentForm">
+                    <ngb-alert *ngIf="documentError" [dismissible]="false" class="d-block mt-3" type="danger">
+                      {{documentFormError}}
+                    </ngb-alert>
+                    <ngb-alert *ngIf="documentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
+                      {{documentMessage}}
+                    </ngb-alert>
+                    <div formArrayName="document">
+                      <section class="container border mb-4 p-3"
+                        *ngFor="let item of document.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <div class="card-title">Attachement {{pointIndex + 1}}</div>
+                        <div class="card-description text-right">
+                          <button type="button" class="btn btn-danger btn-sm"
+                            (click)="deleteDocument(pointIndex)">Delete Document</button>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Attachement Type</label>
+                              <div class="col-sm-8">
+                                <select class="form-control" formControlName="attachment_type">
+                                  <option *ngFor="let item of docType" value={{item.document_type_id}}>
+                                    {{item.doc_type_description}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <label class="col-sm-4 col-form-label">Attachement Discription</label>
+                              <div class="col-sm-8">
+                                <input type="text" placeholder="Discription" formControlName="attachment_description"
+                                  class="form-control ">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group row">
+                              <div class="col-sm-10">
+                                <div class="input-group col-xs-12">
+                                  <label class="col-sm-4 col-form-label">File upload</label>
+                                  <!-- <input type="file" class="file-upload-default" > -->
+                                  <input type="file" class="form-control file-upload-info"
+                                    formControlName="attachment_location" placeholder="Upload Image"
+                                    accept=".pdf,.jpg,.png,.jpeg" (change)="onFileSelect($event.target.files)">
+                                  <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-primary" type="button"
+                                      (click)="uploadFile(pointIndex)">Upload</button>
+                                  </span>
+                                </div>
+                              </div>
+
+                              <!-- <label >Upload Attachement</label>
+                              <div class="col-sm-8">
+                                <input type="file" placeholder="Upload" formControlName="attachment_location"
+                                  class="form-control">
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <button type="submit" (click)="openMediumModal(mediumModalContent)" *ngIf="!hideSubmit"
+                      class="btn btn-primary mr-2">Submit</button>
+                    <button type="submit" (click)="cancel()" *ngIf="!hideSubmit"
+                      class="btn btn-primary mr-2">Cancel</button>
+                  </form>
+                </div>
               </div>
-              <form class="form-sample" [formGroup]="paymentForm">
-                <ngb-alert *ngIf="paymentError" [dismissible]="false" class="d-block mt-3" type="danger">
-                  {{paymentFormError}}
-                </ngb-alert>
-                <ngb-alert *ngIf="paymentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                  {{paymentMessage}}
-                </ngb-alert>
-                <div formArrayName="payment">
-                  <section class="container border mb-4 p-3" *ngFor="let item of payment.controls; let pointIndex=index"
-                    [formGroupName]="pointIndex">
-                    <div class="card-title">Payment Method {{pointIndex + 1}}</div>
-                    <div class="card-description text-right">
-                      <button type="button" class="btn btn-gradient-danger btn-sm"
-                        (click)="deletePayment(pointIndex)">Delete Payment</button>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Payment Type</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="payment_type">
-                              <option value="">Select Type</option>
-                              <option *ngFor="let item of paymentType | keyvalue" value={{item.key}}>{{item.value}}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Account Number</label>
-                          <div class="col-sm-8">
-                            <input type="number" maxlength="19" class="form-control" formControlName="account_number"
-                              placeholder="account number" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Account Name</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" formControlName="account_name"
-                              placeholder="account name" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Routing Number</label>
-                          <div class="col-sm-8">
-                            <input type="text" class="form-control" formControlName="routing_number"
-                              placeholder="routing number" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">CVV</label>
-                          <div class="col-sm-8">
-                            <input type="number" maxlength="3" placeholder="cvv" formControlName="cvv"
-                              class="form-control ">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Expiry Month</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="expiry_month">
-                              <option value="">Select Type</option>
-                              <option selected value='1'>Janaury</option>
-                              <option value='2'>February</option>
-                              <option value='3'>March</option>
-                              <option value='4'>April</option>
-                              <option value='5'>May</option>
-                              <option value='6'>June</option>
-                              <option value='7'>July</option>
-                              <option value='8'>August</option>
-                              <option value='9'>September</option>
-                              <option value='10'>October</option>
-                              <option value='11'>November</option>
-                              <option value='12'>December</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Expiry Year</label>
-                          <div class="col-sm-8">
-                            <input type="number" maxlength="4" class="form-control" formControlName="expiry_year"
-                              placeholder="expiry year" />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Valid</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="valid">
-                              <option value="">Select Type</option>
-                              <option selected value='1'>Yes</option>
-                              <option value='2'>No</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-                <button type="submit" *ngIf="!hideSubmit" (click)="savePayment()"
-                  class="btn btn-gradient-primary mr-2">Submit</button>
-              </form>
             </div>
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Relationships" [disabled]="true">
-          <ng-template ngbTabContent>
-
-          </ng-template>
-        </ngb-tab>
-        <ngb-tab title="Attachments" [disabled]="!showAttachment">
-          <ng-template ngbTabContent>
-            <div *ngIf="documnetArray">
-              <form class="form-sample">
-                <div class="container border mb-4 p-3" *ngFor="let item of documnetArray; let pointIndex=index">
-                  <div class="card-title">Document {{pointIndex+1}}</div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Document Type Id:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                            value="{{item.document_type_id}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Due Date:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.due_date}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Date Submitted:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id="" value="{{item.date_submitted}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Status:</label>
-                        <div class="col-sm-8">
-                          <input type="text" readonly class="form-control-plaintext" id=""
-                          value="{{item.status}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div *ngIf="documnetArray.length==0">
-              <div class="card-title">
-                <button type="button" class="btn btn-gradient-primary btn-sm" (click)="addDocument()">Add
-                  Documents
-                </button>
-              </div>
-              <form class="form-sample" [formGroup]="documentForm">
-                <ngb-alert *ngIf="documentError" [dismissible]="false" class="d-block mt-3" type="danger">
-                  {{documentFormError}}
-                </ngb-alert>
-                <ngb-alert *ngIf="documentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                  {{documentMessage}}
-                </ngb-alert>
-                <div formArrayName="document">
-                  <section class="container border mb-4 p-3"
-                    *ngFor="let item of document.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                    <div class="card-title">Document {{pointIndex + 1}}</div>
-                    <div class="card-description text-right">
-                      <button type="button" class="btn btn-gradient-danger btn-sm"
-                        (click)="deleteDocument(pointIndex)">Delete Document</button>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Document Type</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="document_type_id">
-                              <option value="">Select Type</option>
-                              <option *ngFor="let item of docType" value={{item.document_type_id}}>
-                                {{item.doc_type_description}}
-                              </option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Due Date</label>
-                          <div class="col-sm-8">
-                            <input type="text" placeholder="YYYY-DD-MM" formControlName="due_date"
-                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                              class="form-control " bsDatepicker>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Date Submitted</label>
-                          <div class="col-sm-8">
-                            <input type="text" placeholder="YYYY-DD-MM" formControlName="date_submitted"
-                              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                              class="form-control " bsDatepicker>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-4 col-form-label">Status</label>
-                          <div class="col-sm-8">
-                            <select class="form-control" formControlName="status">
-                              <option value="">Select Type</option>
-                              <option value="1">Active</option>
-                              <option value="0">In-Active</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                </div>
-                <button type="submit" (click)="openMediumModal(mediumModalContent)" *ngIf="!hideSubmit"
-                  class="btn btn-gradient-primary mr-2">Submit</button>
-              </form>
-            </div>
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
+          </div>
+        </mat-tab>
+        <mat-tab label="Relationships" disabled>Content 3</mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>
@@ -1129,7 +1143,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel-2">Confirmation</h5>
-      <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+      <button type="button" class="close" id="CloseButton" (click)="modal.dismiss()" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -1146,3 +1160,7 @@
   </div>
 </ng-template>
 <!-- Modal Ends -->
+
+<script>
+  console.log("jii");
+</script>

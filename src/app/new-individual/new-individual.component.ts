@@ -5,8 +5,6 @@ import { Constants } from '../configuration/constants';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { element } from 'protractor';
-
 
 @Component({
   selector: 'app-new-individual',
@@ -90,22 +88,40 @@ export class NewIndividualComponent implements OnInit {
   documentMessage: string;
   documentSuccess: boolean = false;
   documnetArray: any = [];
+  selectedFile: File = null;
 
   states: any;
-  city: any[] = [];
+  city: any;
+  cancelButton:boolean = false;
+  year = new Date().getFullYear();
+  range = [];
+ 
 
   constructor(private spinner: NgxSpinnerService, private modalService: NgbModal, private fb: FormBuilder, private api: ApiService, public Router: Router, public States: Constants) {
     this.states = States.stateValue;
     this.getConstants();
-
   }
 
   ngOnInit() {
     this.buildIndividualForm();
+    this.city = require('list-of-us-cities');
+     
+  for (var i = 0; i < 25; i++) {
+    this.range.push( this.year + i,);
+}
+setTimeout(function () { this.spinner.show(); }, 3000);
+
   }
 
   redirect() {
     this.Router.navigate(['/individuals']);
+  }
+
+  cancel(){
+    this.modalMessage = 'Your details will not be saved if Cancelled!!';
+    this.successModal = true;
+    this.confirmModal = false;
+    return this.modalService.open(this.modal);
   }
 
 
@@ -319,10 +335,10 @@ export class NewIndividualComponent implements OnInit {
 
     this.documentForm = this.fb.group({
       document: this.fb.array([this.fb.group({
-        document_type_id: "",
-        due_date: "",
-        date_submitted: "",
-        status: "",
+        attachment_id: "",
+        attachment_type: "",
+        attachment_description: "",
+        attachment_location: "",
       })])
     });
   }
@@ -356,17 +372,17 @@ export class NewIndividualComponent implements OnInit {
   /**
    * INDIVIDUALS
    */
-  saveIndividualDetails() {
-    this.individualForm.value.height_inches = this.individualForm.value.height_inches.toString();
-    this.individualForm.value.height_feet = this.individualForm.value.height_feet.toString();
-    this.individualForm.value.weight = this.individualForm.value.weight.toString();
-    this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
-    this.individualForm.value.userId = localStorage.getItem('userId');
-    localStorage.setItem('individualDetails', JSON.stringify(this.individualForm.value));
-    this.success = true;
-    this.successMessage = "Details has been saved succesfully!";
-    this.showContacts = true;
-  }
+  // saveIndividualDetails() {
+  //   this.individualForm.value.height_inches = this.individualForm.value.height_inches.toString();
+  //   this.individualForm.value.height_feet = this.individualForm.value.height_feet.toString();
+  //   this.individualForm.value.weight = this.individualForm.value.weight.toString();
+  //   this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
+  //   this.individualForm.value.userId = localStorage.getItem('userId');
+  //   localStorage.setItem('individualDetails', JSON.stringify(this.individualForm.value));
+  //   this.success = true;
+  //   this.successMessage = "Details has been saved succesfully!";
+  //   this.showContacts = true;
+  // }
 
   /**
    * DOCUMENT
@@ -377,10 +393,10 @@ export class NewIndividualComponent implements OnInit {
 
   addDocument() {
     this.document.push(this.fb.group({
-      document_type_id: "",
-      due_date: "",
-      date_submitted: "",
-      status: "",
+      attachment_id: "",
+      attachment_type: "",
+      attachment_description: "",
+      attachment_location: "",
     }));
   }
 
@@ -389,32 +405,154 @@ export class NewIndividualComponent implements OnInit {
   }
 
   saveDocument() {
-    this.document.value.map(
+
+    this.modalService.dismissAll();
+
+    //contacts
+    this.contacts.value.map(
       (element, i) => {
-        if (element.document_type_id === '' || element.due_date === '' || element.date_submitted === '' || element.status === '') {
-          this.documentError = true;
-          return this.documentFormError = 'Please fill all fields!!';
+        this.modalService.dismissAll();
+        if (element.phone === '' || element.email === '' || element.contact_type === '') {
+          this.contactError = true;
+          this.contactFormError = 'Fields are missing in contact form!!';
+          this.modalMessage = 'Fields are missing in contact form!!';
+          return this.modalService.open(this.modal);
+        }
+        var patt = new RegExp(/\S+@\S+\.\S+/);
+        if (!patt.test(element.email)) {
+          this.modalMessage = 'Please Enter Correct Email Format!!';
+          return this.modalService.open(this.modal);
         } else {
           const id = i + 1;
-          element.document_id = id.toString();
-          element.date_submitted = new Date(element.date_submitted).toISOString().split('T')[0];
-          element.due_date = new Date(element.due_date).toISOString().split('T')[0];
+          element.phone = element.phone.toString();
+          element.contact_id = id.toString();
+          this.contactError = false;
+          //contacts
+          var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+          getDetail.clientContactDetails = this.contacts.value;
+          localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+        }
+      }
+    );
+
+    //address
+    this.address.value.map(
+      (element, i) => {
+        this.modalService.dismissAll();
+        if (element.number === '' || element.street === '' || element.suite === '' || element.city === ''
+          || element.state === '' || element.zip === '' || element.address_type === '' || element.from_date === '' || element.to_date === '') {
+          this.addressError = true;
+          this.addressFormError = 'Fields are missing in Address form!!';
+          this.modalMessage = 'Fields are missing in Address form!!';
+          return this.modalService.open(this.modal);
+        } else {
+          const id = i + 1;
+          element.address_id = id.toString();
+          element.zip = element.zip.toString();
+          element.from_date = new Date(element.from_date).toISOString().split('T')[0];
+          element.to_date = new Date(element.to_date).toISOString().split('T')[0];
+          this.addressError = false;
+          var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+          //address
+          getDetail.clientAddressDetails = this.address.value;
+          localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+
+        }
+      }
+    );
+
+    //employer
+    this.employer.value.map(
+      (element, i) => {
+        this.modalService.dismissAll();
+        if (element.employer_name === '' || element.employer_phone === '' || element.income_amount === '' || element.income_frequency === ''
+          || element.start_date === '' || element.end_date === '') {
+          this.employerError = true;
+          this.employerFormError = 'Please fill all fields!!';
+          this.modalMessage = 'Fields are missing in Employment form!!';
+          return this.modalService.open(this.modal);
+        } else {
+          const id = i + 1;
+          element.employment_id = id.toString();
+          element.income_amount = element.income_amount.toString();
+          element.employer_phone = element.employer_phone.toString();
+          element.start_date = new Date(element.start_date).toISOString().split('T')[0];
+          element.end_date = new Date(element.end_date).toISOString().split('T')[0];
+          this.employerError = false;
+          var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+          //employer
+          getDetail.clientEmploymentDetails = this.employer.value;
+          localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+        }
+      }
+    );
+
+    //payment
+    this.payment.value.map(
+      (element, i) => {
+        this.modalService.dismissAll();
+        if (element.payment_type === '' || element.account_number === '' || element.account_name === '' || element.routing_number === ''
+          || element.cvv === '' || element.expiry_month === '' || element.expiry_year === '' || element.valid === '') {
+          this.paymentError = true;
+          this.paymentFormError = 'Please fill all fields!!';
+          this.modalMessage = 'Fields are missing in Payment form!!';
+          return this.modalService.open(this.modal);
+        } else {
+          const id = i + 1;
+          element.cvv = element.cvv.toString();
+          element.expiry_year = element.expiry_year.toString();
+          element.account_number = element.account_number.toString();
+          element.valid = element.valid.toString();
+          element.payment_method_id = id.toString();
+          this.paymentError = false;
+          var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+
+
+          //payment
+          getDetail.clientPaymentMethods = this.payment.value;
+          localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+        }
+
+      }
+    );
+
+    //document
+    this.document.value.map(
+      (element, i) => {
+        this.modalService.dismissAll();
+        if (element.attachment_type === '' || element.attachment_description === '' || element.attachment_location === '') {
+          this.documentError = true;
+          this.documentFormError = 'Please fill all fields!!';
+          this.modalMessage = 'Fields are missing in Attachment form!!';
+          return this.modalService.open(this.modal);
+        } else {
+          const id = i + 1;
+          element.attachment_id = id.toString();
           this.documentError = false;
+
+          var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+
+          //documents
+          getDetail.clientDocumentDetails = this.document.value;
+          localStorage.setItem('individualDetails', JSON.stringify(getDetail));
         }
 
       }
     );
 
     if (!this.documentError) {
-      var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
-      getDetail.clientDocumentDetails = this.document.value;
-      localStorage.setItem('individualDetails', JSON.stringify(getDetail));
-
+      //individuals
+      this.individualForm.value.height_inches = this.individualForm.value.height_inches.toString();
+      this.individualForm.value.height_feet = this.individualForm.value.height_feet.toString();
+      this.individualForm.value.weight = this.individualForm.value.weight.toString();
+      this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
+      this.individualForm.value.userId = localStorage.getItem('userId');
+      localStorage.setItem('individualDetails', JSON.stringify(this.individualForm.value));
 
       //createClient
       const Obj = JSON.parse(localStorage.getItem('individualDetails'));
       this.api.createClient(Obj).subscribe((data: any) => {
-        setTimeout(function(){ this.spinner.show(); }, 3000);
+        setTimeout(function () { this.spinner.show(); }, 3000);
         if (data.responseCode === 200) {
           this.spinner.hide();
           this.documentSuccess = true;
@@ -432,6 +570,31 @@ export class NewIndividualComponent implements OnInit {
       });
 
     }
+  }
+
+  onFileSelect(event) {
+
+    this.selectedFile = <File>event[0];
+  }
+
+  uploadFile(index) {
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('userId', localStorage.getItem('userId'));
+    console.log(formData);
+
+    this.api.uploadAttachment(formData).subscribe((data: any) => {
+      setTimeout(function () { this.spinner.show(); }, 3000);
+      if (data.responseCode === 200) {        
+        this.spinner.hide();
+        const location  = this.documentForm.controls.document['controls'][index].controls.attachment_location;
+        location.value = data.result.fileName;
+
+        console.log(location);
+        
+      }
+    });
   }
 
 
@@ -459,33 +622,48 @@ export class NewIndividualComponent implements OnInit {
     this.payment.removeAt(index);
   }
 
-  savePayment() {
-    this.payment.value.map(
-      (element, i) => {
-        if (element.payment_type === '' || element.account_number === '' || element.account_name === '' || element.routing_number === ''
-          || element.cvv === '' || element.expiry_month === '' || element.expiry_year === '' || element.valid === '') {
-          this.paymentError = true;
-          return this.paymentFormError = 'Please fill all fields!!';
-        } else {
-          const id = i + 1;
-          element.cvv = element.cvv.toString();
-          element.expiry_year = element.expiry_year.toString();
-          element.account_number = element.account_number.toString();
-          element.valid = element.valid.toString();
-          element.payment_method_id = id.toString();
-          this.paymentError = false;
-        }
+  // savePayment() {
+  //   this.payment.value.map(
+  //     (element, i) => {
+  //       if (element.payment_type === '' || element.account_number === '' || element.account_name === '' || element.routing_number === ''
+  //         || element.cvv === '' || element.expiry_month === '' || element.expiry_year === '' || element.valid === '') {
+  //         this.paymentError = true;
+  //         return this.paymentFormError = 'Please fill all fields!!';
+  //       } else {
+  //         const id = i + 1;
+  //         element.cvv = element.cvv.toString();
+  //         element.expiry_year = element.expiry_year.toString();
+  //         element.account_number = element.account_number.toString();
+  //         element.valid = element.valid.toString();
+  //         element.payment_method_id = id.toString();
+  //         this.paymentError = false;
+  //       }
 
-      }
-    );
+  //     }
+  //   );
 
-    if (!this.paymentError) {
-      var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
-      getDetail.clientPaymentMethods = this.payment.value;
-      localStorage.setItem('individualDetails', JSON.stringify(getDetail));
-      this.showAttachment = true;
-      this.paymentSuccess = true;
-      this.paymentMessage = "Details has been saved succesfully!";
+  //   if (!this.paymentError) {
+  //     var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+  //     getDetail.clientPaymentMethods = this.payment.value;
+  //     localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+  //     this.showAttachment = true;
+  //     this.paymentSuccess = true;
+  //     this.paymentMessage = "Details has been saved succesfully!";
+  //   }
+  // }
+
+  disableField(index, value) {
+    const Form = this.paymentForm.controls.payment['controls'][index].controls;
+    if (Form.payment_type.value == '4' || Form.payment_type.value == '5') {
+      Form.expiry_year.disable();
+      Form.cvv.disable();
+      Form.expiry_month.disable();
+      Form.routing_number.enable();
+    } else {
+      Form.routing_number.disable();
+      Form.expiry_year.enable();
+      Form.cvv.enable();
+      Form.expiry_month.enable();
     }
   }
 
@@ -511,34 +689,34 @@ export class NewIndividualComponent implements OnInit {
     this.employer.removeAt(index);
   }
 
-  saveEmployer() {
-    this.employer.value.map(
-      (element, i) => {
-        if (element.employer_name === '' || element.employer_phone === '' || element.income_amount === '' || element.income_frequency === ''
-          || element.start_date === '' || element.end_date === '') {
-          this.employerError = true;
-          return this.employerFormError = 'Please fill all fields!!';
-        } else {
-          const id = i + 1;
-          element.employment_id = id.toString();
-          element.income_amount = element.income_amount.toString();
-          element.employer_phone = element.employer_phone.toString();
-          element.start_date = new Date(element.start_date).toISOString().split('T')[0];
-          element.end_date = new Date(element.end_date).toISOString().split('T')[0];
-          this.employerError = false;
-        }
-      }
-    );
+  // saveEmployer() {
+  //   this.employer.value.map(
+  //     (element, i) => {
+  //       if (element.employer_name === '' || element.employer_phone === '' || element.income_amount === '' || element.income_frequency === ''
+  //         || element.start_date === '' || element.end_date === '') {
+  //         this.employerError = true;
+  //         return this.employerFormError = 'Please fill all fields!!';
+  //       } else {
+  //         const id = i + 1;
+  //         element.employment_id = id.toString();
+  //         element.income_amount = element.income_amount.toString();
+  //         element.employer_phone = element.employer_phone.toString();
+  //         element.start_date = new Date(element.start_date).toISOString().split('T')[0];
+  //         element.end_date = new Date(element.end_date).toISOString().split('T')[0];
+  //         this.employerError = false;
+  //       }
+  //     }
+  //   );
 
-    if (!this.employerError) {
-      var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
-      getDetail.clientEmploymentDetails = this.employer.value;
-      localStorage.setItem('individualDetails', JSON.stringify(getDetail));
-      this.showPayment = true;
-      this.employerSuccess = true;
-      this.employerMessage = "Details has been saved succesfully!";
-    }
-  }
+  //   if (!this.employerError) {
+  //     var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+  //     getDetail.clientEmploymentDetails = this.employer.value;
+  //     localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+  //     this.showPayment = true;
+  //     this.employerSuccess = true;
+  //     this.employerMessage = "Details has been saved succesfully!";
+  //   }
+  // }
 
   /**
    * ADDRESS
@@ -565,43 +743,33 @@ export class NewIndividualComponent implements OnInit {
     this.address.removeAt(index);
   }
 
-  setCity() {
-    console.log("hii");
+  // saveAddress() {
+  //   this.address.value.map(
+  //     (element, i) => {
+  //       if (element.number === '' || element.street === '' || element.suite === '' || element.city === ''
+  //         || element.state === '' || element.zip === '' || element.address_type === '' || element.from_date === '' || element.to_date === '') {
+  //         this.addressError = true;
+  //         return this.addressFormError = 'Please fill all fields!!';
+  //       } else {
+  //         const id = i + 1;
+  //         element.address_id = id.toString();
+  //         element.zip = element.zip.toString();
+  //         element.from_date = new Date(element.from_date).toISOString().split('T')[0];
+  //         element.to_date = new Date(element.to_date).toISOString().split('T')[0];
+  //         this.addressError = false;
+  //       }
+  //     }
+  //   );
 
-    this.States.states.states.map(element => {
-      element.districts.map(value => {
-        this.city.push(value);
-      })
-    });
-  }
-
-  saveAddress() {
-    this.address.value.map(
-      (element, i) => {
-        if (element.number === '' || element.street === '' || element.suite === '' || element.city === ''
-          || element.state === '' || element.zip === '' || element.address_type === '' || element.from_date === '' || element.to_date === '') {
-          this.addressError = true;
-          return this.addressFormError = 'Please fill all fields!!';
-        } else {
-          const id = i + 1;
-          element.address_id = id.toString();
-          element.zip = element.zip.toString();
-          element.from_date = new Date(element.from_date).toISOString().split('T')[0];
-          element.to_date = new Date(element.to_date).toISOString().split('T')[0];
-          this.addressError = false;
-        }
-      }
-    );
-
-    if (!this.addressError) {
-      var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
-      getDetail.clientAddressDetails = this.address.value;
-      localStorage.setItem('individualDetails', JSON.stringify(getDetail));
-      this.showEmployemment = true;
-      this.addressSuccess = true;
-      this.addressMessage = "Details has been saved succesfully!";
-    }
-  }
+  //   if (!this.addressError) {
+  //     var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+  //     getDetail.clientAddressDetails = this.address.value;
+  //     localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+  //     this.showEmployemment = true;
+  //     this.addressSuccess = true;
+  //     this.addressMessage = "Details has been saved succesfully!";
+  //   }
+  // }
 
   /**
    * CONTACTS
@@ -622,34 +790,34 @@ export class NewIndividualComponent implements OnInit {
     this.contacts.removeAt(index);
   }
 
-  saveContacts() {
-    this.contacts.value.map(
-      (element, i) => {
-        if (element.phone === '' || element.email === '' || element.contact_type === '') {
-          this.contactError = true;
-          return this.contactFormError = 'Please fill all fields!!';
-        }
-        var patt = new RegExp(/\S+@\S+\.\S+/);
-        if (!patt.test(element.email)) {
-          this.contactError = true;
-          return this.contactFormError = 'Please enter correct Email Format!';
-        } else {
-          const id = i + 1;
-          element.phone = element.phone.toString();
-          element.contact_id = id.toString();
-          this.contactError = false;
-        }
-      }
-    );
+  // saveContacts() {
+  //   this.contacts.value.map(
+  //     (element, i) => {
+  //       if (element.phone === '' || element.email === '' || element.contact_type === '') {
+  //         this.contactError = true;
+  //         return this.contactFormError = 'Please fill all fields!!';
+  //       }
+  //       var patt = new RegExp(/\S+@\S+\.\S+/);
+  //       if (!patt.test(element.email)) {
+  //         this.contactError = true;
+  //         return this.contactFormError = 'Please enter correct Email Format!';
+  //       } else {
+  //         const id = i + 1;
+  //         element.phone = element.phone.toString();
+  //         element.contact_id = id.toString();
+  //         this.contactError = false;
+  //       }
+  //     }
+  //   );
 
-    if (!this.contactError) {
-      var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
-      getDetail.clientContactDetails = this.contacts.value;
-      localStorage.setItem('individualDetails', JSON.stringify(getDetail));
-      this.showAddress = true;
-      this.contactSuccess = true;
-      this.contactMessage = "Details has been saved succesfully!";
-    }
-  }
+  //   if (!this.contactError) {
+  //     var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+  //     getDetail.clientContactDetails = this.contacts.value;
+  //     localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+  //     this.showAddress = true;
+  //     this.contactSuccess = true;
+  //     this.contactMessage = "Details has been saved succesfully!";
+  //   }
+  // }
 
 }

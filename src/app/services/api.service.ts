@@ -70,6 +70,23 @@ export class ApiService {
     }
 
     /**
+   * @method uploadAttachment()
+   * @desc create client 
+   */
+    uploadAttachment(Obj) {
+
+    const headers = new HttpHeaders({
+        // 'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+        headers: headers
+    }
+    
+    return this.httpClient.post(this.urlObject.UrlObj.upload, Obj, this.options);
+}
+
+    /**
    * @method createIndividuals()
    * @desc create client 
    */

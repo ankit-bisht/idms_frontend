@@ -29,6 +29,8 @@ import { NewIndividualComponent } from './new-individual/new-individual.componen
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Constants } from './configuration/constants';
 import { JwPaginationModule } from 'jw-angular-pagination';
+import { MatTabsModule } from '@angular/material';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 @NgModule({
@@ -51,6 +53,7 @@ import { JwPaginationModule } from 'jw-angular-pagination';
     NewIndividualComponent
   ],
   imports: [
+    MatTabsModule,
     NgxSpinnerModule,
     HttpClientModule,
     BrowserModule,
@@ -60,6 +63,7 @@ import { JwPaginationModule } from 'jw-angular-pagination';
     FormsModule,
     ReactiveFormsModule,
     JwPaginationModule,
+    FileUploadModule,
     BsDatepickerModule.forRoot()
   ],
   providers: [LoginGuard, CommonService, ApiService, Configuration, Constants],
