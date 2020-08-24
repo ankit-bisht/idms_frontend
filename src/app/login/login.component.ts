@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.result.authorizationToken);
         localStorage.setItem('userId', data.result.userDetails.user_id);
         localStorage.setItem('username', data.result.userDetails.username);
+        localStorage.setItem('individualDetails',"");
         this.Router.navigate(['/dashboard']);
       } else {
         this.FormError = data.error;
