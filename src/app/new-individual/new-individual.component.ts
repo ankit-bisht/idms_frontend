@@ -698,7 +698,7 @@ export class NewIndividualComponent implements OnInit {
   }
 
 
-  disableField(index, value) {
+  disableField(index) {
     const Form = this.paymentForm.controls.payment['controls'][index].controls;
     if (Form.payment_type.value == '4' || Form.payment_type.value == '5') {
       Form.expiry_year.disable();

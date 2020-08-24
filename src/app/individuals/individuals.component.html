@@ -98,8 +98,7 @@
                         </thead>
                         <tbody *ngFor="let item of pageOfItems">
                             <tr>
-                                <td style="text-align: center;"
-                                    *ngIf="!pageOfItems?.length > 1 || pageOfItems.length === 1">{{pageOfItems[0]}}</td>
+                                <td style="text-align: center;" *ngIf="(pageOfItems.length > 1) || pageOfItems.length === 1">{{pageOfItems[0]}}</td>
                             </tr>
                             <tr *ngIf="pageOfItems.length > 1">
                                 <td>
