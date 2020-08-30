@@ -20,12 +20,8 @@ export class IndividualsComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private api: ApiService, public Router: Router) {
     this.searchForm = new FormGroup({
-      'search': new FormControl('', [
-        Validators.required
-      ]),
-      'type': new FormControl('', [
-        Validators.required
-      ]),
+      'search': new FormControl(''),
+      'type': new FormControl(''),
     });
 
   }
@@ -56,13 +52,18 @@ export class IndividualsComponent implements OnInit {
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;
-    if(this.pageOfItems.length ==0){
-      this.pageOfItems[0]= "No Records Found!";
+    if (this.pageOfItems.length == 0) {
+      this.pageOfItems[0] = "No Records Found!";
     }
-    
+
   }
 
   search() {
+
+    if (this.searchForm.value.type == "" && this.searchForm.value.search == "") {
+      return this.getIndividuals();
+    }
+
     const Obj = {
       userId: localStorage.getItem('userId'),
       searchParameter: this.searchForm.value.type,
@@ -75,7 +76,7 @@ export class IndividualsComponent implements OnInit {
           this.spinner.hide();
         }, 1000);
 
-        this.items = data.result;        
+        this.items = data.result;
         this.items.map((item, i) => {
           item.id = i + 1;
         });

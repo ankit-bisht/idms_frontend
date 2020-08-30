@@ -35,6 +35,7 @@ export class NewIndividualComponent implements OnInit {
   hideSubmit: boolean = false;
   modalMessage: string = "Do you want to save details?";
   confirmModal: boolean = true;
+  FileModal: boolean = false;
   successModal: boolean = false;
 
   contactError: Boolean = false;
@@ -89,6 +90,12 @@ export class NewIndividualComponent implements OnInit {
   documentFormError: string;
   documentMessage: string;
   documentSuccess: boolean = false;
+
+  attachmentForm: FormGroup;
+  attachmentError: Boolean = false;
+  attachmentFormError: string;
+  attachmentMessage: string;
+  attachmentSuccess: boolean = false;
   documnetArray: any = [];
   selectedFile: File = null;
 
@@ -343,6 +350,15 @@ export class NewIndividualComponent implements OnInit {
       })])
     });
 
+    this.attachmentForm = this.fb.group({
+      attachment: this.fb.array([this.fb.group({
+        due_date: "",
+        date_submitted: "",
+        status: "",
+        document_type_id: ""
+      })])
+    });
+
     this.setViewDetails();
   }
 
@@ -350,16 +366,16 @@ export class NewIndividualComponent implements OnInit {
     //setting for edit profile
     if (localStorage.getItem('ClientDetails')) {
 
-      const ContactsDetails = JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails;
+      // const ContactsDetails = JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails;
 
-      ContactsDetails.map(element => {
-        this.contacts.push(this.fb.group({
-          phone: element.phone,
-          email: element.email,
-          contact_type: element.contact_type,
-        }));
-      });
-      this.contacts.removeAt(0);
+      // ContactsDetails.map(element => {
+      //   this.contacts.push(this.fb.group({
+      //     phone: element.phone,
+      //     email: element.email,
+      //     contact_type: element.contact_type,
+      //   }));
+      // });
+      // this.contacts.removeAt(0);
 
 
       const AddressDetails = JSON.parse(localStorage.getItem('ClientDetails')).clientAddressDetails;
@@ -448,6 +464,26 @@ export class NewIndividualComponent implements OnInit {
     });
   }
 
+   /**
+   * DOCUMENT
+   */
+  get attachment() {
+    return this.attachmentForm.get('attachment') as FormArray;
+  }
+
+  addAttachment() {
+    this.attachment.push(this.fb.group({
+        due_date: "",
+        date_submitted: "",
+        status: "",
+        document_type_id: ""
+    }));
+  }
+
+  deleteAttachment(index) {
+    this.attachment.removeAt(index);
+  }
+
   /**
    * DOCUMENT
    */
@@ -469,12 +505,11 @@ export class NewIndividualComponent implements OnInit {
   }
 
   saveDocument() {
-    
     const individualValue = this.individualForm.value;
-    if(individualValue.height_inches == '' || individualValue.height_feet == '' 
-    || individualValue.weight=='' || individualValue.DOB==''){
-          this.modalMessage = 'Fields are missing in Individual form!!';
-          return this.modalService.open(this.modal);
+    if (individualValue.height_inches == '' || individualValue.height_feet == ''
+      || individualValue.weight == '' || individualValue.DOB == '') {
+      this.modalMessage = 'Fields are missing in Individual form!!';
+      return this.modalService.open(this.modal);
     }
 
     //individuals
@@ -486,31 +521,31 @@ export class NewIndividualComponent implements OnInit {
     localStorage.setItem('individualDetails', JSON.stringify(this.individualForm.value));
 
     //contacts
-    this.contacts.value.map(
-      (element, i) => {
-        this.modalService.dismissAll();
-        if (element.phone === '' || element.email === '' || element.contact_type === '') {
-          this.contactError = true;
-          this.contactFormError = 'Fields are missing in contact form!!';
-          this.modalMessage = 'Fields are missing in contact form!!';
-          return this.modalService.open(this.modal);
-        }
-        var patt = new RegExp(/\S+@\S+\.\S+/);
-        if (!patt.test(element.email)) {
-          this.modalMessage = 'Please Enter Correct Email Format!!';
-          return this.modalService.open(this.modal);
-        } else {
-          const id = i + 1;
-          element.phone = element.phone.toString();
-          element.contact_id = id.toString();
-          this.contactError = false;
-          //contacts
-          var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
-          getDetail.clientContactDetails = this.contacts.value;
-          localStorage.setItem('individualDetails', JSON.stringify(getDetail));
-        }
-      }
-    );
+    // this.contacts.value.map(
+    //   (element, i) => {
+    //     this.modalService.dismissAll();
+    //     if (element.phone === '' || element.email === '' || element.contact_type === '') {
+    //       this.contactError = true;
+    //       this.contactFormError = 'Fields are missing in contact form!!';
+    //       this.modalMessage = 'Fields are missing in contact form!!';
+    //       return this.modalService.open(this.modal);
+    //     }
+    //     var patt = new RegExp(/\S+@\S+\.\S+/);
+    //     if (!patt.test(element.email)) {
+    //       this.modalMessage = 'Please Enter Correct Email Format!!';
+    //       return this.modalService.open(this.modal);
+    //     } else {
+    //       const id = i + 1;
+    //       element.phone = element.phone.toString();
+    //       element.contact_id = id.toString();
+    //       this.contactError = false;
+    //       //contacts
+    //       var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
+    //       getDetail.clientContactDetails = this.contacts.value;
+    //       localStorage.setItem('individualDetails', JSON.stringify(getDetail));
+    //     }
+    //   }
+    // );
 
     //address
     this.address.value.map(
@@ -610,7 +645,7 @@ export class NewIndividualComponent implements OnInit {
           var getDetail = JSON.parse(localStorage.getItem('individualDetails'));
 
           //documents
-          getDetail.clientDocumentDetails = this.document.value;
+          getDetail.clientAttachmentDetails = this.document.value;
           localStorage.setItem('individualDetails', JSON.stringify(getDetail));
         }
 
@@ -653,9 +688,9 @@ export class NewIndividualComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
     formData.append('userId', localStorage.getItem('userId'));
-    console.log(formData);
 
     this.api.uploadAttachment(formData).subscribe((data: any) => {
+      this.FileModal = true;
       setTimeout(function () { this.spinner.show(); }, 3000);
       if (data.responseCode === 200) {
         this.spinner.hide();
@@ -668,8 +703,6 @@ export class NewIndividualComponent implements OnInit {
         return this.modalService.open(this.modal);
       }
     });
-    this.modalService.dismissAll();
-
   }
 
 
@@ -762,23 +795,23 @@ export class NewIndividualComponent implements OnInit {
   }
 
 
-  /**
-   * CONTACTS
-   */
-  get contacts() {
-    return this.contactForm.get('contacts') as FormArray;
-  }
+  // /**
+  //  * CONTACTS
+  //  */
+  // get contacts() {
+  //   return this.contactForm.get('contacts') as FormArray;
+  // }
 
-  addContacts() {
-    this.contacts.push(this.fb.group({
-      phone: '',
-      email: '',
-      contact_type: '',
-    }));
-  }
+  // addContacts() {
+  //   this.contacts.push(this.fb.group({
+  //     phone: '',
+  //     email: '',
+  //     contact_type: '',
+  //   }));
+  // }
 
-  deleteContacts(index) {
-    this.contacts.removeAt(index);
-  }
+  // deleteContacts(index) {
+  //   this.contacts.removeAt(index);
+  // }
 
 }

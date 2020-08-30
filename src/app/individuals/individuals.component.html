@@ -3,7 +3,7 @@
         padding: 0px;
     }
 </style>
-<div class="page-header">
+<!-- <div class="page-header">
     <h3 class="page-title">
         Individuals
     </h3>
@@ -13,25 +13,53 @@
                 Individual</button>
         </ol>
     </nav>
-</div>
+</div> -->
 
 <div class="row">
+
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+
                 <!-- <h4 class="card-title">Basic form elements</h4> -->
                 <!-- <p class="card-description">
             Basic form elements
           </p> -->
                 <div class="search-field d-md-block">
-                    <form class="form-inline" [formGroup]="searchForm">
+                    <button type="button" class="btn btn-primary btn-sm float-right" (click)="newIndividual()">New
+                        Individual</button>
+
+                        <form class="form-inline" [formGroup]="searchForm">
+                            <label class="sr-only" for="inlineFormInputName2">Type</label>
+                            <select class="form-control mb-2 mr-sm-2 form-control-sm" id="inlineFormInputName2"
+                                        style="height: fit-content;color: black;background-color:white"
+                                        formControlName="type">
+                                        <option class="dropdown-item" value="" selected>Select Type</option>
+                                        <option class="dropdown-item" value="first_name">First name</option>
+                                        <option class="dropdown-item" value="middle_name">Middle Name</option>
+                                        <option class="dropdown-item" value="last_name">Last Name</option>
+                                        <option class="dropdown-item" value="phone">Phone</option>
+                                        <option class="dropdown-item" value="email">Email</option>
+                                        <option class="dropdown-item" value="sex">Sex</option>
+                                        <option class="dropdown-item" value="DOB">DOB</option>
+                                    </select>
+                          
+                            <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                              <input type="text" formControlName="search" class="form-control form-control-sm" id="inlineFormInputGroupUsername2" placeholder="Search..">
+                            </div>
+                            <div class="form-check mx-sm-2">
+                                <button type="submit" (click)="search()" class="btn btn-gradient-primary mb-2 btn-sm">Submit</button>
+                            </div>
+                          </form>
+
+                    <!-- <form class="form-inline" >
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <select class="form-control form-control-sm input-group-text"
                                         style="height: fit-content;color: black;background-color:white"
                                         formControlName="type">
-                                        <option class="dropdown-item" value="client_id">Client Id</option>
                                         <option class="dropdown-item" value="first_name">First name</option>
                                         <option class="dropdown-item" value="middle_name">Middle Name</option>
                                         <option class="dropdown-item" value="last_name">Last Name</option>
@@ -51,11 +79,11 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
                 <br />
                 <div style="overflow:auto">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-sm">
                         <!-- LOADER -->
                         <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box"
                             [fullScreen]="false">
@@ -64,12 +92,12 @@
 
                         <thead>
                             <tr>
-                                <th class="font-weight-bold">
+                                <!-- <th class="font-weight-bold">
                                     S.no.
                                 </th>
                                 <th class="font-weight-bold">
                                     Client Id
-                                </th>
+                                </th> -->
                                 <th class="font-weight-bold">
                                     First name
                                 </th>
@@ -91,22 +119,23 @@
                                 <th class="font-weight-bold">
                                     DOB
                                 </th>
-                                <th class="font-weight-bold">
+                                <!-- <th class="font-weight-bold">
                                     Actions
-                                </th>
+                                </th> -->
                             </tr>
                         </thead>
                         <tbody *ngFor="let item of pageOfItems">
                             <tr>
-                                <td style="text-align: center;" *ngIf="(pageOfItems.length > 1) || pageOfItems.length === 1">{{pageOfItems[0]}}</td>
+                                <td colspan="8" style="text-align: center;"
+                                    *ngIf="(pageOfItems.length > 1) || pageOfItems.length === 1">{{pageOfItems[0]}}</td>
                             </tr>
-                            <tr *ngIf="pageOfItems.length > 1">
-                                <td>
+                            <tr *ngIf="pageOfItems.length > 1" (click)="getSingleIndividual(item.client_id)">
+                                <!-- <td>
                                     {{item.id}}
                                 </td>
                                 <td>
                                     {{item.client_id}}
-                                </td>
+                                </td> -->
                                 <td>
                                     {{item.first_name}}
                                 </td>
@@ -128,10 +157,10 @@
                                 <td>
                                     {{item.DOB}}
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <button class="btn btn-primary mb-2 btn-sm"
-                                        (click)="getSingleIndividual(item.client_id)">More</button>
-                                </td>
+                                        >More</button>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>

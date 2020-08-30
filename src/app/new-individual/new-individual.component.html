@@ -4,8 +4,11 @@
   ::ng-deep.mat-tab-label-active {
     min-width: 97px !important;
   }
+  ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
+    font-weight:100;
+}
 </style>
-<div class="page-header">
+<!-- <div class="page-header">
   <h3 class="page-title">
     Client Details
   </h3>
@@ -15,10 +18,10 @@
       <li class="breadcrumb-item active" aria-current="page">Details</li>
     </ol>
   </nav>
-</div>
+</div> -->
 <div class="grid-margin stretch-card">
   <div class="card">
-    <div class="card-body">
+    <div class="card-body" style="padding-top: 1.25rem;">
       <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
         <p style="color: white"> Loading... </p>
       </ngx-spinner>
@@ -302,190 +305,13 @@
           </div>
         </mat-tab>
         <mat-tab label="Contacts">
-          <div class="grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <!-- <div *ngIf="contactsArray">
-                  <div class="card-title">
-                  </div>
-                  <form class="form-sample">
-                    <div class="container border mb-4 p-3" *ngFor="let item of contactsArray; let pointIndex=index">
-                      <div class="card-title">Contact {{pointIndex+1}}</div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Mobile No:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.phone}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Email:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.email}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Contact type:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.contact_type}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div> -->
-                <div>
-                  <div class="card-title">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="addContacts()">Add
-                      Contacts
-                    </button>
-                  </div>
-                  <form class="form-sample" [formGroup]="contactForm">
-                    <ngb-alert *ngIf="contactError" [dismissible]="false" class="d-block mt-3" type="danger">
-                      {{contactFormError}}
-                    </ngb-alert>
-                    <ngb-alert *ngIf="contactSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                      {{contactMessage}}
-                    </ngb-alert>
-                    <div formArrayName="contacts">
-                      <section class="container border mb-4 p-3"
-                        *ngFor="let item of contacts.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="card-title">Contact {{pointIndex + 1}}</div>
-                        <div class="card-description text-right">
-                          <button type="button" class="btn btn-danger btn-sm"
-                            (click)="deleteContacts(pointIndex)">Delete Contacts</button>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Mobile No</label>
-                              <div class="col-sm-8">
-                                <input type="number" maxlength="10" class="form-control" formControlName="phone"
-                                  placeholder="Mobile No" />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Email Id</label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" formControlName="email"
-                                  placeholder="Email Id" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Contact type</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="contact_type">
-                                  <option *ngFor="let item of contactype | keyvalue" value={{item.key}}>{{item.value}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveContacts()"
-                      class="btn btn-primary mr-2">Submit</button> -->
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
+          <app-contacts></app-contacts>
         </mat-tab>
         <mat-tab label="Address">
-          <div class="grid-margin stretch-card">
+          <app-address></app-address>
+          <!-- <div class="grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <!-- <div *ngIf="addressArray">
-                  <div class="card-title">
-                  </div>
-                  <form class="form-sample">
-                    <div class="container border mb-4 p-3" *ngFor="let item of addressArray; let pointIndex=index">
-                      <div class="card-title">Address {{pointIndex+1}}</div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Address Type:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.address_type}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Number:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.number}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Street:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.street}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Suite:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.suite}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Zip:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.zip}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">From Date:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.from_date}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">To Date:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.to_date}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div> -->
                 <div>
                   <div class="card-title">
                     <button type="button" class="btn btn-primary btn-sm" (click)="addAddress()">Add
@@ -604,85 +430,19 @@
                         </div>
                       </section>
                     </div>
-                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveAddress()"
-                      class="btn btn-primary mr-2">Submit</button> -->
+                    <button type="submit" *ngIf="!hideSubmit" (click)="saveAddress()"
+                      class="btn btn-primary mr-2">Submit</button> 
                   </form>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </mat-tab>
         <mat-tab label="Employment">
-          <div class="grid-margin stretch-card">
+          <app-employment></app-employment>
+          <!-- <div class="grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <!-- <div *ngIf="employerArray">
-                  <form class="form-sample">
-                    <div class="container border mb-4 p-3" *ngFor="let item of employerArray; let pointIndex=index">
-                      <div class="card-title">Employer {{pointIndex+1}}</div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Employer Name:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.employer_name}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Employer Phone:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.employer_phone}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Income Amount:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.income_amount}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Income Frequency:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.income_frequency}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Start Date:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.start_date}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">End Date:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.end_date}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div> -->
                 <div>
                   <div class="card-title">
                     <button type="button" class="btn btn-primary btn-sm" (click)="addEmployer()">Add
@@ -773,95 +533,19 @@
                         </div>
                       </section>
                     </div>
-                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveEmployer()"
-                      class="btn btn-primary mr-2">Submit</button> -->
+                   <button type="submit" *ngIf="!hideSubmit" (click)="saveEmployer()"
+                      class="btn btn-primary mr-2">Submit</button>
                   </form>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </mat-tab>
         <mat-tab label="Payment">
-          <div class="grid-margin stretch-card">
+          <app-payment></app-payment>
+          <!-- <div class="grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <!-- <div *ngIf="paymentArray">
-                  <form class="form-sample">
-                    <div class="container border mb-4 p-3" *ngFor="let item of paymentArray; let pointIndex=index">
-                      <div class="card-title">Payment {{pointIndex+1}}</div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Payment Type:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.payment_type}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Account Number:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.account_number}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Account Name:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.account_name}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Routing Number:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.routing_number}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Expiry Month:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.expiry_month}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Expiry Year:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.expiry_year}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Valid:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.valid}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div> -->
                 <div>
                   <div class="card-title">
                     <button type="button" class="btn btn-primary btn-sm" (click)="addPayment()">Add
@@ -986,68 +670,23 @@
                         </div>
                       </section>
                     </div>
-                    <!-- <button type="submit" *ngIf="!hideSubmit" (click)="savePayment()"
-                      class="btn btn-primary mr-2">Submit</button> -->
+                     <button type="submit" *ngIf="!hideSubmit" (click)="savePayment()"
+                      class="btn btn-primary mr-2">Submit</button> 
                   </form>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </mat-tab>
         <mat-tab label="Attachments">
-          <div class="grid-margin stretch-card">
+          <app-attachments></app-attachments>
+          <!-- <div class="grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <!-- <div *ngIf="documnetArray">
-                  <form class="form-sample">
-                    <div class="container border mb-4 p-3" *ngFor="let item of documnetArray; let pointIndex=index">
-                      <div class="card-title">Document {{pointIndex+1}}</div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Attachement Type:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.attachment_type}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Attachement Description:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.attachment_description}}">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Attachement Upload:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id=""
-                                value="{{item.attachment_location}}">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Status:</label>
-                            <div class="col-sm-8">
-                              <input type="text" readonly class="form-control-plaintext" id="" value="{{item.status}}">
-                            </div>
-                          </div>
-                        </div> -->
-                <!-- </div>
-                    </div>
-                  </form>
-                </div> -->
                 <div>
                   <div class="card-title">
                     <button type="button" class="btn btn-primary btn-sm" (click)="addDocument()">Add
-                      Documents
+                      Attachments
                     </button>
                   </div>
                   <form class="form-sample" [formGroup]="documentForm">
@@ -1060,10 +699,10 @@
                     <div formArrayName="document">
                       <section class="container border mb-4 p-3"
                         *ngFor="let item of document.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="card-title">Attachement {{pointIndex + 1}}</div>
+                        <div class="card-title">Attachment {{pointIndex + 1}}</div>
                         <div class="card-description text-right">
                           <button type="button" class="btn btn-danger btn-sm"
-                            (click)="deleteDocument(pointIndex)">Delete Document</button>
+                            (click)="deleteDocument(pointIndex)">Delete Attachment</button>
                         </div>
                         <div class="row">
                           <div class="col-md-6">
@@ -1094,7 +733,7 @@
                               <div class="col-sm-10">
                                 <div class="input-group col-xs-12">
                                   <label class="col-sm-4 col-form-label">File upload</label>
-                                  <!-- <input type="file" class="file-upload-default" > -->
+                                  <input type="file" class="file-upload-default" >
                                   <input type="file" class="form-control file-upload-info"
                                     formControlName="attachment_location" placeholder="Upload Image"
                                     accept=".pdf,.jpg,.png,.jpeg" (change)="onFileSelect($event.target.files)">
@@ -1105,11 +744,11 @@
                                 </div>
                               </div>
 
-                              <!-- <label >Upload Attachement</label>
+                               <label >Upload Attachement</label>
                               <div class="col-sm-8">
                                 <input type="file" placeholder="Upload" formControlName="attachment_location"
                                   class="form-control">
-                              </div> -->
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1123,10 +762,95 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </mat-tab>
+        <mat-tab label="Documents">
+          <div class="grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <div>
+                <div class="card-title">
+                  <button type="button" class="btn btn-primary btn-sm" (click)="addDocument()">Add
+                    Documents
+                  </button>
+                </div>
+                <form class="form-sample" [formGroup]="documentForm">
+                  <ngb-alert *ngIf="documentError" [dismissible]="false" class="d-block mt-3" type="danger">
+                    {{documentFormError}}
+                  </ngb-alert>
+                  <ngb-alert *ngIf="documentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
+                    {{documentMessage}}
+                  </ngb-alert>
+                  <div formArrayName="document">
+                    <section class="container border mb-4 p-3"
+                      *ngFor="let item of document.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                      <div class="card-title">Attachement {{pointIndex + 1}}</div>
+                      <div class="card-description text-right">
+                        <button type="button" class="btn btn-danger btn-sm"
+                          (click)="deleteDocument(pointIndex)">Delete Document</button>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Attachement Type</label>
+                            <div class="col-sm-8">
+                              <select class="form-control" formControlName="attachment_type">
+                                <option *ngFor="let item of docType" value={{item.document_type_id}}>
+                                  {{item.doc_type_description}}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Attachement Discription</label>
+                            <div class="col-sm-8">
+                              <input type="text" placeholder="Discription" formControlName="attachment_description"
+                                class="form-control ">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group row">
+                            <div class="col-sm-10">
+                              <div class="input-group col-xs-12">
+                                <label class="col-sm-4 col-form-label">File upload</label>
+                                <!-- <input type="file" class="file-upload-default" > -->
+                                <input type="file" class="form-control file-upload-info"
+                                  formControlName="attachment_location" placeholder="Upload Image"
+                                  accept=".pdf,.jpg,.png,.jpeg" (change)="onFileSelect($event.target.files)">
+                                <span class="input-group-append">
+                                  <button class="file-upload-browse btn btn-primary" type="button"
+                                    (click)="uploadFile(pointIndex)">Upload</button>
+                                </span>
+                              </div>
+                            </div>
+
+                            <!-- <label >Upload Attachement</label>
+                            <div class="col-sm-8">
+                              <input type="file" placeholder="Upload" formControlName="attachment_location"
+                                class="form-control">
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                  <button type="submit" (click)="openMediumModal(mediumModalContent)" [disabled]="!individualForm.valid"
+                    class="btn btn-primary mr-2">Submit</button>
+                  <button type="submit" (click)="cancel()"
+                    class="btn btn-primary mr-2">Cancel</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div></mat-tab>
         <mat-tab label="Relationships" disabled>Content 3</mat-tab>
       </mat-tab-group>
+      
     </div>
   </div>
 </div>

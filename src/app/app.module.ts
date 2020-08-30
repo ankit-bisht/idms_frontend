@@ -31,7 +31,35 @@ import { Constants } from './configuration/constants';
 import { JwPaginationModule } from 'jw-angular-pagination';
 import { MatTabsModule } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ContactsComponent } from './contacts/contacts.component';
+import { NgxBootstrapModalComponent } from './ngx-bootstrap-modal/ngx-bootstrap-modal.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AddressComponent } from './address/address.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { PhoneMaskDirective } from './phone-mask.directive';
+import { EmploymentComponent } from './employment/employment.component';
+import { PaymentComponent } from './payment/payment.component';
+import { AttachmentsComponent } from './attachments/attachments.component';
+import { DocumentsComponent } from './documents/documents.component';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
+
+export const DateFormat = {
+  parse: {
+    dateInput: 'input',
+    },
+    display: {
+    dateInput: 'MM/DD/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'MM/DD/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+    }
+  };
 
 @NgModule({
   declarations: [
@@ -50,10 +78,20 @@ import { FileUploadModule } from 'ng2-file-upload';
     CarriersComponent,
     ReportsComponent,
     CommisionComponent,
-    NewIndividualComponent
+    NewIndividualComponent,
+    ContactsComponent,
+    NgxBootstrapModalComponent,
+    AddressComponent,
+    PhoneMaskDirective,
+    EmploymentComponent,
+    PaymentComponent,
+    AttachmentsComponent,
+    DocumentsComponent
   ],
   imports: [
+    ModalModule.forRoot(),
     MatTabsModule,
+    MaterialFileInputModule,
     NgxSpinnerModule,
     HttpClientModule,
     BrowserModule,
@@ -64,9 +102,19 @@ import { FileUploadModule } from 'ng2-file-upload';
     ReactiveFormsModule,
     JwPaginationModule,
     FileUploadModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule
+  ], 
+  exports: [
+    PhoneMaskDirective
   ],
-  providers: [LoginGuard, CommonService, ApiService, Configuration, Constants],
+  providers: [LoginGuard, CommonService, ApiService, Configuration, Constants,  { provide: MAT_DATE_FORMATS, useValue: DateFormat }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
