@@ -29,13 +29,6 @@
                             <input matInput type="text" formControlName="email" (keyup)="submitForm()">
                         </mat-form-field>
                     </td>
-                    <!-- <td>
-              <mat-form-field>
-                <input matInput matInput [matDatepicker]="picker" formControlName="dob">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-            </td> -->
                     <td>
                         <mat-form-field>
                             <mat-select formControlName="contact_type" (selectionChange)="submitForm()">
@@ -47,7 +40,7 @@
                     </td>
                     <td>
                         <mat-form-field>
-                            <input matInput type="text" formControlName="mobNumber" maxlength="12" appPhoneMask (keyup)="submitForm()" autocomplete="off"/>
+                            <input matInput type="text" formControlName="phone" maxlength="13" appPhoneMask (keyup)="submitForm()" autocomplete="off"/>
                         </mat-form-field>
                     </td>
                     <td>
@@ -63,7 +56,7 @@
                         {{group.get('contact_type').value?group.get('contact_type').value:'NA'}}
                     </td>
                     <td>
-                        {{group.get('mobNumber').value?group.get('mobNumber').value:'NA'}}
+                        {{group.get('phone').value?group.get('phone').value:'NA'}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>

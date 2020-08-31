@@ -36,7 +36,12 @@ export class ContactsComponent implements OnInit {
     this.contactForm = this.fb.group({
       clientContactDetails: this.fb.array([])
     });
-    this.addRow();
+
+    if (JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails.length >=1) {      
+      this.setDetails();
+    } else {      
+      this.addRow();
+    }
   }
 
   ngAfterOnInit() {
@@ -47,26 +52,38 @@ export class ContactsComponent implements OnInit {
     return this.fb.group({
       email: ['', Validators.email],
       contact_type: ['', Validators.required],
-      mobNumber: [''],
+      phone: [''],
       isEditable: [true]
     });
   }
 
   getConstants() {
-    const Obj = {
-      userId: localStorage.getItem('userId')
-    }
-    this.api.getConstants(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        localStorage.setItem('constants', JSON.stringify(data.result));
-        this.contactype = data.result.contactType;
-      }
-    });
+    this.contactype = JSON.parse(localStorage.getItem('constants')).contactType;
   }
 
   addRow() {
     const control = this.contactForm.get('clientContactDetails') as FormArray;
     control.push(this.initiateForm());
+  }
+
+  setDetails() {
+    const control = this.contactForm.get('clientContactDetails') as FormArray;
+    const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails;
+    
+    Details.map(element => {
+      control.push(this.setForm(element));
+    });
+    // this.deleteRow(0);    
+    this.saveIndividuals.addToIndividual(this.contactForm.value);
+  }
+
+  setForm(element): FormGroup {    
+    return this.fb.group({
+      email: [element.email, Validators.email],
+      contact_type: [element.contact_type, Validators.required],
+      phone: [element.phone],
+      isEditable: [true]
+    });
   }
 
   deleteRow(index: number) {
@@ -91,17 +108,17 @@ export class ContactsComponent implements OnInit {
     const control = this.contactForm.get('clientContactDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
     if (!this.contactForm.valid) {
-      setTimeout(() => {
-        this.modalMessage = "Please Fill All Details Correctly!!"
-        return this.modalRef = this.modalService.show(this.templateRef);
-      }, 5000);
+      // setTimeout(() => {
+      //   this.modalMessage = "Please Fill All Details Correctly!!"
+      //   return this.modalRef = this.modalService.show(this.templateRef);
+      // }, 5000);
 
     } else {
       var contactsDetails = this.contactForm.value.clientContactDetails;
       contactsDetails.map((element, key) => {
         delete element.isEditable;
         const id = key + 1;
-        element.mobNumber = element.mobNumber.toString();
+        element.phone = element.phone.toString();
         element.contact_id = id.toString();
       });
       console.log(this.saveIndividuals.addToIndividual(this.contactForm.value));

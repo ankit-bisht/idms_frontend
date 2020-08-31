@@ -42,6 +42,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { PhoneMaskDirective } from './phone-mask.directive';
+import { SSNMaskDirective } from './ssn-mask.directive';
 import { EmploymentComponent } from './employment/employment.component';
 import { PaymentComponent } from './payment/payment.component';
 import { AttachmentsComponent } from './attachments/attachments.component';
@@ -83,6 +84,7 @@ export const DateFormat = {
     NgxBootstrapModalComponent,
     AddressComponent,
     PhoneMaskDirective,
+    SSNMaskDirective,
     EmploymentComponent,
     PaymentComponent,
     AttachmentsComponent,
@@ -111,7 +113,7 @@ export const DateFormat = {
     MatSelectModule
   ], 
   exports: [
-    PhoneMaskDirective
+    PhoneMaskDirective,SSNMaskDirective
   ],
   providers: [LoginGuard, CommonService, ApiService, Configuration, Constants,  { provide: MAT_DATE_FORMATS, useValue: DateFormat }
 ],

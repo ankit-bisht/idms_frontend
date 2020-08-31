@@ -36,7 +36,11 @@ export class EmploymentComponent implements OnInit {
     this.employmentForm = this.fb.group({
       clientEmploymentDetails: this.fb.array([])
     });
-    this.addRow();
+    if (JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails.length >= 1) {
+      this.setDetails();
+    } else {
+      this.addRow();
+    }
   }
 
   ngAfterOnInit() {
@@ -55,16 +59,32 @@ export class EmploymentComponent implements OnInit {
     });
   }
 
-  getConstants() {
-    const Obj = {
-      userId: localStorage.getItem('userId')
-    }
-    this.api.getConstants(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        localStorage.setItem('constants', JSON.stringify(data.result));
-        this.incomeFrequency = data.result.incomeFrequency;
-      }
+  setDetails() {
+    const control = this.employmentForm.get('clientEmploymentDetails') as FormArray;
+    const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails;
+    Details.map(element => {
+      delete element.client_id;
+      control.push(this.setForm(element));
     });
+    //this.deleteRow(0);
+    this.saveIndividuals.addToIndividual(this.employmentForm.value);
+  }
+
+  setForm(element): FormGroup {
+    return this.fb.group({
+      employer_name: [element.employer_name, Validators.required],
+      employer_phone: [element.employer_phone],
+      income_amount: [element.income_amount, Validators.required],
+      income_frequency: [element.income_frequency, Validators.required],
+      start_date: [element.start_date, Validators.required],
+      end_date: [element.end_date],
+      isEditable: [true]
+    });
+  }
+
+  getConstants() {
+    this.incomeFrequency = JSON.parse(localStorage.getItem('constants')).incomeFrequency;
+
   }
 
   private closeAllModals() {

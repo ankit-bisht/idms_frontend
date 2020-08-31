@@ -42,7 +42,11 @@ export class AddressComponent implements OnInit {
     this.addressForm = this.fb.group({
       clientAddressDetails: this.fb.array([])
     });
-    this.addRow();
+    if (JSON.parse(localStorage.getItem('ClientDetails')).clientAddressDetails.length >= 1) {
+      this.setDetails();
+    } else {
+      this.addRow();
+    }
   }
 
   ngAfterOnInit() {
@@ -64,16 +68,34 @@ export class AddressComponent implements OnInit {
     });
   }
 
-  getConstants() {
-    const Obj = {
-      userId: localStorage.getItem('userId')
-    }
-    this.api.getConstants(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        localStorage.setItem('constants', JSON.stringify(data.result));
-        this.addresstype = data.result.addressType;
-      }
+  setDetails() {
+    const control = this.addressForm.get('clientAddressDetails') as FormArray;
+    const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientAddressDetails;
+    Details.map(element => {
+      delete element.client_id;
+      control.push(this.setForm(element));
     });
+    //this.deleteRow(0);
+    this.saveIndividuals.addToIndividual(this.addressForm.value);
+  }
+
+  setForm(element): FormGroup {
+    return this.fb.group({
+      suite: [element.suite],
+      number: [element.number, Validators.required],
+      street: [element.street, Validators.required],
+      city: [element.city, Validators.required],
+      state: [element.state, Validators.required],
+      zip: [element.zip, Validators.required],
+      address_type: [element.address_type, Validators.required],
+      from_date: [element.from_date],
+      to_date: [element.to_date],
+      isEditable: [true]
+    });
+  }
+
+  getConstants() {
+    this.addresstype = JSON.parse(localStorage.getItem('constants')).addressType;
   }
 
   private closeAllModals() {

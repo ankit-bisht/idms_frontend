@@ -4,9 +4,10 @@
   ::ng-deep.mat-tab-label-active {
     min-width: 97px !important;
   }
+
   ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
-    font-weight:100;
-}
+    font-weight: 100;
+  }
 </style>
 <!-- <div class="page-header">
   <h3 class="page-title">
@@ -31,18 +32,12 @@
             <div class="card">
               <div class="card-body">
                 <form class="form-sample" [formGroup]="individualForm">
-                  <ngb-alert *ngIf="FormError" [dismissible]="false" class="d-block mt-3" type="danger">
-                    This tab content DOM will de destroyed when not active
-                  </ngb-alert>
-                  <ngb-alert *ngIf="success" [dismissible]="false" class="d-block mt-3" type="success">
-                    {{successMessage}}
-                  </ngb-alert>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">First Name</label>
                         <div class="col-sm-8">
-                          <input class="form-control " formControlName="first_name" placeholder="first name"
+                          <input class="form-control " (keyup)="onSubmit()" formControlName="first_name" placeholder="first name"
                             [(ngModel)]="firstName" />
                           <div
                             *ngIf="individualForm.get('first_name').invalid && (individualForm.get('first_name').touched)"
@@ -58,7 +53,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Middle Name</label>
                         <div class="col-sm-8">
-                          <input class="form-control" formControlName="middle_name" placeholder="middle name"
+                          <input class="form-control"(keyup)="onSubmit()"  formControlName="middle_name" placeholder="middle name"
                             maxlength="10" [(ngModel)]="middleName" />
                         </div>
                       </div>
@@ -70,7 +65,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Last Name</label>
                         <div class="col-sm-8">
-                          <input class="form-control" formControlName="last_name" placeholder="last name" maxlength="10"
+                          <input class="form-control" (keyup)="onSubmit()" formControlName="last_name" placeholder="last name" maxlength="10"
                             [(ngModel)]="lastName" />
                           <div
                             *ngIf="individualForm.get('last_name').invalid && (individualForm.get('last_name').touched)"
@@ -86,8 +81,8 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Date of Birth</label>
                         <div class="col-sm-8">
-                          <input type="text" placeholder="YYYY-DD-MM" formControlName="DOB" [(ngModel)]="DOB"
-                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
+                          <input type="text"  (keyup)="onSubmit()" placeholder="MM/DD/YYY" formControlName="DOB" [(ngModel)]="DOB"
+                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'MM/DD/YYY', containerClass: 'theme-default' }"
                             class="form-control " bsDatepicker>
                           <div *ngIf="individualForm.get('DOB').invalid && (individualForm.get('DOB').touched)"
                             class="text-danger">
@@ -106,7 +101,7 @@
                         <div class="col-sm-4">
                           <div class="form-check">
                             <label class="form-check-label">
-                              <input type="radio" class="form-check-input" id="membershipRadios1" formControlName="sex"
+                              <input type="radio"  (keyup)="onSubmit()" class="form-check-input" id="membershipRadios1" formControlName="sex"
                                 value="M" [(ngModel)]="sex">
                               Male
                               <i class="input-helper"></i>
@@ -116,7 +111,7 @@
                         <div class="col-sm-5">
                           <div class="form-check">
                             <label class="form-check-label">
-                              <input type="radio" class="form-check-input" id="membershipRadios2" formControlName="sex"
+                              <input type="radio"  (keyup)="onSubmit()" class="form-check-input" id="membershipRadios2" formControlName="sex"
                                 value="F" [(ngModel)]="sex">
                               Female
                               <i class="input-helper"></i>
@@ -129,8 +124,8 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">SSN</label>
                         <div class="col-sm-8">
-                          <input class="form-control" placeholder="ssn" formControlName="ssn" maxlength="10"
-                            [(ngModel)]="ssn" />
+                          <input class="form-control"  (keyup)="onSubmit()" placeholder="ssn" formControlName="ssn" maxlength="11"
+                            [(ngModel)]="ssn" appSSNMask />
                           <div *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)"
                             class="text-danger">
                             <p *ngIf="individualForm.get('ssn').errors.required">
@@ -146,7 +141,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Weight</label>
                         <div class="col-sm-8">
-                          <input class="form-control" type="number" oninput="if(value.length>16)value=value.slice(0,3)"
+                          <input class="form-control"  (keyup)="onSubmit()" type="number" oninput="if(value.length>16)value=value.slice(0,3)"
                             placeholder="weight" formControlName="weight" [(ngModel)]="weight" />
                           <div *ngIf="individualForm.get('weight').invalid && (individualForm.get('weight').touched)"
                             class="text-danger">
@@ -161,7 +156,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Height Inches</label>
                         <div class="col-sm-8">
-                          <input class="form-control" type="number" placeholder="height in inches"
+                          <input class="form-control"  (keyup)="onSubmit()" type="number" placeholder="height in inches"
                             oninput="if(value.length>16)value=value.slice(0,3)" formControlName="height_inches"
                             [(ngModel)]="inches" />
                           <div
@@ -178,7 +173,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Height Feet</label>
                         <div class="col-sm-8">
-                          <input class="form-control" type="number" placeholder="height in feets"
+                          <input class="form-control"  (keyup)="onSubmit()" type="number" placeholder="height in feets"
                             oninput="if(value.length>16)value=value.slice(0,3)" formControlName="height_feet"
                             [(ngModel)]="feet" />
                           <div
@@ -197,7 +192,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">MP User Id</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" placeholder="mp user id" formControlName="mp_user_id"
+                          <input type="text"  (keyup)="onSubmit()" class="form-control" placeholder="mp user id" formControlName="mp_user_id"
                             [(ngModel)]="mpUserId" maxlength="10" />
                           <div
                             *ngIf="individualForm.get('mp_user_id').invalid && (individualForm.get('mp_user_id').touched)"
@@ -213,7 +208,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">MP Password</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" placeholder="mp password" maxlength="10"
+                          <input type="text"  (keyup)="onSubmit()" class="form-control" placeholder="mp password" maxlength="10"
                             formControlName="mp_password" [(ngModel)]="mpPassword" />
                           <div
                             *ngIf="individualForm.get('mp_password').invalid && (individualForm.get('mp_password').touched)"
@@ -231,7 +226,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Driver License State</label>
                         <div class="col-sm-8">
-                          <select class="form-control" formControlName="driver_license_state" [(ngModel)]="driverState">
+                          <select class="form-control"  formControlName="driver_license_state" [(ngModel)]="driverState">
                             <option class="dropdown-item" *ngFor="let item of states | keyvalue" value={{item.key}}>
                               {{item.value}}</option>
                           </select>
@@ -249,7 +244,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">Driver License Number</label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" placeholder="License no" maxlength="15"
+                          <input type="text" (keyup)="onSubmit()" class="form-control" placeholder="License no" maxlength="15"
                             formControlName="driver_license_number" [(ngModel)]="driverNumber" />
                           <div
                             *ngIf="individualForm.get('driver_license_number').invalid && (individualForm.get('driver_license_number').touched)"
@@ -286,7 +281,7 @@
                         <label class="col-sm-4 col-form-label">Notes</label>
                         <div class="col-sm-8">
                           <textarea class="form-control" placeholder="notes" formControlName="notes" rows="2"
-                            [(ngModel)]="notes"></textarea>
+                            [(ngModel)]="notes" (keyup)="onSubmit()"></textarea>
                           <div *ngIf="individualForm.get('notes').invalid && (individualForm.get('notes').touched)"
                             class="text-danger">
                             <p *ngIf="individualForm.get('notes').errors.required">
@@ -309,575 +304,42 @@
         </mat-tab>
         <mat-tab label="Address">
           <app-address></app-address>
-          <!-- <div class="grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <div>
-                  <div class="card-title">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="addAddress()">Add
-                      Address
-                    </button>
-                  </div>
-                  <form class="form-sample" [formGroup]="addressForm">
-                    <ngb-alert *ngIf="addressError" [dismissible]="false" class="d-block mt-3" type="danger">
-                      {{addressFormError}}
-                    </ngb-alert>
-                    <ngb-alert *ngIf="addressSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                      {{addressMessage}}
-                    </ngb-alert>
-                    <div formArrayName="address">
-                      <section class="container border mb-4 p-3"
-                        *ngFor="let item of address.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="card-title">Address {{pointIndex + 1}}</div>
-                        <div class="card-description text-right">
-                          <button type="button" class="btn btn-danger btn-sm" (click)="deleteAddress(pointIndex)">Delete
-                            Address</button>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Address Type</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="address_type">
-                                  <option *ngFor="let item of addresstype | keyvalue" value={{item.key}}>{{item.value}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Number</label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" formControlName="number" placeholder="Number" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Street</label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" formControlName="street" placeholder="street" />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">suite</label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" formControlName="suite" placeholder="suite" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">State</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="state">
-                                  <option value="">Select State</option>
-                                  <option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">City</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="city">
-                                  <option *ngFor="let item of city" value={{item}}>{{item}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Zip</label>
-                              <div class="col-sm-8">
-                                <input type="number" class="form-control" formControlName="zip" placeholder="Zip" />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">From Date</label>
-                              <div class="col-sm-8">
-                                <input type="text" placeholder="YYYY-DD-MM" formControlName="from_date"
-                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                                  class="form-control " bsDatepicker>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">To Date</label>
-                              <div class="col-sm-8">
-                                <input type="text" placeholder="YYYY-DD-MM" formControlName="to_date"
-                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-DD-MM', containerClass: 'theme-default' }"
-                                  class="form-control " bsDatepicker>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                    <button type="submit" *ngIf="!hideSubmit" (click)="saveAddress()"
-                      class="btn btn-primary mr-2">Submit</button> 
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </mat-tab>
         <mat-tab label="Employment">
           <app-employment></app-employment>
-          <!-- <div class="grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <div>
-                  <div class="card-title">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="addEmployer()">Add
-                      Employer
-                    </button>
-                  </div>
-                  <form class="form-sample" [formGroup]="employerForm">
-                    <ngb-alert *ngIf="employerError" [dismissible]="false" class="d-block mt-3" type="danger">
-                      {{employerFormError}}
-                    </ngb-alert>
-                    <ngb-alert *ngIf="employerSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                      {{employerMessage}}
-                    </ngb-alert>
-                    <div formArrayName="employer">
-                      <section class="container border mb-4 p-3"
-                        *ngFor="let item of employer.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="card-title">Employer {{pointIndex + 1}}</div>
-                        <div class="card-description text-right">
-                          <button type="button" class="btn btn-danger btn-sm"
-                            (click)="deleteEmployer(pointIndex)">Delete Employer</button>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Employer Name</label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" formControlName="employer_name"
-                                  placeholder="employer name" />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Employer Phone</label>
-                              <div class="col-sm-8">
-                                <input type="number" maxlength="10" class="form-control"
-                                  formControlName="employer_phone" placeholder="employer phone" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Income Amount</label>
-                              <div class="col-sm-8">
-                                <input type="number" class="form-control" formControlName="income_amount"
-                                  placeholder="income amount" />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Income Frequency</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="income_frequency">
-                                  <option *ngFor="let item of incomeFrequency | keyvalue" value={{item.key}}>
-                                    {{item.value}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Start Date</label>
-                              <div class="col-sm-8">
-                                <input type="text" placeholder="DD-MM-YYYY" formControlName="start_date"
-                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-default' }"
-                                  class="form-control " bsDatepicker>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">End Date</label>
-                              <div class="col-sm-8">
-                                <input type="text" placeholder="DD-MM-YYYY" formControlName="end_date"
-                                  [bsConfig]="{ isAnimated: true, dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-default' }"
-                                  class="form-control " bsDatepicker>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                   <button type="submit" *ngIf="!hideSubmit" (click)="saveEmployer()"
-                      class="btn btn-primary mr-2">Submit</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </mat-tab>
         <mat-tab label="Payment">
           <app-payment></app-payment>
-          <!-- <div class="grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <div>
-                  <div class="card-title">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="addPayment()">Add
-                      Payment Method
-                    </button>
-                  </div>
-                  <form class="form-sample" [formGroup]="paymentForm">
-                    <ngb-alert *ngIf="paymentError" [dismissible]="false" class="d-block mt-3" type="danger">
-                      {{paymentFormError}}
-                    </ngb-alert>
-                    <ngb-alert *ngIf="paymentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                      {{paymentMessage}}
-                    </ngb-alert>
-                    <div formArrayName="payment">
-                      <section class="container border mb-4 p-3"
-                        *ngFor="let item of payment.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="card-title">Payment Method {{pointIndex + 1}}</div>
-                        <div class="card-description text-right">
-                          <button type="button" class="btn btn-danger btn-sm" (click)="deletePayment(pointIndex)">Delete
-                            Payment</button>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Payment Type</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="payment_type"
-                                  (click)="disableField(pointIndex)">
-                                  <option *ngFor="let item of paymentType | keyvalue" value={{item.key}}>{{item.value}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Account Number</label>
-                              <div class="col-sm-8">
-                                <input type="number" maxlength="19" class="form-control"
-                                  formControlName="account_number" placeholder="account number" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Account Name</label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" formControlName="account_name"
-                                  placeholder="account name" />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Routing Number</label>
-                              <div class="col-sm-8">
-                                <input type="text" class="form-control" formControlName="routing_number"
-                                  placeholder="routing number" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">CVV</label>
-                              <div class="col-sm-8">
-                                <input type="number" maxlength="3" placeholder="cvv" formControlName="cvv"
-                                  class="form-control ">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Expiry Month</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="expiry_month">
-                                  <option selected value='1'>Janaury</option>
-                                  <option value='2'>February</option>
-                                  <option value='3'>March</option>
-                                  <option value='4'>April</option>
-                                  <option value='5'>May</option>
-                                  <option value='6'>June</option>
-                                  <option value='7'>July</option>
-                                  <option value='8'>August</option>
-                                  <option value='9'>September</option>
-                                  <option value='10'>October</option>
-                                  <option value='11'>November</option>
-                                  <option value='12'>December</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Expiry Year</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="expiry_year">
-                                  <option *ngFor="let item of range | keyvalue" value={{item.key}}>{{item.value}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Valid</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="valid">
-                                  <option selected value='1'>Yes</option>
-                                  <option value='2'>No</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                     <button type="submit" *ngIf="!hideSubmit" (click)="savePayment()"
-                      class="btn btn-primary mr-2">Submit</button> 
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </mat-tab>
         <mat-tab label="Attachments">
           <app-attachments></app-attachments>
-          <!-- <div class="grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <div>
-                  <div class="card-title">
-                    <button type="button" class="btn btn-primary btn-sm" (click)="addDocument()">Add
-                      Attachments
-                    </button>
-                  </div>
-                  <form class="form-sample" [formGroup]="documentForm">
-                    <ngb-alert *ngIf="documentError" [dismissible]="false" class="d-block mt-3" type="danger">
-                      {{documentFormError}}
-                    </ngb-alert>
-                    <ngb-alert *ngIf="documentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                      {{documentMessage}}
-                    </ngb-alert>
-                    <div formArrayName="document">
-                      <section class="container border mb-4 p-3"
-                        *ngFor="let item of document.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                        <div class="card-title">Attachment {{pointIndex + 1}}</div>
-                        <div class="card-description text-right">
-                          <button type="button" class="btn btn-danger btn-sm"
-                            (click)="deleteDocument(pointIndex)">Delete Attachment</button>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Attachement Type</label>
-                              <div class="col-sm-8">
-                                <select class="form-control" formControlName="attachment_type">
-                                  <option *ngFor="let item of docType" value={{item.document_type_id}}>
-                                    {{item.doc_type_description}}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group row">
-                              <label class="col-sm-4 col-form-label">Attachement Discription</label>
-                              <div class="col-sm-8">
-                                <input type="text" placeholder="Discription" formControlName="attachment_description"
-                                  class="form-control ">
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group row">
-                              <div class="col-sm-10">
-                                <div class="input-group col-xs-12">
-                                  <label class="col-sm-4 col-form-label">File upload</label>
-                                  <input type="file" class="file-upload-default" >
-                                  <input type="file" class="form-control file-upload-info"
-                                    formControlName="attachment_location" placeholder="Upload Image"
-                                    accept=".pdf,.jpg,.png,.jpeg" (change)="onFileSelect($event.target.files)">
-                                  <span class="input-group-append">
-                                    <button class="file-upload-browse btn btn-primary" type="button"
-                                      (click)="uploadFile(pointIndex)">Upload</button>
-                                  </span>
-                                </div>
-                              </div>
-
-                               <label >Upload Attachement</label>
-                              <div class="col-sm-8">
-                                <input type="file" placeholder="Upload" formControlName="attachment_location"
-                                  class="form-control">
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                    <button type="submit" (click)="openMediumModal(mediumModalContent)" [disabled]="!individualForm.valid"
-                      class="btn btn-primary mr-2">Submit</button>
-                    <button type="submit" (click)="cancel()"
-                      class="btn btn-primary mr-2">Cancel</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </mat-tab>
         <mat-tab label="Documents">
-          <div class="grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <div>
-                <div class="card-title">
-                  <button type="button" class="btn btn-primary btn-sm" (click)="addDocument()">Add
-                    Documents
-                  </button>
-                </div>
-                <form class="form-sample" [formGroup]="documentForm">
-                  <ngb-alert *ngIf="documentError" [dismissible]="false" class="d-block mt-3" type="danger">
-                    {{documentFormError}}
-                  </ngb-alert>
-                  <ngb-alert *ngIf="documentSuccess" [dismissible]="false" class="d-block mt-3" type="success">
-                    {{documentMessage}}
-                  </ngb-alert>
-                  <div formArrayName="document">
-                    <section class="container border mb-4 p-3"
-                      *ngFor="let item of document.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                      <div class="card-title">Attachement {{pointIndex + 1}}</div>
-                      <div class="card-description text-right">
-                        <button type="button" class="btn btn-danger btn-sm"
-                          (click)="deleteDocument(pointIndex)">Delete Document</button>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Attachement Type</label>
-                            <div class="col-sm-8">
-                              <select class="form-control" formControlName="attachment_type">
-                                <option *ngFor="let item of docType" value={{item.document_type_id}}>
-                                  {{item.doc_type_description}}
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Attachement Discription</label>
-                            <div class="col-sm-8">
-                              <input type="text" placeholder="Discription" formControlName="attachment_description"
-                                class="form-control ">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group row">
-                            <div class="col-sm-10">
-                              <div class="input-group col-xs-12">
-                                <label class="col-sm-4 col-form-label">File upload</label>
-                                <!-- <input type="file" class="file-upload-default" > -->
-                                <input type="file" class="form-control file-upload-info"
-                                  formControlName="attachment_location" placeholder="Upload Image"
-                                  accept=".pdf,.jpg,.png,.jpeg" (change)="onFileSelect($event.target.files)">
-                                <span class="input-group-append">
-                                  <button class="file-upload-browse btn btn-primary" type="button"
-                                    (click)="uploadFile(pointIndex)">Upload</button>
-                                </span>
-                              </div>
-                            </div>
-
-                            <!-- <label >Upload Attachement</label>
-                            <div class="col-sm-8">
-                              <input type="file" placeholder="Upload" formControlName="attachment_location"
-                                class="form-control">
-                            </div> -->
-                          </div>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                  <button type="submit" (click)="openMediumModal(mediumModalContent)" [disabled]="!individualForm.valid"
-                    class="btn btn-primary mr-2">Submit</button>
-                  <button type="submit" (click)="cancel()"
-                    class="btn btn-primary mr-2">Cancel</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div></mat-tab>
+          <app-documents></app-documents>
+        </mat-tab>
         <mat-tab label="Relationships" disabled>Content 3</mat-tab>
       </mat-tab-group>
-      
+      <br/>
+      <button class="btn btn-primary float-right" [disabled]="!individualForm.valid" (click)="submit()">SUBMIT</button>
     </div>
   </div>
 </div>
 
-<!-- Modal starts -->
-<ng-template #mediumModalContent let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
   <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel-2">Confirmation</h5>
-      <button type="button" class="close" id="CloseButton" (click)="modal.dismiss()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <p>{{modalMessage}}</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" *ngIf="successModal" class="btn btn-success"
-        (click)="[modal.close(),redirect()]">Submit</button>
-      <button type="button" *ngIf="confirmModal" class="btn btn-success"
-        (click)="[modal.close(),saveDocument()]">Submit</button>
-      <button type="button" class="btn btn-light" (click)="modal.close()">Cancel</button>
-    </div>
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+          <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <p> {{modalMessage}}
+          </p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+          <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+      </div>
   </div>
 </ng-template>
-<!-- Modal Ends -->
-
-<script>
-  console.log("jii");
-</script>

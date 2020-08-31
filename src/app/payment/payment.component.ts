@@ -37,7 +37,11 @@ export class PaymentComponent implements OnInit {
     this.paymentForm = this.fb.group({
       clientPaymentMethods: this.fb.array([])
     });
-    this.addRow();
+    if (JSON.parse(localStorage.getItem('ClientDetails')).clientPaymentMethods.length >= 1) {
+      this.setDetails();
+    } else {
+      this.addRow();
+    }
     for (var i = 0; i < 25; i++) {
       this.range.push(this.year + i,);
     }
@@ -62,16 +66,33 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  getConstants() {
-    const Obj = {
-      userId: localStorage.getItem('userId')
-    }
-    this.api.getConstants(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        localStorage.setItem('constants', JSON.stringify(data.result));
-        this.paymentType = data.result.paymentType;
-      }
+  setDetails() {
+    const control = this.paymentForm.get('clientPaymentMethods') as FormArray;
+    const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientPaymentMethods;
+    Details.map(element => {
+      delete element.client_id;
+      control.push(this.setForm(element));
     });
+    //this.deleteRow(0);
+    this.saveIndividuals.addToIndividual(this.paymentForm.value);
+  }
+
+  setForm(element): FormGroup {
+    return this.fb.group({
+      payment_type: [element.payment_type, Validators.required],
+      account_number: [element.account_number, Validators.required],
+      account_name: [element.account_name, Validators.required],
+      routing_number: [element.routing_number],
+      cvv: [element.cvv],
+      expiry_month: [element.expiry_month],
+      expiry_year: [element.expiry_year],
+      valid: [element.valid, Validators.required],
+      isEditable: [true]
+    });
+  }
+
+  getConstants() {
+    this.paymentType = JSON.parse(localStorage.getItem('constants')).paymentType;
   }
 
   addRow() {

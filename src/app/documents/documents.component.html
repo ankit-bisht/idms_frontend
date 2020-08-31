@@ -1,1 +1,116 @@
-<p>documents works!</p>
+<style>
+    ::ng-deep .mat-form-field-wrapper {
+        margin-top: -1.25em;
+    }
+
+    mat-icon {
+        cursor: pointer;
+    }
+</style>
+
+<div class="action-container" style="padding: 3%;">
+    <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()">Add row</button>
+    &nbsp;
+    <!-- <button mat-raised-button class="btn btn-primary" [disabled]="contactForm.invalid" type="submit"
+        (click)="submitForm()">Submit</button> -->
+</div>
+
+<form [formGroup]="documentForm">
+    <table class="table table-bordered table-sm">
+        <thead class="text-nowrap text-center">
+            <th>
+                <h6>Document Type Id<span class="text-danger">*</span></h6><span dragableColumn> </span>
+            </th>
+            <th>
+                <h6>Due Date<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+            </th>
+            <th>
+                <h6>Date Submitted<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+            </th>
+            <th>
+                <h6>Status<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+            </th>
+            <th></th>
+        </thead>
+        <tbody class="text-center">
+            <ng-container formArrayName="clientDocumentDetails"
+                *ngFor="let group of getFormControls.controls ; let i=index">
+                <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                    <td>
+                        <mat-form-field>
+                            <mat-select formControlName="document_type_id" (selectionChange)="submitForm()">
+                                <mat-option *ngFor="let item of docType" value={{item.document_type_id}}>
+                                    {{item.doc_type_description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput matInput [matDatepicker]="picker" formControlName="due_date"
+                                (dateChange)="submitForm()">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput matInput [matDatepicker]="picker1" formControlName="date_submitted"
+                                (dateChange)="submitForm()">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-select formControlName="status" (selectionChange)="submitForm()">
+                                <mat-option value="1">Valid</mat-option>
+                                <mat-option value="0">In-Valid</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+                        <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+                    </td>
+                </tr>
+                <tr *ngIf="!group.get('isEditable').value">
+                    <td>
+                        {{group.get('document_type_id').value?group.get('document_type_id').value:'NA'}}
+                    </td>
+                    <td>
+                        {{group.get('due_date').value?group.get('due_date').value:'NA'}}
+                    </td>
+                    <td>
+                        {{group.get('date_submitted').value?group.get('date_submitted').value:'NA'}}
+                    </td>
+                    <td>
+                        {{group.get('status').value?group.get('status').value:'NA'}}
+                    </td>
+                    <td>
+                        <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</form>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+            <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p> {{modalMessage}}
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+            <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+        </div>
+    </div>
+</ng-template>

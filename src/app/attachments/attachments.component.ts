@@ -10,6 +10,7 @@ import { IndividualDetailServiceService } from '../individual-detail-service.ser
 import { ApiService } from '../services/api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-attachments',
@@ -25,7 +26,7 @@ export class AttachmentsComponent implements OnInit {
   modalMessage: any;
   modalRef: BsModalRef;
   touchedRows: any;
-  fileArray:any=[];
+  fileArray: any = [];
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -37,7 +38,11 @@ export class AttachmentsComponent implements OnInit {
     this.attachmentForm = this.fb.group({
       clientAttachmentDetails: this.fb.array([])
     });
-    this.addRow();
+    if (JSON.parse(localStorage.getItem('ClientDetails')).clientAttachmentDetails.length >= 1) {
+      this.setDetails();
+    } else {
+      this.addRow();
+    }
   }
 
   ngAfterOnInit() {
@@ -53,15 +58,31 @@ export class AttachmentsComponent implements OnInit {
     });
   }
 
-  getConstants() {
-    const Obj = {
-      userId: localStorage.getItem('userId')
-    }
-    this.api.documentDropDownValues(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        this.docType = data.result;
-      }
+  setDetails() {
+    const control = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
+    const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientAttachmentDetails;
+    Details.map(element => {
+      console.log(element);
+
+      delete element.client_id;
+      control.push(this.setForm(element));
     });
+    //this.deleteRow(0);
+    this.saveIndividuals.addToIndividual(this.attachmentForm.value);
+
+  }
+
+  setForm(element): FormGroup {
+    return this.fb.group({
+      attachment_type: [element.attachment_type, Validators.required],
+      attachment_location: [element.attachment_location, Validators.required],
+      attachment_description: [element.attachment_description],
+      isEditable: [true]
+    });
+  }
+
+  getConstants() {
+    this.docType = JSON.parse(localStorage.getItem('docType'));
   }
 
   addRow() {
@@ -98,11 +119,7 @@ export class AttachmentsComponent implements OnInit {
       this.openModal();
       if (data.responseCode === 200) {
         this.spinner.hide();
-        this.fileArray.push({index:index , name:File.name});
-        // setTimeout(() =>{ this.spinner.hide() }, 3000);                
-        // const location = this.attachmentForm.controls.clientAttachmentDetails['controls'][index].controls.attachment_location;
-        // location.setValue(File.name);
-
+        this.fileArray[index] = data.result.fileName;
         this.modalMessage = data.message;
         return this.modalRef = this.modalService.show(this.templateRef);
       } else {
@@ -130,20 +147,15 @@ export class AttachmentsComponent implements OnInit {
 
     } else {
       var contactsDetails = this.attachmentForm.value.clientAttachmentDetails;
-      contactsDetails.map((element, key) => {
-        for (let index = 0; index < this.fileArray.length; index++) {
-          console.log(this.fileArray[index].index);
-          
-            if(this.fileArray[index].index == key){
-              element.attachment_location = this.fileArray.name;
-            }
-          
-        }
-
+      contactsDetails.forEach((element, key) => {
         delete element.isEditable;
+        delete element.attachment_location;
         const id = key + 1;
         element.attachment_description = element.attachment_description.toString();
         element.attachment_id = id.toString();
+        const fileName = this.fileArray[key];
+        element.attachment_location = fileName;
+
       });
       console.log(this.saveIndividuals.addToIndividual(this.attachmentForm.value));
     }

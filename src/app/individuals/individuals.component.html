@@ -52,38 +52,10 @@
                                 <button type="submit" (click)="search()" class="btn btn-gradient-primary mb-2 btn-sm">Submit</button>
                             </div>
                           </form>
-
-                    <!-- <form class="form-inline" >
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <select class="form-control form-control-sm input-group-text"
-                                        style="height: fit-content;color: black;background-color:white"
-                                        formControlName="type">
-                                        <option class="dropdown-item" value="first_name">First name</option>
-                                        <option class="dropdown-item" value="middle_name">Middle Name</option>
-                                        <option class="dropdown-item" value="last_name">Last Name</option>
-                                        <option class="dropdown-item" value="phone">Phone</option>
-                                        <option class="dropdown-item" value="email">Email</option>
-                                        <option class="dropdown-item" value="sex">Sex</option>
-                                        <option class="dropdown-item" value="DOB">DOB</option>
-                                    </select>
-                                </div>
-                                <input type="text" formControlName="search" class="col-md-5 form-control"
-                                    style="height: 36px;" aria-label="Text input with dropdown button">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-primary mb-2 btn-sm" style="height:35px"
-                                        (click)="getIndividuals()">Reset</button>
-                                    <button type="submit" class="btn btn-primary mb-2 btn-sm" style="height: 35px;"
-                                        (click)="search()" [disabled]="!searchForm.valid">Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form> -->
                 </div>
                 <br />
                 <div style="overflow:auto">
-                    <table class="table table-striped table-sm">
+                    <table class="table table-striped">
                         <!-- LOADER -->
                         <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box"
                             [fullScreen]="false">
@@ -127,9 +99,9 @@
                         <tbody *ngFor="let item of pageOfItems">
                             <tr>
                                 <td colspan="8" style="text-align: center;"
-                                    *ngIf="(pageOfItems.length > 1) || pageOfItems.length === 1">{{pageOfItems[0]}}</td>
+                                    *ngIf=" pageOfItems.length === 1">{{pageOfItems[0]}}</td>
                             </tr>
-                            <tr *ngIf="pageOfItems.length > 1" (click)="getSingleIndividual(item.client_id)">
+                            <tr *ngIf="pageOfItems.length >= 1" (click)="getSingleIndividual(item.client_id)">
                                 <!-- <td>
                                     {{item.id}}
                                 </td>
