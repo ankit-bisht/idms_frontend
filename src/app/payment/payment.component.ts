@@ -37,8 +37,11 @@ export class PaymentComponent implements OnInit {
     this.paymentForm = this.fb.group({
       clientPaymentMethods: this.fb.array([])
     });
+
+    if(localStorage.getItem('ClientDetails')){
     if (JSON.parse(localStorage.getItem('ClientDetails')).clientPaymentMethods.length >= 1) {
       this.setDetails();
+    }
     } else {
       this.addRow();
     }

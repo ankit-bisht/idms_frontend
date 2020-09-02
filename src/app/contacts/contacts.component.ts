@@ -37,9 +37,11 @@ export class ContactsComponent implements OnInit {
       clientContactDetails: this.fb.array([])
     });
 
-    if (JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails.length >=1) {      
-      this.setDetails();
-    } else {      
+    if (localStorage.getItem('ClientDetails')) {
+      if (JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails.length >= 1) {
+        this.setDetails();
+      }
+    } else {
       this.addRow();
     }
   }
@@ -69,7 +71,7 @@ export class ContactsComponent implements OnInit {
   setDetails() {
     const control = this.contactForm.get('clientContactDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails;
-    
+
     Details.map(element => {
       control.push(this.setForm(element));
     });
@@ -77,7 +79,7 @@ export class ContactsComponent implements OnInit {
     this.saveIndividuals.addToIndividual(this.contactForm.value);
   }
 
-  setForm(element): FormGroup {    
+  setForm(element): FormGroup {
     return this.fb.group({
       email: [element.email, Validators.email],
       contact_type: [element.contact_type, Validators.required],

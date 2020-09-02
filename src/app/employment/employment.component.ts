@@ -36,8 +36,10 @@ export class EmploymentComponent implements OnInit {
     this.employmentForm = this.fb.group({
       clientEmploymentDetails: this.fb.array([])
     });
+    if(localStorage.getItem('ClientDetails')){
     if (JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails.length >= 1) {
       this.setDetails();
+    }
     } else {
       this.addRow();
     }

@@ -36,8 +36,10 @@ export class DocumentsComponent implements OnInit {
     this.documentForm = this.fb.group({
       clientDocumentDetails: this.fb.array([])
     });
+    if(localStorage.getItem('ClientDetails')){
     if (JSON.parse(localStorage.getItem('ClientDetails')).clientDocumentDetails.length>=1) {
       this.setDetails();
+    }
     } else {
       this.addRow();
     }

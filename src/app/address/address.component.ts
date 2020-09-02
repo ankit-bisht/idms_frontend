@@ -42,8 +42,11 @@ export class AddressComponent implements OnInit {
     this.addressForm = this.fb.group({
       clientAddressDetails: this.fb.array([])
     });
+    
+    if(localStorage.getItem('ClientDetails')){
     if (JSON.parse(localStorage.getItem('ClientDetails')).clientAddressDetails.length >= 1) {
       this.setDetails();
+    }
     } else {
       this.addRow();
     }

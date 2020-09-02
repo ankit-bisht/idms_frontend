@@ -38,8 +38,10 @@ export class AttachmentsComponent implements OnInit {
     this.attachmentForm = this.fb.group({
       clientAttachmentDetails: this.fb.array([])
     });
+    if(localStorage.getItem('ClientDetails')){
     if (JSON.parse(localStorage.getItem('ClientDetails')).clientAttachmentDetails.length >= 1) {
       this.setDetails();
+    }
     } else {
       this.addRow();
     }
