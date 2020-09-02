@@ -13,6 +13,7 @@ export class IndividualsComponent implements OnInit {
 
   searchForm: FormGroup;
   config: any;
+  showTable:boolean=false;
   collection: any = [];
 
   items = [];
@@ -59,6 +60,7 @@ export class IndividualsComponent implements OnInit {
   }
 
   search() {
+    this.showTable = true;
 
     if (this.searchForm.value.type == "" && this.searchForm.value.search == "") {
       return this.getIndividuals();

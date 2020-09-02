@@ -54,7 +54,7 @@
                           </form>
                 </div>
                 <br />
-                <div style="overflow:auto">
+                <div style="overflow:auto" *ngIf= "showTable">
                     <table class="table table-striped">
                         <!-- LOADER -->
                         <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box"
@@ -138,7 +138,7 @@
                     </table>
                 </div>
                 <br />
-                <jw-pagination [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
+                <jw-pagination *ngIf= "showTable" [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
             </div>
         </div>
     </div>

@@ -42,11 +42,11 @@ export class NewIndividualComponent implements OnInit {
 
 
   constructor(private modalService: BsModalService, private saveIndividuals: IndividualDetailServiceService, private spinner: NgxSpinnerService, private fb: FormBuilder, private api: ApiService, public Router: Router, public States: Constants) {
-    this.getConstants();
     this.states = States.stateValue;
   }
 
   ngOnInit() {
+        // this.getConstants();
     this.buildIndividualForm();
   }
 
@@ -205,20 +205,21 @@ export class NewIndividualComponent implements OnInit {
    * get constants 
    */
   getConstants() {
-    const Obj = {
-      userId: localStorage.getItem('userId')
-    }
-    this.api.getConstants(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        localStorage.setItem('constants', JSON.stringify(data.result));
-        this.clientType = data.result.clientType;
-      }
-    });
-    this.api.documentDropDownValues(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        localStorage.setItem('docType', JSON.stringify(data.result));
-      }
-    });
+    this.clientType = JSON.parse(localStorage.getItem('constants')).clientType;
+    // const Obj = {
+    //   userId: localStorage.getItem('userId')
+    // }
+    // this.api.getConstants(Obj).subscribe((data: any) => {
+    //   if (data.responseCode === 200) {
+    //     localStorage.setItem('constants', JSON.stringify(data.result));
+    //     this.clientType = data.result.clientType;
+    //   }
+    // });
+    // this.api.documentDropDownValues(Obj).subscribe((data: any) => {
+    //   if (data.responseCode === 200) {
+    //     localStorage.setItem('docType', JSON.stringify(data.result));
+    //   }
+    // });
   }
 
   format = (input) => {

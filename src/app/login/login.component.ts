@@ -50,7 +50,22 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.result.authorizationToken);
         localStorage.setItem('userId', data.result.userDetails.user_id);
         localStorage.setItem('username', data.result.userDetails.username);
-        localStorage.setItem('individualDetails',"");
+        localStorage.setItem('individualDetails', "");
+        const Obj = {
+          userId: data.result.userDetails.user_id
+        }
+        this.api.getConstants(Obj).subscribe((data: any) => {
+          if (data.responseCode === 200) {
+            localStorage.setItem('constants', JSON.stringify(data.result));
+            // this.clientType = data.result.clientType;
+          }
+        });
+        this.api.documentDropDownValues(Obj).subscribe((data: any) => {
+          if (data.responseCode === 200) {
+            localStorage.setItem('docType', JSON.stringify(data.result));
+          }
+        });
+
         this.Router.navigate(['/dashboard']);
       } else {
         this.FormError = data.error;
