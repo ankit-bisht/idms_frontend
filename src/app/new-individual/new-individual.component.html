@@ -124,7 +124,7 @@
                       <div class="form-group row">
                         <label class="col-sm-4 col-form-label">SSN</label>
                         <div class="col-sm-8">
-                          <input class="form-control"  (keyup)="onSubmit()" placeholder="ssn" formControlName="ssn" maxlength="11"
+                          <input class="form-control" type="text"  (keyup)="onSubmit()" placeholder="ssn" formControlName="ssn" maxlength="11"
                             [(ngModel)]="ssn" appSSNMask />
                           <div *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)"
                             class="text-danger">
