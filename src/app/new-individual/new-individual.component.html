@@ -5,6 +5,10 @@
     min-width: 97px !important;
   }
 
+  mat-form-field {
+    width: 100%;
+  }
+
   ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
     font-weight: 100;
   }
@@ -32,77 +36,67 @@
             <div class="card">
               <div class="card-body">
                 <form class="form-sample" [formGroup]="individualForm">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">First Name</label>
-                        <div class="col-sm-8">
-                          <input class="form-control " (keyup)="onSubmit()" formControlName="first_name" placeholder="first name"
-                            [(ngModel)]="firstName" />
-                          <div
-                            *ngIf="individualForm.get('first_name').invalid && (individualForm.get('first_name').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('first_name').errors.required">
-                              First Name is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="row mt-4">
+                    <div class="col-md-4">
+                      <mat-form-field appearance="legacy">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First Name" (keyup)="onSubmit()" formControlName="first_name"
+                          [(ngModel)]="firstName" required>
+                        <mat-error
+                          *ngIf="individualForm.get('first_name').invalid && (individualForm.get('first_name').touched)">
+                          <span *ngIf="individualForm.get('first_name').errors.required">
+                            First Name is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Middle Name</label>
-                        <div class="col-sm-8">
-                          <input class="form-control"(keyup)="onSubmit()"  formControlName="middle_name" placeholder="middle name"
-                            maxlength="10" [(ngModel)]="middleName" />
-                        </div>
-                      </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput placeholder="Middle Name" (keyup)="onSubmit()" formControlName="middle_name"
+                          [(ngModel)]="middleName">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last Name" (keyup)="onSubmit()" formControlName="last_name"
+                          [(ngModel)]="lastName" required>
+                        <mat-error
+                          *ngIf="individualForm.get('last_name').invalid && (individualForm.get('last_name').touched)">
+                          <span *ngIf="individualForm.get('last_name').errors.required">
+                            Last Name is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row mt-4">
                     <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Last Name</label>
-                        <div class="col-sm-8">
-                          <input class="form-control" (keyup)="onSubmit()" formControlName="last_name" placeholder="last name" maxlength="10"
-                            [(ngModel)]="lastName" />
-                          <div
-                            *ngIf="individualForm.get('last_name').invalid && (individualForm.get('last_name').touched)"
-                            class="text-danger" [(ngModel)]="firstName">
-                            <p *ngIf="individualForm.get('last_name').errors.required">
-                              Last Name is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="DOB" [(ngModel)]="DOB"
+                          required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="individualForm.get('DOB').invalid && (individualForm.get('DOB').touched)">
+                          <span *ngIf="individualForm.get('DOB').errors.required">
+                            Date Of Birth is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Date of Birth</label>
-                        <div class="col-sm-8">
-                          <input type="text"  (keyup)="onSubmit()" placeholder="MM/DD/YYY" formControlName="DOB" [(ngModel)]="DOB"
-                            [bsConfig]="{ isAnimated: true, dateInputFormat: 'MM/DD/YYY', containerClass: 'theme-default' }"
-                            class="form-control " bsDatepicker>
-                          <div *ngIf="individualForm.get('DOB').invalid && (individualForm.get('DOB').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('DOB').errors.required">
-                              Date Of Birth is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Gender</label>
+                        <label class="col-sm-3 col-form-label">
+                          <h6>Gender</h6>
+                        </label>
                         <div class="col-sm-4">
                           <div class="form-check">
                             <label class="form-check-label">
-                              <input type="radio"  (keyup)="onSubmit()" class="form-check-input" id="membershipRadios1" formControlName="sex"
-                                value="M" [(ngModel)]="sex">
+                              <input type="radio" (keyup)="onSubmit()" class="form-check-input" id="membershipRadios1"
+                                formControlName="sex" value="M" [(ngModel)]="sex">
                               Male
                               <i class="input-helper"></i>
                             </label>
@@ -111,8 +105,8 @@
                         <div class="col-sm-5">
                           <div class="form-check">
                             <label class="form-check-label">
-                              <input type="radio"  (keyup)="onSubmit()" class="form-check-input" id="membershipRadios2" formControlName="sex"
-                                value="F" [(ngModel)]="sex">
+                              <input type="radio" (keyup)="onSubmit()" class="form-check-input" id="membershipRadios2"
+                                formControlName="sex" value="F" [(ngModel)]="sex">
                               Female
                               <i class="input-helper"></i>
                             </label>
@@ -120,176 +114,147 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">SSN</label>
-                        <div class="col-sm-8">
-                          <input class="form-control" type="text"  (keyup)="onSubmit()" placeholder="ssn" formControlName="ssn" maxlength="11"
-                            [(ngModel)]="ssn" appSSNMask />
-                          <div *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('ssn').errors.required">
-                              SSn is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Weight</label>
-                        <div class="col-sm-8">
-                          <input class="form-control"  (keyup)="onSubmit()" type="number" oninput="if(value.length>16)value=value.slice(0,3)"
-                            placeholder="weight" formControlName="weight" [(ngModel)]="weight" />
-                          <div *ngIf="individualForm.get('weight').invalid && (individualForm.get('weight').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('weight').errors.required">
-                              Weight is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Height Inches</label>
-                        <div class="col-sm-8">
-                          <input class="form-control"  (keyup)="onSubmit()" type="number" placeholder="height in inches"
-                            oninput="if(value.length>16)value=value.slice(0,3)" formControlName="height_inches"
-                            [(ngModel)]="inches" />
-                          <div
-                            *ngIf="individualForm.get('height_inches').invalid && (individualForm.get('height_inches').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('height_inches').errors.required">
-                              Height is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Height Feet</label>
-                        <div class="col-sm-8">
-                          <input class="form-control"  (keyup)="onSubmit()" type="number" placeholder="height in feets"
-                            oninput="if(value.length>16)value=value.slice(0,3)" formControlName="height_feet"
-                            [(ngModel)]="feet" />
-                          <div
-                            *ngIf="individualForm.get('height_feet').invalid && (individualForm.get('height_feet').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('height_feet').errors.required">
-                              Height is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">MP User Id</label>
-                        <div class="col-sm-8">
-                          <input type="text"  (keyup)="onSubmit()" class="form-control" placeholder="mp user id" formControlName="mp_user_id"
-                            [(ngModel)]="mpUserId" maxlength="10" />
-                          <div
-                            *ngIf="individualForm.get('mp_user_id').invalid && (individualForm.get('mp_user_id').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('mp_user_id').errors.required">
-                              MP User Id is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <mat-form-field appearance="legacy">
+                        <mat-label>SSN</mat-label>
+                        <input matInput placeholder="SSN" (keyup)="onSubmit()" formControlName="ssn" [(ngModel)]="ssn"
+                          appSSNMask required>
+                        <mat-error *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)">
+                          <span *ngIf="individualForm.get('ssn').errors.required">
+                            SSN is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">MP Password</label>
-                        <div class="col-sm-8">
-                          <input type="text"  (keyup)="onSubmit()" class="form-control" placeholder="mp password" maxlength="10"
-                            formControlName="mp_password" [(ngModel)]="mpPassword" />
-                          <div
-                            *ngIf="individualForm.get('mp_password').invalid && (individualForm.get('mp_password').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('mp_password').errors.required">
-                              MP Password is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Weight</mat-label>
+                        <input matInput placeholder="Weight" (keyup)="onSubmit()" formControlName="weight"
+                          [(ngModel)]="weight" required>
+                        <mat-error
+                          *ngIf="individualForm.get('weight').invalid && (individualForm.get('weight').touched)">
+                          <span *ngIf="individualForm.get('weight').errors.required">
+                            Weight is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Driver License State</label>
-                        <div class="col-sm-8">
-                          <select class="form-control"  formControlName="driver_license_state" [(ngModel)]="driverState">
-                            <option class="dropdown-item" *ngFor="let item of states | keyvalue" value={{item.key}}>
-                              {{item.value}}</option>
-                          </select>
-                          <div
-                            *ngIf="individualForm.get('driver_license_state').invalid && (individualForm.get('driver_license_state').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('driver_license_state').errors.required">
-                              State is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3" style="padding-right: 0%;">
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Height in Feets</mat-label>
+                        <input matInput placeholder="Feets" (keyup)="onSubmit()" formControlName="height_feet"
+                          [(ngModel)]="feet" required>
+                        <mat-error
+                          *ngIf="individualForm.get('height_feet').invalid && (individualForm.get('height_feet').touched)">
+                          <span *ngIf="individualForm.get('height_feet').errors.required">
+                            Feet is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3" style="padding-left: 0%;">
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Height in Inches</mat-label>
+                        <input matInput placeholder="Inches" (keyup)="onSubmit()" formControlName="height_inches"
+                          [(ngModel)]="inches" required>
+                        <mat-error
+                          *ngIf="individualForm.get('height_inches').invalid && (individualForm.get('height_inches').touched)">
+                          <span *ngIf="individualForm.get('height_inches').errors.required">
+                            Inches is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Driver License Number</label>
-                        <div class="col-sm-8">
-                          <input type="text" (keyup)="onSubmit()" class="form-control" placeholder="License no" maxlength="15"
-                            formControlName="driver_license_number" [(ngModel)]="driverNumber" />
-                          <div
-                            *ngIf="individualForm.get('driver_license_number').invalid && (individualForm.get('driver_license_number').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('driver_license_number').errors.required">
-                              Driver License Number is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <mat-form-field appearance="legacy">
+                        <mat-label>MP User Id</mat-label>
+                        <input matInput placeholder="MP User Id" (keyup)="onSubmit()" formControlName="mp_user_id"
+                          [(ngModel)]="mpUserId" required>
+                        <mat-error
+                          *ngIf="individualForm.get('mp_user_id').invalid && (individualForm.get('mp_user_id').touched)">
+                          <span *ngIf="individualForm.get('mp_user_id').errors.required">
+                            MP User Id is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row  mt-4">
                     <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Client Type</label>
-                        <div class="col-sm-8">
-                          <select class="form-control" formControlName="client_type" [(ngModel)]="clienttype">
-                            <option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}
-                            </option>
-                          </select>
-                          <div
-                            *ngIf="individualForm.get('client_type').invalid && (individualForm.get('client_type').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('client_type').errors.required">
-                              Client Type is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <mat-form-field appearance="legacy">
+                        <mat-label>MP Password</mat-label>
+                        <input matInput placeholder="MP Password" (keyup)="onSubmit()" formControlName="mp_password"
+                          [(ngModel)]="mpPassword" required>
+                        <mat-error
+                          *ngIf="individualForm.get('mp_password').invalid && (individualForm.get('mp_password').touched)">
+                          <span *ngIf="individualForm.get('mp_password').errors.required">
+                            MP Password is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                     <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Notes</label>
-                        <div class="col-sm-8">
-                          <textarea class="form-control" placeholder="notes" formControlName="notes" rows="2"
-                            [(ngModel)]="notes" (keyup)="onSubmit()"></textarea>
-                          <div *ngIf="individualForm.get('notes').invalid && (individualForm.get('notes').touched)"
-                            class="text-danger">
-                            <p *ngIf="individualForm.get('notes').errors.required">
-                              Notes is Required.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      <mat-form-field>
+                        <mat-label>Driver License State</mat-label>
+                        <mat-select formControlName="driver_license_state" (selectionChange)="submitForm()" [(ngModel)]="driverState" required>
+                            <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                        *ngIf="individualForm.get('driver_license_state').invalid && (individualForm.get('driver_license_state').touched)">
+                        <span *ngIf="individualForm.get('driver_license_state').errors.required">
+                          State is Required.
+                        </span>
+                      </mat-error>
+                    </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <mat-form-field appearance="legacy">
+                        <mat-label>Driver License Number</mat-label>
+                        <input matInput placeholder="Driver License Number" (keyup)="onSubmit()" formControlName="driver_license_number"
+                          [(ngModel)]="driverNumber" required>
+                        <mat-error
+                          *ngIf="individualForm.get('driver_license_number').invalid && (individualForm.get('driver_license_number').touched)">
+                          <span *ngIf="individualForm.get('driver_license_number').errors.required">
+                            Driver License Number is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field>
+                        <mat-label>Client Type</mat-label>
+                        <mat-select formControlName="client_type" (selectionChange)="submitForm()" [(ngModel)]="clienttype" required>
+                            <mat-option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error
+                        *ngIf="individualForm.get('client_type').invalid && (individualForm.get('client_type').touched)">
+                        <span *ngIf="individualForm.get('client_type').errors.required">
+                          Client Type is Required.
+                        </span>
+                      </mat-error>
+                    </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput formControlName="notes" rows="2"  placeholder="Notes.."  [(ngModel)]="notes" (keyup)="onSubmit()" required></textarea>
+                        <mat-error
+                        *ngIf="individualForm.get('notes').invalid && (individualForm.get('notes').touched)">
+                        <span *ngIf="individualForm.get('notes').errors.required">
+                          Notes Type is Required.
+                        </span>
+                      </mat-error>
+                      </mat-form-field>
                     </div>
                   </div>
                   <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveIndividualDetails()"
@@ -319,7 +284,7 @@
         </mat-tab>
         <mat-tab label="Relationships" disabled>Content 3</mat-tab>
       </mat-tab-group>
-      <br/>
+      <br />
       <button class="btn btn-primary float-right" [disabled]="!individualForm.valid" (click)="submit()">SUBMIT</button>
     </div>
   </div>
@@ -327,19 +292,19 @@
 
 <ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
   <div class="modal-content">
-      <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
-          <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      <div class="modal-body">
-          <p> {{modalMessage}}
-          </p>
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
-          <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
-      </div>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
   </div>
 </ng-template>

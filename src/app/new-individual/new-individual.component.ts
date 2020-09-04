@@ -22,7 +22,7 @@ export class NewIndividualComponent implements OnInit {
   firstName: string;
   middleName: string;
   lastName: string;
-  DOB: string;
+  DOB: any;
   sex: string;
   ssn: string;
   weight: string;
@@ -46,7 +46,7 @@ export class NewIndividualComponent implements OnInit {
   }
 
   ngOnInit() {
-        // this.getConstants();
+    this.getConstants();
     this.buildIndividualForm();
   }
 
@@ -55,6 +55,7 @@ export class NewIndividualComponent implements OnInit {
   }
 
   buildIndividualForm(): void {
+
     this.individualForm = new FormGroup({
       "first_name": new FormControl('', [
         Validators.required
@@ -109,7 +110,7 @@ export class NewIndividualComponent implements OnInit {
       this.firstName = Client.first_name;
       this.middleName = Client.middle_name;
       this.lastName = Client.last_name;
-      this.DOB = Client.DOB;
+      this.DOB = new Date(Client.DOB);
       this.sex = Client.sex;
       this.ssn = Client.ssn;
       this.weight = Client.weight;
@@ -204,7 +205,7 @@ export class NewIndividualComponent implements OnInit {
   /**
    * get constants 
    */
-  getConstants() {
+  getConstants() {    
     this.clientType = JSON.parse(localStorage.getItem('constants')).clientType;
     // const Obj = {
     //   userId: localStorage.getItem('userId')
