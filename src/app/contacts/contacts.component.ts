@@ -40,7 +40,7 @@ export class ContactsComponent implements OnInit {
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails.length >= 1) {
         this.setDetails();
-      }else{
+      } else {
         this.addRow();
       }
     } else {

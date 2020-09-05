@@ -87,7 +87,7 @@ export class IndividualsComponent implements OnInit {
   }
 
   newIndividual() {
-    this.Router.navigate(['/newIndividual']);
+    this.Router.navigate(['individuals/newIndividual']);
   }
 
   getSingleIndividual(clientId) {
@@ -100,7 +100,7 @@ export class IndividualsComponent implements OnInit {
       if (data.responseCode === 200) {
         this.spinner.hide();
         localStorage.setItem('ClientDetails', JSON.stringify(data.result));
-        this.Router.navigate(['/newIndividual']);
+        this.Router.navigate(['individuals/newIndividual']);
       }
     });
   }

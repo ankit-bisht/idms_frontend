@@ -14,7 +14,7 @@
         (click)="submitForm()">Submit</button> -->
 </div>
 
-<form [formGroup]="paymentForm">
+<form [formGroup]="paymentForm" style="font-size: 12px">
     <table class="table table-bordered table-sm">
         <thead class="text-nowrap text-center">
             <th>
@@ -48,7 +48,8 @@
                 *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Payment Type</mat-label>
                             <mat-select formControlName="payment_type" (selectionChange)="disableField(i)">
                                 <mat-option *ngFor="let item of paymentType | keyvalue" value={{item.key}}>
                                     {{item.value}}
@@ -57,31 +58,36 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Account Number</mat-label>
                             <input matInput type="text" formControlName="account_number" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Account Name</mat-label>
                             <input matInput type="text" formControlName="account_name" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Routing Number</mat-label>
                             <input matInput type="text" formControlName="routing_number" (keyup)="submitForm()"
                                 autocomplete="off"  />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>CVV</mat-label>
                             <input matInput type="text" formControlName="cvv" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Expiry Month</mat-label>
                             <mat-select formControlName="expiry_month" (selectionChange)="submitForm()">
                                 <mat-option selected value='1'>Janaury</mat-option>
                                   <mat-option value='2'>February</mat-option>
@@ -99,7 +105,8 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Expiry Year</mat-label>
                             <mat-select formControlName="expiry_year" (selectionChange)="submitForm()">
                                 <mat-option  *ngFor="let item of range | keyvalue" value={{item.value}}>{{item.value}}
                                 </mat-option>
@@ -107,7 +114,8 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Valid</mat-label>
                             <mat-select formControlName="valid" (selectionChange)="submitForm()">
                                 <mat-option value="1">Valid
                                 </mat-option>

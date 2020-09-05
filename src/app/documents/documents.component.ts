@@ -114,6 +114,14 @@ export class DocumentsComponent implements OnInit {
     return control;
   }
 
+  format = (input) => {
+    var pattern = /(\d{4})\-(\d{2})\-(\d{2})/;
+    if (!input || !input.match(pattern)) {
+      return null;
+    }
+    return input.replace(pattern, '$2/$3/$1');
+  };
+
   submitForm() {
     this.closeAllModals();
     const control = this.documentForm.get('clientDocumentDetails') as FormArray;
@@ -130,12 +138,14 @@ export class DocumentsComponent implements OnInit {
         delete element.isEditable;
         const id = key + 1;
         element.document_id = id.toString();
-        // if (element.start_date != '') {
-        //   element.start_date = new Date(element.start_date).toISOString().split('T')[0];
-        // }
-        // if (element.end_date != "") {
-        //   element.end_date = new Date(element.end_date).toISOString().split('T')[0];
-        // }
+        if (element.due_date != '') {
+          element.due_date = new Date(element.due_date).toISOString().split('T')[0];
+          element.due_date = this.format(element.due_date);
+        }
+        if (element.date_submitted != "") {
+          element.date_submitted = new Date(element.date_submitted).toISOString().split('T')[0];
+          element.due_date = this.format(element.date_submitted);
+        }
       });
       console.log(this.saveIndividuals.addToIndividual(this.documentForm.value));
     }

@@ -15,7 +15,7 @@
         (click)="submitForm()">Submit</button> -->
 </div>
 
-<form [formGroup]="attachmentForm">
+<form [formGroup]="attachmentForm" style="font-size: 12px">
     <table class="table table-bordered table-sm">
         <thead class="text-nowrap text-center">
             <th>
@@ -34,7 +34,8 @@
                 *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Attachment Type</mat-label>
                             <mat-select formControlName="attachment_type" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of docType" value={{item.document_type_id}}>
                                     {{item.doc_type_description}}
@@ -43,13 +44,15 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Attachment Description</mat-label>
                             <input matInput type="text" formControlName="attachment_description" (keyup)="submitForm()">
                         </mat-form-field>
                     </td>
                     <td>
 
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>File Upload</mat-label>
                             <ngx-mat-file-input #removableInput formControlName="attachment_location"
                             (change)="uploadFile($event.target.files,i)"></ngx-mat-file-input>
                             <button mat-icon-button matSuffix *ngIf="!removableInput.empty"

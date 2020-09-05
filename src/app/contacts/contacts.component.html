@@ -21,17 +21,19 @@
             <th><h6>Mobile Number</h6></th>
             <th></th>
         </thead>
-        <tbody class="text-center">
+        <tbody class="text-center" >
             <ng-container formArrayName="clientContactDetails" *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                     <td>
-                        <mat-form-field>
-                            <input matInput type="text" formControlName="email" (keyup)="submitForm()">
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Email</mat-label>
+                            <input matInput type="text" placeholder="Email" formControlName="email" (keyup)="submitForm()">
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
-                            <mat-select formControlName="contact_type" (selectionChange)="submitForm()">
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Contact Type</mat-label>
+                            <mat-select formControlName="contact_type" (selectionChange)="submitForm()" required>
                                 <mat-option *ngFor="let item of contactype | keyvalue" value={{item.key}}>
                                     {{item.value}}
                                 </mat-option>
@@ -39,8 +41,9 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
-                            <input matInput type="text" formControlName="phone" maxlength="13" appPhoneMask (keyup)="submitForm()" autocomplete="off"/>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Mobile No</mat-label>
+                            <input matInput type="text" placeholder="Mobile no" formControlName="phone" maxlength="13" appPhoneMask (keyup)="submitForm()" autocomplete="off"/>
                         </mat-form-field>
                     </td>
                     <td>

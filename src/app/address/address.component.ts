@@ -43,10 +43,10 @@ export class AddressComponent implements OnInit {
       clientAddressDetails: this.fb.array([])
     });
 
-    if(localStorage.getItem('ClientDetails')){
-    if (JSON.parse(localStorage.getItem('ClientDetails')).clientAddressDetails.length >= 1) {
-      this.setDetails();
-    }else{
+    if (localStorage.getItem('ClientDetails')) {
+      if (JSON.parse(localStorage.getItem('ClientDetails')).clientAddressDetails.length >= 1) {
+        this.setDetails();
+      } else {
         this.addRow();
       }
     } else {
@@ -132,6 +132,14 @@ export class AddressComponent implements OnInit {
     return control;
   }
 
+  format = (input) => {
+    var pattern = /(\d{4})\-(\d{2})\-(\d{2})/;
+    if (!input || !input.match(pattern)) {
+      return null;
+    }
+    return input.replace(pattern, '$2/$3/$1');
+  };
+
   submitForm() {
     this.closeAllModals();
     const control = this.addressForm.get('clientAddressDetails') as FormArray;
@@ -151,9 +159,12 @@ export class AddressComponent implements OnInit {
         element.zip = element.zip.toString();
         if (element.from_date != '') {
           element.from_date = new Date(element.from_date).toISOString().split('T')[0];
+          element.from_date = this.format(element.from_date);
+
         }
         if (element.to_date != "") {
           element.to_date = new Date(element.to_date).toISOString().split('T')[0];
+          element.to_date = this.format(element.to_date);
         }
       });
       console.log(this.saveIndividuals.addToIndividual(this.addressForm.value));

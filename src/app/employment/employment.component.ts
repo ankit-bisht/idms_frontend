@@ -36,12 +36,12 @@ export class EmploymentComponent implements OnInit {
     this.employmentForm = this.fb.group({
       clientEmploymentDetails: this.fb.array([])
     });
-    if(localStorage.getItem('ClientDetails')){
-    if (JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails.length >= 1) {
-      this.setDetails();
-    }else{
-      this.addRow();
-    }
+    if (localStorage.getItem('ClientDetails')) {
+      if (JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails.length >= 1) {
+        this.setDetails();
+      } else {
+        this.addRow();
+      }
     } else {
       this.addRow();
     }
@@ -90,6 +90,13 @@ export class EmploymentComponent implements OnInit {
     this.incomeFrequency = JSON.parse(localStorage.getItem('constants')).incomeFrequency;
 
   }
+  format = (input) => {
+    var pattern = /(\d{4})\-(\d{2})\-(\d{2})/;
+    if (!input || !input.match(pattern)) {
+      return null;
+    }
+    return input.replace(pattern, '$2/$3/$1');
+  };
 
   private closeAllModals() {
     for (let i = 1; i <= this.modalService.getModalsCount(); i++) {
@@ -138,9 +145,12 @@ export class EmploymentComponent implements OnInit {
         element.employment_id = id.toString();
         if (element.start_date != '') {
           element.start_date = new Date(element.start_date).toISOString().split('T')[0];
+          element.start_date = this.format(element.start_date);
         }
         if (element.end_date != "") {
           element.end_date = new Date(element.end_date).toISOString().split('T')[0];
+          element.start_date = this.format(element.end_date);
+
         }
       });
       console.log(this.saveIndividuals.addToIndividual(this.employmentForm.value));

@@ -14,7 +14,7 @@
         (click)="submitForm()">Submit</button> -->
 </div>
 
-<form [formGroup]="employmentForm">
+<form [formGroup]="employmentForm" style="font-size: 12px">
     <table class="table table-bordered table-sm">
         <thead class="text-nowrap text-center">
             <th>
@@ -42,25 +42,29 @@
                 *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Employer Name</mat-label>
                             <input matInput type="text" formControlName="employer_name" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Employer Phone</mat-label>
                             <input matInput type="text" formControlName="employer_phone" (keyup)="submitForm()"
                                 autocomplete="off" appPhoneMask />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Income Amount</mat-label>
                             <input matInput type="text" formControlName="income_amount" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Income Frequency</mat-label>
                             <mat-select formControlName="income_frequency" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of incomeFrequency | keyvalue" value={{item.key}}>
                                     {{item.value}}
@@ -69,14 +73,16 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Start Date</mat-label>
                             <input matInput matInput [matDatepicker]="picker" formControlName="start_date" (dateChange)="submitForm()">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>End Date</mat-label>
                             <input matInput matInput [matDatepicker]="picker1" formControlName="end_date" (dateChange)="submitForm()">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>

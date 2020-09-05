@@ -15,7 +15,7 @@
         (click)="submitForm()">Submit</button> -->
 </div>
 
-<form [formGroup]="documentForm">
+<form [formGroup]="documentForm" style="font-size: 12px">
     <table class="table table-bordered table-sm">
         <thead class="text-nowrap text-center">
             <th>
@@ -37,7 +37,8 @@
                 *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Document Type</mat-label>
                             <mat-select formControlName="document_type_id" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of docType" value={{item.document_type_id}}>
                                     {{item.doc_type_description}}
@@ -46,7 +47,8 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Due Date</mat-label>
                             <input matInput matInput [matDatepicker]="picker" formControlName="due_date"
                                 (dateChange)="submitForm()">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -54,7 +56,8 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Date Submitted</mat-label>
                             <input matInput matInput [matDatepicker]="picker1" formControlName="date_submitted"
                                 (dateChange)="submitForm()">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -62,7 +65,8 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Status</mat-label>
                             <mat-select formControlName="status" (selectionChange)="submitForm()">
                                 <mat-option value="1">Valid</mat-option>
                                 <mat-option value="0">In-Valid</mat-option>

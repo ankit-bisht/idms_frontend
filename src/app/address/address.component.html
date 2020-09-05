@@ -14,7 +14,7 @@
         (click)="submitForm()">Submit</button> -->
 </div>
 
-<form [formGroup]="addressForm">
+<form [formGroup]="addressForm" style="font-size: 12px">
     <table class="table table-bordered table-sm">
         <thead class="text-nowrap text-center">
             <th>
@@ -51,7 +51,8 @@
                 *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Address Type</mat-label>
                             <mat-select formControlName="address_type" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of addresstype | keyvalue" value={{item.key}}>
                                     {{item.value}}
@@ -60,25 +61,29 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Number</mat-label>
                             <input matInput type="text" formControlName="number" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Street</mat-label>
                             <input matInput type="text" formControlName="street" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Suite</mat-label>
                             <input matInput type="text" formControlName="suite" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>State</mat-label>
                             <mat-select formControlName="state" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>
                                     {{item.value}}
@@ -87,7 +92,8 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>City</mat-label>
                             <mat-select formControlName="city" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of city" value={{item}}>{{item}}
                                 </mat-option>
@@ -95,20 +101,23 @@
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Zip</mat-label>
                             <input matInput type="text" formControlName="zip" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>From Date</mat-label>
                             <input matInput matInput [matDatepicker]="picker" formControlName="from_date">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                     </td>
                     <td>
-                        <mat-form-field>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>To Date</mat-label>
                             <input matInput matInput [matDatepicker]="picker1" formControlName="to_date">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
