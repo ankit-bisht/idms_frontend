@@ -1,4 +1,4 @@
-const PROD_SERVER = 'http://192.168.2.255:81/api/v1/';
+const PROD_SERVER = 'http://localhost:81/api/v1/';
 
 export class Configuration {
     public baseUrl = PROD_SERVER;
