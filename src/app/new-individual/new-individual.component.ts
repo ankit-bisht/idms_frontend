@@ -133,7 +133,8 @@ export class NewIndividualComponent implements OnInit {
     console.log(this.saveIndividuals.addToIndividual(this.individualForm.value));
     var obj: any = this.saveIndividuals.getIndividual();
     obj.userId = localStorage.getItem('userId');
-
+    delete obj.height;
+    
     if (localStorage.getItem('ClientDetails')) {
 
       obj.client_id = JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id;
