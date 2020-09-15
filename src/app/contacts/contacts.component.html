@@ -27,7 +27,10 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Email</mat-label>
-                            <input matInput type="text" placeholder="Email" formControlName="email" (keyup)="submitForm()">
+                            <mat-select formControlName="email" (selectionChange)="submitForm()">
+                                <mat-option value="Primary Email">Primary Email</mat-option>
+                                <mat-option value="Secondary Email">Secondary Email</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </td>
                     <td>

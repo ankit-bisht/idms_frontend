@@ -54,7 +54,7 @@ export class ContactsComponent implements OnInit {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      email: ['', Validators.email],
+      email: [''],
       contact_type: ['', Validators.required],
       phone: [''],
       isEditable: [true]
