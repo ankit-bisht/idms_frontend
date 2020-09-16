@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from "../services/user";
+
 
 @Component({
   selector: 'app-individuals',
@@ -11,28 +14,29 @@ import { ApiService } from '../services/api.service';
 })
 export class IndividualsComponent implements OnInit {
 
-  searchForm: FormGroup;
-  config: any;
-  showTable:boolean=false;
-  collection: any = [];
 
-  items = [];
-  pageOfItems: Array<any>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  displayedColumns = ['first_name', 'middle_name', 'last_name', 'phone', 'email', 'DOB'];
+  dataSource: any;
+  data: any = [];
+  length: any = 0;
 
   constructor(private spinner: NgxSpinnerService, private api: ApiService, public Router: Router) {
-    this.searchForm = new FormGroup({
-      'search': new FormControl(''),
-      'type': new FormControl(''),
-    });
-
   }
 
   ngOnInit() {
-    this.getIndividuals();
+    this.getDetail();
     localStorage.removeItem('ClientDetails')
+
   }
 
-  getIndividuals() {
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  getDetail() {
     const Obj = {
       userId: localStorage.getItem('userId')
     }
@@ -42,46 +46,11 @@ export class IndividualsComponent implements OnInit {
         setTimeout(() => {
           this.spinner.hide();
         }, 1000);
-        this.items = data.result;
-        this.items.map((item, i) => {
-          item.id = i + 1;
-        });
-      }
-    });
-  }
-
-  onChangePage(pageOfItems: Array<any>) {
-    // update current page of items
-    this.pageOfItems = pageOfItems;
-    if (this.pageOfItems.length == 0) {
-      this.pageOfItems[0] = "No Records Found!";
-    }
-
-  }
-
-  search() {
-    this.showTable = true;
-
-    if (this.searchForm.value.type == "" && this.searchForm.value.search == "") {
-      return this.getIndividuals();
-    }
-
-    const Obj = {
-      userId: localStorage.getItem('userId'),
-      searchParameter: this.searchForm.value.type,
-      parameterValue: this.searchForm.value.search
-    }
-    this.api.searchIndividuals(Obj).subscribe((data: any) => {
-      this.spinner.show();
-      if (data.responseCode === 200) {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000);
-
-        this.items = data.result;
-        this.items.map((item, i) => {
-          item.id = i + 1;
-        });
+        let users: User[] = [data.result];
+        this.data = users[0];
+        this.dataSource = new MatTableDataSource(this.data);
+        this.dataSource.paginator = this.paginator;
+        this.length = data.result.length;
       }
     });
   }
@@ -91,12 +60,12 @@ export class IndividualsComponent implements OnInit {
   }
 
   getSingleIndividual(clientId) {
+    this.spinner.show();
     const Obj = {
       userId: localStorage.getItem('userId'),
       clientId: clientId
     }
     this.api.getClientAllDetails(Obj).subscribe((data: any) => {
-      this.spinner.show();
       if (data.responseCode === 200) {
         this.spinner.hide();
         localStorage.setItem('ClientDetails', JSON.stringify(data.result));
@@ -104,5 +73,4 @@ export class IndividualsComponent implements OnInit {
       }
     });
   }
-
 }

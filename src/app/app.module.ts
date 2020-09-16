@@ -49,6 +49,10 @@ import { PaymentComponent } from './payment/payment.component';
 import { AttachmentsComponent } from './attachments/attachments.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 
 export const DateFormat = {
@@ -93,6 +97,8 @@ export const DateFormat = {
   ],
   imports: [
     ModalModule.forRoot(),
+    MatTableModule,
+    MatPaginatorModule,
     MatTabsModule,
     MaterialFileInputModule,
     NgxSpinnerModule,
@@ -108,7 +114,7 @@ export const DateFormat = {
     BsDatepickerModule.forRoot(),
     MatInputModule,
     MatDatepickerModule,
-    // MatNativeDateModule,
+    MatRadioModule,
     MatButtonModule,
     MatIconModule,
     MatSelectModule

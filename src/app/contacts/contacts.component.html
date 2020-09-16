@@ -2,13 +2,15 @@
     ::ng-deep .mat-form-field-wrapper {
         margin-top: -1.25em;
     }
+
     mat-icon {
-   cursor: pointer;
-}
+        cursor: pointer;
+    }
 </style>
 
 <div class="action-container" style="padding: 3%;">
-    <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()">Add row</button> &nbsp;
+    <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()">Add row</button>
+    &nbsp;
     <!-- <button mat-raised-button class="btn btn-primary" [disabled]="contactForm.invalid" type="submit"
         (click)="submitForm()">Submit</button> -->
 </div>
@@ -16,23 +18,22 @@
 <form [formGroup]="contactForm">
     <table class="table table-bordered table-sm">
         <thead class="text-nowrap text-center">
-            <th><h6>Email</h6><span dragableColumn> </span></th>
-            <th><h6>Contact Type<span class="text-danger">*</span></h6> <span dragableColumn> </span></th>
-            <th><h6>Mobile Number</h6></th>
+            <th>
+                <h6>Contact Type<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+            </th>
+            <th>
+                <h6>Mobile Number</h6><span dragableColumn> </span>
+            </th>
+            <th>
+                <h6>Email</h6>
+            </th>
             <th></th>
         </thead>
-        <tbody class="text-center" >
-            <ng-container formArrayName="clientContactDetails" *ngFor="let group of getFormControls.controls ; let i=index">
+        <tbody class="text-center">
+            <ng-container formArrayName="clientContactDetails"
+                *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-                    <td>
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Email</mat-label>
-                            <mat-select formControlName="email" (selectionChange)="submitForm()">
-                                <mat-option value="Primary Email">Primary Email</mat-option>
-                                <mat-option value="Secondary Email">Secondary Email</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </td>
+
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Contact Type</mat-label>
@@ -46,7 +47,17 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Mobile No</mat-label>
-                            <input matInput type="text" placeholder="Mobile no" formControlName="phone" maxlength="13" appPhoneMask (keyup)="submitForm()" autocomplete="off"/>
+                            <input matInput type="text" placeholder="Mobile no" formControlName="phone" maxlength="13"
+                                appPhoneMask (keyup)="submitForm()" autocomplete="off" />
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="outline" style="font-size: 10px">
+                            <mat-label>Email</mat-label>
+                            <mat-select formControlName="email" (selectionChange)="submitForm()">
+                                <mat-option value="Primary Email">Primary Email</mat-option>
+                                <mat-option value="Secondary Email">Secondary Email</mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </td>
                     <td>

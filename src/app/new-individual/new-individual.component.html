@@ -9,21 +9,14 @@
     width: 100%;
   }
 
+  .form-check .form-check-label {
+    font-size: 10px;
+  }
+
   ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
     font-weight: 100;
   }
 </style>
-<!-- <div class="page-header">
-  <h3 class="page-title">
-    Client Details
-  </h3>
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="javascript:;" (click)="redirect()">Individuals</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Details</li>
-    </ol>
-  </nav>
-</div> -->
 <div class="grid-margin stretch-card">
   <div class="card">
     <div class="card-body" style="padding-top: 1.25rem;">
@@ -73,7 +66,7 @@
                   </div>
 
                   <div class="row mt-4">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <mat-form-field appearance="outline">
                         <mat-label>Date of Birth</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="DOB" [(ngModel)]="DOB" required>
@@ -86,8 +79,13 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group row" style="font-size: 12px">
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>SSN</mat-label>
+                        <input matInput placeholder="SSN" (keyup)="onSubmit()" formControlName="ssn" [(ngModel)]="ssn"
+                          appSSNMask>
+                      </mat-form-field>
+                      <!-- <div class="form-group row" style="font-size: 12px">
                         <label class="col-sm-3 col-form-label">
                           <h6>Gender *</h6>
                         </label>
@@ -111,38 +109,21 @@
                             </label>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Client Type</mat-label>
+                        <mat-select formControlName="client_type" (selectionChange)="submitForm()"
+                          [(ngModel)]="clienttype">
+                          <mat-option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6">
-                      <mat-form-field appearance="outline">
-                        <mat-label>SSN</mat-label>
-                        <input matInput placeholder="SSN" (keyup)="onSubmit()" formControlName="ssn" [(ngModel)]="ssn"
-                          appSSNMask>
-                        <!-- <mat-error *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)">
-                          <span *ngIf="individualForm.get('ssn').errors.required">
-                            SSN is Required.
-                          </span>
-                        </mat-error> -->
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Weight</mat-label>
-                        <input matInput placeholder="Weight" (keyup)="onSubmit()" formControlName="weight"
-                          [(ngModel)]="weight">
-                        <!-- <mat-error
-                          *ngIf="individualForm.get('weight').invalid && (individualForm.get('weight').touched)">
-                          <span *ngIf="individualForm.get('weight').errors.required">
-                            Weight is Required.
-                          </span>
-                        </mat-error> -->
-                      </mat-form-field>
-                    </div>
-                  </div>
-                  <div class="row mt-3">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <mat-form-field appearance="outline">
                         <mat-label>Height in Feets/Inches</mat-label>
                         <input matInput placeholder="Feets/Inches" (keyup)="onSubmit()" formControlName="height"
@@ -153,47 +134,44 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <!-- <div class="col-md-3" style="padding-left: 0%;">
+                    <div class="col-md-4">
                       <mat-form-field appearance="outline">
-                        <mat-label>Height in Inches</mat-label>
-                        <input matInput placeholder="Inches" (keyup)="onSubmit()" formControlName="height_inches"
-                          [(ngModel)]="inches" required>
-                        <mat-error
-                          *ngIf="individualForm.get('height_inches').invalid && (individualForm.get('height_inches').touched)">
-                          <span *ngIf="individualForm.get('height_inches').errors.required">
-                            Inches is Required.
-                          </span>
-                        </mat-error>
+                        <mat-label>Weight</mat-label>
+                        <input matInput placeholder="Weight" (keyup)="onSubmit()" formControlName="weight"
+                          [(ngModel)]="weight">
                       </mat-form-field>
-                    </div> -->
-                    <div class="col-md-6">
-                      <mat-form-field appearance="outline">
-                        <mat-label>MP User Id</mat-label>
-                        <input matInput placeholder="MP User Id" (keyup)="onSubmit()" formControlName="mp_user_id"
-                          [(ngModel)]="mpUserId">
-                        <!-- <mat-error
-                          *ngIf="individualForm.get('mp_user_id').invalid && (individualForm.get('mp_user_id').touched)">
-                          <span *ngIf="individualForm.get('mp_user_id').errors.required">
-                            MP User Id is Required.
-                          </span> -->
-                        <!-- </mat-error> -->
-                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row" style="font-size: 12px">
+                        <label class="col-sm-4 col-form-label">
+                          <span style="font-size: 10px;">Gender *</span>
+                        </label>
+                        <div class="col-sm-4" style="padding: 0%;flex: 0 0 33.33333333%;
+                        max-width: 21.333333%;">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" style="font-size: 10px;" (keyup)="onSubmit()" class="form-check-input"
+                                id="membershipRadios1" formControlName="sex" value="M" [(ngModel)]="sex">
+                              Male
+                              <i class="input-helper"></i>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-4" style="padding: 0%;flex: 0 0 33.33333333%;
+                        max-width: 21.333333%;">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" style="font-size: 10px;" (keyup)="onSubmit()" class="form-check-input"
+                                id="membershipRadios2" formControlName="sex" value="F" [(ngModel)]="sex">
+                              Female
+                              <i class="input-helper"></i>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="row  mt-4">
-                    <div class="col-md-6">
-                      <mat-form-field appearance="outline">
-                        <mat-label>MP Password</mat-label>
-                        <input matInput placeholder="MP Password" (keyup)="onSubmit()" formControlName="mp_password"
-                          [(ngModel)]="mpPassword">
-                        <!-- <mat-error
-                          *ngIf="individualForm.get('mp_password').invalid && (individualForm.get('mp_password').touched)">
-                          <span *ngIf="individualForm.get('mp_password').errors.required">
-                            MP Password is Required.
-                          </span>
-                        </mat-error> -->
-                      </mat-form-field>
-                    </div>
+                  <div class="row mt-3">
                     <div class="col-md-6">
                       <mat-form-field appearance="outline">
                         <mat-label>Driver License State</mat-label>
@@ -202,43 +180,30 @@
                           <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
                           </mat-option>
                         </mat-select>
-                        <!-- <mat-error
-                        *ngIf="individualForm.get('driver_license_state').invalid && (individualForm.get('driver_license_state').touched)">
-                        <span *ngIf="individualForm.get('driver_license_state').errors.required">
-                          State is Required.
-                        </span>
-                      </mat-error> -->
                       </mat-form-field>
                     </div>
-                  </div>
-                  <div class="row mt-4">
                     <div class="col-md-6">
                       <mat-form-field appearance="outline">
                         <mat-label>Driver License Number</mat-label>
                         <input matInput placeholder="Driver License Number" (keyup)="onSubmit()"
                           formControlName="driver_license_number" [(ngModel)]="driverNumber">
-                        <!-- <mat-error
-                          *ngIf="individualForm.get('driver_license_number').invalid && (individualForm.get('driver_license_number').touched)">
-                          <span *ngIf="individualForm.get('driver_license_number').errors.required">
-                            Driver License Number is Required.
-                          </span>
-                        </mat-error> -->
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                  <div class="row  mt-4">
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>MP User Id</mat-label>
+                        <input matInput placeholder="MP User Id" (keyup)="onSubmit()" formControlName="mp_user_id"
+                          [(ngModel)]="mpUserId">
                       </mat-form-field>
                     </div>
                     <div class="col-md-6">
                       <mat-form-field appearance="outline">
-                        <mat-label>Client Type</mat-label>
-                        <mat-select formControlName="client_type" (selectionChange)="submitForm()"
-                          [(ngModel)]="clienttype">
-                          <mat-option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}
-                          </mat-option>
-                        </mat-select>
-                        <!-- <mat-error
-                        *ngIf="individualForm.get('client_type').invalid && (individualForm.get('client_type').touched)">
-                        <span *ngIf="individualForm.get('client_type').errors.required">
-                          Client Type is Required.
-                        </span>
-                      </mat-error> -->
+                        <mat-label>MP Password</mat-label>
+                        <input matInput placeholder="MP Password" (keyup)="onSubmit()" formControlName="mp_password"
+                          [(ngModel)]="mpPassword">
                       </mat-form-field>
                     </div>
                   </div>
@@ -248,17 +213,9 @@
                         <mat-label>Notes</mat-label>
                         <textarea matInput formControlName="notes" rows="5" placeholder="Notes.." [(ngModel)]="notes"
                           (keyup)="onSubmit()"></textarea>
-                        <!-- <mat-error
-                        *ngIf="individualForm.get('notes').invalid && (individualForm.get('notes').touched)">
-                        <span *ngIf="individualForm.get('notes').errors.required">
-                          Notes Type is Required.
-                        </span>
-                      </mat-error> -->
                       </mat-form-field>
                     </div>
                   </div>
-                  <!-- <button type="submit" *ngIf="!hideSubmit" (click)="saveIndividualDetails()"
-                    [disabled]="!individualForm.valid" class="btn btn-primary mr-2">Submit</button> -->
                 </form>
               </div>
             </div>
