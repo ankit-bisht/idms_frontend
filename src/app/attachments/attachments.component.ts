@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -17,7 +17,7 @@ import { element } from 'protractor';
   templateUrl: './attachments.component.html',
   styleUrls: ['./attachments.component.scss']
 })
-export class AttachmentsComponent implements OnInit {
+export class AttachmentsComponent implements OnChanges {
 
   attachmentForm: FormGroup;
   control: FormArray;
@@ -32,7 +32,9 @@ export class AttachmentsComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveIndividuals: IndividualDetailServiceService) { }
 
-  ngOnInit(): void {
+  @Input() disable: boolean;
+
+  ngOnChanges(disable: SimpleChanges): void {
     this.getConstants();
     this.touchedRows = [];
     this.attachmentForm = this.fb.group({
@@ -46,6 +48,11 @@ export class AttachmentsComponent implements OnInit {
       }
     } else {
       this.addRow();
+    }
+    if (disable.disable.currentValue) {
+      this.attachmentForm.disable();
+    } else {
+      this.attachmentForm.enable();
     }
   }
 

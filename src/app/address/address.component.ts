@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
+import { Component, OnChanges, SimpleChanges,Input, ViewChild, TemplateRef } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -17,7 +17,7 @@ import { Constants } from '../configuration/constants';
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss']
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent implements OnChanges {
 
   addressForm: FormGroup;
   control: FormArray;
@@ -35,7 +35,10 @@ export class AddressComponent implements OnInit {
     this.states = States.stateValue;
   }
 
-  ngOnInit(): void {
+  @Input() disable: boolean;
+
+
+  ngOnChanges(disable: SimpleChanges): void {
     this.getConstants();
     this.city = cities;
     this.touchedRows = [];
@@ -51,6 +54,12 @@ export class AddressComponent implements OnInit {
       }
     } else {
       this.addRow();
+    }
+
+    if (disable.disable.currentValue) {
+      this.addressForm.disable();
+    } else {
+      this.addressForm.enable();
     }
   }
 

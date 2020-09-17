@@ -19,6 +19,9 @@
 </style>
 <div class="grid-margin stretch-card">
   <div class="card">
+    <div class="card-title" style="padding: 10px 0px 0px 10px;" *ngIf="disable">
+      <button class="btn btn-primary btn-sm" (click)="enable()"><i class="mdi mdi-pencil"></i>Edit</button>
+    </div>
     <div class="card-body" style="padding-top: 1.25rem;">
       <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
         <p style="color: white"> Loading... </p>
@@ -123,15 +126,18 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <mat-form-field appearance="outline">
-                        <mat-label>Height in Feets/Inches</mat-label>
-                        <input matInput placeholder="Feets/Inches" (keyup)="onSubmit()" formControlName="height"
-                          [(ngModel)]="height">
-                        <mat-error
-                          *ngIf="individualForm.get('height').invalid && (individualForm.get('height').touched)">
-                          Height should be given in feets / inches.
-                        </mat-error>
+                        <mat-label>Height in Feets</mat-label>
+                        <input matInput placeholder="Feets" (keyup)="onSubmit()" formControlName="height_feet"
+                          [(ngModel)]="height_feet">
+                      </mat-form-field>
+                    </div><span style="margin-left: -5px;margin-top: 20px;">/</span>
+                    <div class="col-md-2">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Height in Inches</mat-label>
+                        <input matInput placeholder="Inches" (keyup)="onSubmit()" formControlName="height_inches"
+                          [(ngModel)]="height_inches">
                       </mat-form-field>
                     </div>
                     <div class="col-md-4">
@@ -222,27 +228,28 @@
           </div>
         </mat-tab>
         <mat-tab label="Contacts">
-          <app-contacts></app-contacts>
+          <app-contacts [disable]="disable"></app-contacts>
         </mat-tab>
         <mat-tab label="Address">
-          <app-address></app-address>
+          <app-address [disable]="disable"></app-address>
         </mat-tab>
         <mat-tab label="Employment">
-          <app-employment></app-employment>
+          <app-employment [disable]="disable"></app-employment>
         </mat-tab>
         <mat-tab label="Payment">
-          <app-payment></app-payment>
+          <app-payment [disable]="disable"></app-payment>
         </mat-tab>
         <mat-tab label="Attachments">
-          <app-attachments></app-attachments>
+          <app-attachments [disable]="disable"></app-attachments>
         </mat-tab>
         <mat-tab label="Documents">
-          <app-documents></app-documents>
+          <app-documents [disable]="disable"></app-documents>
         </mat-tab>
         <mat-tab label="Relationships" disabled>Content 3</mat-tab>
       </mat-tab-group>
       <br />
-      <button class="btn btn-primary float-right" [disabled]="!individualForm.valid" (click)="submit()">SUBMIT</button>
+      <button class="btn btn-primary float-right" [disabled]="!individualForm.valid" (click)="submit()"
+        *ngIf="!disable">SUBMIT</button>
     </div>
   </div>
 </div>

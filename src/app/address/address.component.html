@@ -30,10 +30,10 @@
                 <h6>Suite</h6> <span dragableColumn> </span>
             </th>
             <th>
-                <h6>State<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+                <h6>City<span class="text-danger">*</span></h6> <span dragableColumn> </span>
             </th>
             <th>
-                <h6>City<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+                <h6>State<span class="text-danger">*</span></h6> <span dragableColumn> </span>
             </th>
             <th>
                 <h6>Zip<span class="text-danger">*</span></h6> <span dragableColumn> </span>
@@ -83,19 +83,19 @@
                     </td>
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>State</mat-label>
-                            <mat-select formControlName="state" (selectionChange)="submitForm()">
-                                <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>
-                                    {{item.value}}
+                            <mat-label>City</mat-label>
+                            <mat-select formControlName="city" (selectionChange)="submitForm()">
+                                <mat-option *ngFor="let item of city" value={{item}}>{{item}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>City</mat-label>
-                            <mat-select formControlName="city" (selectionChange)="submitForm()">
-                                <mat-option *ngFor="let item of city" value={{item}}>{{item}}
+                            <mat-label>State</mat-label>
+                            <mat-select formControlName="state" (selectionChange)="submitForm()">
+                                <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>
+                                    {{item.value}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -142,10 +142,10 @@
                         {{group.get('suite').value ? group.get('suite').value:'NA'}}
                     </td>
                     <td>
-                        {{group.get('state').value?group.get('state').value:'NA'}}
+                        {{group.get('city').value?group.get('city').value:'NA'}}
                     </td>
                     <td>
-                        {{group.get('city').value?group.get('city').value:'NA'}}
+                        {{group.get('state').value?group.get('state').value:'NA'}}
                     </td>
                     <td>
                         {{group.get('zip').value?group.get('zip').value:'NA'}}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef,Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -15,7 +15,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss']
 })
-export class DocumentsComponent implements OnInit {
+export class DocumentsComponent implements OnChanges {
 
   documentForm: FormGroup;
   control: FormArray;
@@ -30,7 +30,9 @@ export class DocumentsComponent implements OnInit {
   constructor(private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveIndividuals: IndividualDetailServiceService) {
   }
 
-  ngOnInit(): void {
+  @Input() disable: boolean;
+
+  ngOnChanges(disable: SimpleChanges): void {
     this.getConstants();
     this.touchedRows = [];
     this.documentForm = this.fb.group({
@@ -44,6 +46,11 @@ export class DocumentsComponent implements OnInit {
       }
     } else {
       this.addRow();
+    }
+    if (disable.disable.currentValue) {
+      this.documentForm.disable();
+    } else {
+      this.documentForm.enable();
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef,Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -15,7 +15,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnChanges {
 
   paymentForm: FormGroup;
   control: FormArray;
@@ -31,7 +31,9 @@ export class PaymentComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveIndividuals: IndividualDetailServiceService) { }
 
-  ngOnInit(): void {
+  @Input() disable: boolean;
+
+  ngOnChanges(disable: SimpleChanges): void {
     this.getConstants();
     this.touchedRows = [];
     this.paymentForm = this.fb.group({
@@ -49,6 +51,11 @@ export class PaymentComponent implements OnInit {
       this.range.push(this.year + i,);
     }
 
+    if (disable.disable.currentValue) {
+      this.paymentForm.disable();
+    } else {
+      this.paymentForm.enable();
+    }
   }
 
   ngAfterOnInit() {

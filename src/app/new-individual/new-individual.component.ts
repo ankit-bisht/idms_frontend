@@ -26,8 +26,8 @@ export class NewIndividualComponent implements OnInit {
   sex: string;
   ssn: string;
   weight: string;
-  height: string;
-  // inches: string;
+  height_feet: string;
+  height_inches: string;
   mpUserId: string;
   mpPassword: string;
   driverState: string;
@@ -38,6 +38,7 @@ export class NewIndividualComponent implements OnInit {
   modalRef: BsModalRef;
   states: any;
   clientType: any;
+  disable: boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -49,6 +50,12 @@ export class NewIndividualComponent implements OnInit {
     this.getConstants();
     this.buildIndividualForm();
   }
+
+  enable() {
+    this.individualForm.enable();
+    this.disable = false;
+  }
+
 
   redirect() {
     this.Router.navigate(['/individuals']);
@@ -63,8 +70,8 @@ export class NewIndividualComponent implements OnInit {
       "DOB": new FormControl('', [Validators.required]),
       "sex": new FormControl('', [Validators.required]),
       "ssn": new FormControl(''),
-      "height": new FormControl('',Validators.pattern(/([^/]*\/){1}/)),
-      // "height_feet": new FormControl(''),
+      "height_feet": new FormControl(''),
+      "height_inches": new FormControl(''),
       "weight": new FormControl(''),
       "mp_user_id": new FormControl(''),
       "mp_password": new FormControl(''),
@@ -77,6 +84,10 @@ export class NewIndividualComponent implements OnInit {
     const getClientDetail = JSON.parse(localStorage.getItem('ClientDetails'));
 
     if (getClientDetail) {
+
+      this.individualForm.disable();
+      this.disable = true;
+
       const Client = getClientDetail.clientDetails[0];
       this.firstName = Client.first_name;
       this.middleName = Client.middle_name ? Client.middle_name : '';
@@ -85,8 +96,8 @@ export class NewIndividualComponent implements OnInit {
       this.sex = Client.sex ? Client.sex : '';
       this.ssn = Client.ssn ? Client.ssn : '';
       this.weight = Client.weight ? Client.weight : '';
-      this.height = Client.height ? Client.height : '';
-      // this.inches = Client.height_inches ? Client.height_inches : '';
+      this.height_feet = Client.height_feet ? Client.height_feet : '';
+      this.height_inches = Client.height_inches ? Client.height_inches : '';
       this.mpUserId = Client.mp_user_id ? Client.mp_user_id : '';
       this.mpPassword = Client.mp_password ? Client.mp_password : '';
       this.driverState = Client.driver_license_state ? Client.driver_license_state : '';
@@ -116,8 +127,8 @@ export class NewIndividualComponent implements OnInit {
       this.individualForm.value.userId = localStorage.getItem('userId');
       this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
       this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
-      this.individualForm.value.height_feet = this.individualForm.value.height ? this.individualForm.value.height.split('/')[0].toString() : '';
-      this.individualForm.value.height_inches = this.individualForm.value.height ? this.individualForm.value.height.split('/')[1].toString() : '';      this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
+      // this.individualForm.value.height_feet = this.individualForm.value.height ? this.individualForm.value.height.split('/')[0].toString() : '';
+      // this.individualForm.value.height_inches = this.individualForm.value.height ? this.individualForm.value.height.split('/')[1].toString() : '';      this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
       console.log(this.saveIndividuals.addToIndividual(this.individualForm.value));
     }
   }
@@ -125,16 +136,16 @@ export class NewIndividualComponent implements OnInit {
   submit() {
     this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
     this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
-    this.individualForm.value.height_feet = this.individualForm.value.height ? this.individualForm.value.height.split('/')[0].toString() : '';
-    this.individualForm.value.height_inches = this.individualForm.value.height ? this.individualForm.value.height.split('/')[1].toString() : '';
-    delete this.individualForm.value['height'];
-    
+    // this.individualForm.value.height_feet = this.individualForm.value.height ? this.individualForm.value.height.split('/')[0].toString() : '';
+    // this.individualForm.value.height_inches = this.individualForm.value.height ? this.individualForm.value.height.split('/')[1].toString() : '';
+    // delete this.individualForm.value['height'];
+
     this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
     console.log(this.saveIndividuals.addToIndividual(this.individualForm.value));
     var obj: any = this.saveIndividuals.getIndividual();
     obj.userId = localStorage.getItem('userId');
     delete obj.height;
-    
+
     if (localStorage.getItem('ClientDetails')) {
 
       obj.client_id = JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id;

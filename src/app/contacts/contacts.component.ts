@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -16,7 +16,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   templateUrl: "./contacts.component.html",
   styleUrls: ["./contacts.component.scss"],
 })
-export class ContactsComponent implements OnInit {
+export class ContactsComponent implements OnChanges {
 
   contactForm: FormGroup;
   control: FormArray;
@@ -30,7 +30,9 @@ export class ContactsComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveIndividuals: IndividualDetailServiceService) { }
 
-  ngOnInit(): void {
+  @Input() disable: boolean;
+
+  ngOnChanges(disable: SimpleChanges): void {
     this.getConstants();
     this.touchedRows = [];
     this.contactForm = this.fb.group({
@@ -46,6 +48,12 @@ export class ContactsComponent implements OnInit {
     } else {
       this.addRow();
     }
+
+    if (disable.disable.currentValue) {
+      this.contactForm.disable();
+    } else {
+      this.contactForm.enable();
+    }
   }
 
   ngAfterOnInit() {
@@ -54,7 +62,7 @@ export class ContactsComponent implements OnInit {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      email: [''],
+      email: ['', Validators.email],
       contact_type: ['', Validators.required],
       phone: [''],
       isEditable: [true]
