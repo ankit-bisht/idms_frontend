@@ -72,9 +72,12 @@ export class DocumentsComponent implements OnChanges {
     const control = this.documentForm.get('clientDocumentDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientDocumentDetails;
     Details.map(element => {
+      delete element.document_id;
       control.push(this.setForm(element));
-    });;
-    this.documentForm.value.clientDocumentDetails.map(element => {
+    });
+    this.documentForm.value.clientDocumentDetails.map((element, key) => {
+      const id = key + 1;
+      element.document_id = id.toString();
       delete element.isEditable;
     });
     this.saveIndividuals.addToIndividual(this.documentForm.value);

@@ -74,10 +74,12 @@ export class EmploymentComponent implements OnChanges {
     const control = this.employmentForm.get('clientEmploymentDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails;
     Details.map(element => {
-      delete element.client_id;
+      delete element.employment_id;
       control.push(this.setForm(element));
     });
-    this.employmentForm.value.clientEmploymentDetails.map(element => {
+    this.employmentForm.value.clientEmploymentDetails.map((element, key) => {
+      const id = key + 1;
+      element.employment_id = id.toString();
       delete element.isEditable;
     });
     this.saveIndividuals.addToIndividual(this.employmentForm.value);
