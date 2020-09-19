@@ -16,7 +16,7 @@ export class IndividualsComponent implements OnInit {
 
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['first_name', 'middle_name', 'last_name', 'phone', 'email', 'DOB'];
+  displayedColumns = ['first_name', 'middle_name', 'last_name','DOB', 'phone', 'email', ];
   dataSource: any;
   data: any = [];
   length: any = 0;
@@ -27,7 +27,6 @@ export class IndividualsComponent implements OnInit {
   ngOnInit() {
     this.getDetail();
     localStorage.removeItem('ClientDetails')
-
   }
 
   applyFilter(filterValue: string) {

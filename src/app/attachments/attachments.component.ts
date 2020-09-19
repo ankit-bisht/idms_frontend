@@ -78,7 +78,9 @@ export class AttachmentsComponent implements OnChanges {
       delete element.client_id;
       control.push(this.setForm(element));
     });
-    //this.deleteRow(0);
+    this.attachmentForm.value.clientAttachmentDetails.map(element => {
+      delete element.isEditable;
+    });
     this.saveIndividuals.addToIndividual(this.attachmentForm.value);
 
   }
@@ -88,7 +90,7 @@ export class AttachmentsComponent implements OnChanges {
       attachment_type: [element.attachment_type, Validators.required],
       attachment_location: [element.attachment_location, Validators.required],
       attachment_description: [element.attachment_description],
-      isEditable: [true]
+      isEditable: [false]
     });
   }
 

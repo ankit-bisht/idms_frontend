@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef,Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -40,10 +40,12 @@ export class PaymentComponent implements OnChanges {
       clientPaymentMethods: this.fb.array([])
     });
 
-    if(localStorage.getItem('ClientDetails')){
-    if (JSON.parse(localStorage.getItem('ClientDetails')).clientPaymentMethods.length >= 1) {
-      this.setDetails();
-    }
+    if (localStorage.getItem('ClientDetails')) {
+      if (JSON.parse(localStorage.getItem('ClientDetails')).clientPaymentMethods.length >= 1) {
+        this.setDetails();
+      }else{
+        this.addRow();
+      }
     } else {
       this.addRow();
     }
@@ -83,7 +85,9 @@ export class PaymentComponent implements OnChanges {
       delete element.client_id;
       control.push(this.setForm(element));
     });
-    //this.deleteRow(0);
+    this.paymentForm.value.clientPaymentMethods.map(element => {
+      delete element.isEditable;
+    });
     this.saveIndividuals.addToIndividual(this.paymentForm.value);
   }
 

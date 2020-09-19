@@ -7,9 +7,11 @@
         background-color: lightgray;
         cursor: pointer;
     }
-    .mat-cell{
+
+    .mat-cell {
         font-size: 13px;
     }
+
     .mat-header-cell {
         font-size: 14px;
     }
@@ -36,33 +38,39 @@
 
                     <ng-container matColumnDef="first_name">
                         <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
-                        <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">{{element.first_name}}</mat-cell>
+                        <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
+                            {{element.first_name}}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="middle_name">
                         <mat-header-cell *matHeaderCellDef> Middle Name </mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.middle_name}}</mat-cell>
+                        <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
+                            {{element.middle_name}}</mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="last_name">
                         <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.last_name}}
+                        <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
+                            {{element.last_name}}
                         </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="email">
-                        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.email}} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="phone">
-                        <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.phone}} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="DOB">
                         <mat-header-cell *matHeaderCellDef> DOB </mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.DOB}} </mat-cell>
+                        <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
+                            {{element.DOB}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                        <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
+                            {{element.email}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="phone">
+                        <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+                        <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
+                            {{element.phone}} </mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -70,107 +78,6 @@
                 </mat-table>
                 <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]">
                 </mat-paginator>
-
-
-                <!-- <h4 class="card-title">Basic form elements</h4> -->
-                <!-- <p class="card-description">
-            Basic form elements
-          </p> -->
-                <!-- <div class="search-field d-md-block">
-                    
-
-                        <form class="form-inline" [formGroup]="searchForm">
-                            <label class="sr-only" for="inlineFormInputName2">Type</label>
-                            <select class="form-control mb-2 mr-sm-2 form-control-sm" id="inlineFormInputName2"
-                                        style="height: fit-content;color: black;background-color:white"
-                                        formControlName="type">
-                                        <option class="dropdown-item" value="" selected>Select Type</option>
-                                        <option class="dropdown-item" value="first_name">First name</option>
-                                        <option class="dropdown-item" value="middle_name">Middle Name</option>
-                                        <option class="dropdown-item" value="last_name">Last Name</option>
-                                        <option class="dropdown-item" value="phone">Phone</option>
-                                        <option class="dropdown-item" value="email">Email</option>
-                                        <option class="dropdown-item" value="sex">Sex</option>
-                                        <option class="dropdown-item" value="DOB">DOB</option>
-                                    </select>
-                          
-                            <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
-                            <div class="input-group mb-2 mr-sm-2">
-                              <input type="text" formControlName="search" class="form-control form-control-sm" id="inlineFormInputGroupUsername2" placeholder="Search..">
-                            </div>
-                            <div class="form-check mx-sm-2">
-                                <button type="submit" (click)="search()" class="btn btn-gradient-primary mb-2 btn-sm">Submit</button>
-                            </div>
-                          </form>
-                </div>
-                <br />
-                <div style="overflow:auto" *ngIf= "showTable">
-                    <table class="table table-striped">
-                        <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box"
-                            [fullScreen]="false">
-                            <p style="color: white"> Loading... </p>
-                        </ngx-spinner>
-
-                        <thead>
-                            <tr>
-                                <th class="font-weight-bold">
-                                    First name
-                                </th>
-                                <th class="font-weight-bold">
-                                    Middle Name
-                                </th>
-                                <th class="font-weight-bold">
-                                    Last Name
-                                </th>
-                                <th class="font-weight-bold">
-                                    Phone
-                                </th>
-                                <th class="font-weight-bold">
-                                    Email
-                                </th>
-                                <th class="font-weight-bold">
-                                    Sex
-                                </th>
-                                <th class="font-weight-bold">
-                                    DOB
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody *ngFor="let item of pageOfItems">
-                            <tr>
-                                <td colspan="8" style="text-align: center;"
-                                    *ngIf=" pageOfItems.length === 1">{{pageOfItems[0]}}</td>
-                            </tr>
-                            <tr *ngIf="pageOfItems.length >= 1" (click)="getSingleIndividual(item.client_id)">
-                                
-                                <td>
-                                    {{item.first_name}}
-                                </td>
-                                <td>
-                                    {{item.middle_name}}
-                                </td>
-                                <td>
-                                    {{item.last_name}}
-                                </td>
-                                <td>
-                                    {{item.phone}}
-                                </td>
-                                <td>
-                                    {{item.email}}
-                                </td>
-                                <td>
-                                    {{item.sex}}
-                                </td>
-                                <td>
-                                    {{item.DOB}}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <br />
-                <jw-pagination *ngIf= "showTable" [items]="items" (changePage)="onChangePage($event)"></jw-pagination>
-            </div> -->
             </div>
         </div>
     </div>

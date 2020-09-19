@@ -89,7 +89,9 @@ export class AddressComponent implements OnChanges {
       delete element.client_id;
       control.push(this.setForm(element));
     });
-    //this.deleteRow(0);
+    this.addressForm.value.clientAddressDetails.map(element => {
+      delete element.isEditable;
+    });
     this.saveIndividuals.addToIndividual(this.addressForm.value);
   }
 
@@ -104,7 +106,7 @@ export class AddressComponent implements OnChanges {
       address_type: [element.address_type, Validators.required],
       from_date: [element.from_date],
       to_date: [element.to_date],
-      isEditable: [true]
+      isEditable: [false]
     });
   }
 
