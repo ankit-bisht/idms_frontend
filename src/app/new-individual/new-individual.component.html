@@ -19,8 +19,11 @@
 </style>
 <div class="grid-margin stretch-card">
   <div class="card">
-    <div class="card-title" style="padding: 10px 0px 0px 10px;" *ngIf="disable">
-      <button class="btn btn-primary btn-sm" (click)="enable()"><i class="mdi mdi-pencil"></i>Edit</button>
+    <div class="card-title" style="padding: 10px 0px 0px 10px;">
+      <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="disable"><i
+          class="mdi mdi-pencil"></i>Edit</button>
+      <button class="btn btn-primary btn-sm float-right" (click)="redirect()"><i
+          class="mdi mdi-keyboard-backspace"></i>Back</button>
     </div>
     <div class="card-body" style="padding-top: 1.25rem;">
       <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">

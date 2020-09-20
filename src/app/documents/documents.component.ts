@@ -72,9 +72,14 @@ export class DocumentsComponent implements OnChanges {
     const control = this.documentForm.get('clientDocumentDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientDocumentDetails;
     Details.map(element => {
+      delete element.document_id;
       control.push(this.setForm(element));
-    });;
-    //this.deleteRow(0);
+    });
+    this.documentForm.value.clientDocumentDetails.map((element, key) => {
+      const id = key + 1;
+      element.document_id = id.toString();
+      delete element.isEditable;
+    });
     this.saveIndividuals.addToIndividual(this.documentForm.value);
   }
 
@@ -84,7 +89,7 @@ export class DocumentsComponent implements OnChanges {
       due_date: [element.due_date, Validators.required],
       date_submitted: [element.date_submitted, Validators.required],
       status: [element.status, Validators.required],
-      isEditable: [true]
+      isEditable: [false]
     });
   }
 

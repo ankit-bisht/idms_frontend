@@ -127,8 +127,6 @@ export class NewIndividualComponent implements OnInit {
       this.individualForm.value.userId = localStorage.getItem('userId');
       this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
       this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
-      // this.individualForm.value.height_feet = this.individualForm.value.height ? this.individualForm.value.height.split('/')[0].toString() : '';
-      // this.individualForm.value.height_inches = this.individualForm.value.height ? this.individualForm.value.height.split('/')[1].toString() : '';      this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
       console.log(this.saveIndividuals.addToIndividual(this.individualForm.value));
     }
   }
@@ -136,10 +134,6 @@ export class NewIndividualComponent implements OnInit {
   submit() {
     this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
     this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
-    // this.individualForm.value.height_feet = this.individualForm.value.height ? this.individualForm.value.height.split('/')[0].toString() : '';
-    // this.individualForm.value.height_inches = this.individualForm.value.height ? this.individualForm.value.height.split('/')[1].toString() : '';
-    // delete this.individualForm.value['height'];
-
     this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
     console.log(this.saveIndividuals.addToIndividual(this.individualForm.value));
     var obj: any = this.saveIndividuals.getIndividual();
@@ -154,6 +148,8 @@ export class NewIndividualComponent implements OnInit {
         this.spinner.show();
         if (data.responseCode === 200) {
           this.spinner.hide();
+          this.individualForm.disable();
+          this.disable = true;
           this.modalMessage = data.message;
           return this.modalRef = this.modalService.show(this.templateRef);
         } else {
@@ -167,6 +163,8 @@ export class NewIndividualComponent implements OnInit {
         this.spinner.show();
         if (data.responseCode === 200) {
           this.spinner.hide();
+          this.individualForm.disable();
+          this.disable = true;
           this.modalMessage = data.message;
           return this.modalRef = this.modalService.show(this.templateRef);
         } else {

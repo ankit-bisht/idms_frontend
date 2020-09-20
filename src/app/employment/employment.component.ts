@@ -74,10 +74,14 @@ export class EmploymentComponent implements OnChanges {
     const control = this.employmentForm.get('clientEmploymentDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails;
     Details.map(element => {
-      delete element.client_id;
+      delete element.employment_id;
       control.push(this.setForm(element));
     });
-    //this.deleteRow(0);
+    this.employmentForm.value.clientEmploymentDetails.map((element, key) => {
+      const id = key + 1;
+      element.employment_id = id.toString();
+      delete element.isEditable;
+    });
     this.saveIndividuals.addToIndividual(this.employmentForm.value);
   }
 
@@ -89,7 +93,7 @@ export class EmploymentComponent implements OnChanges {
       income_frequency: [element.income_frequency, Validators.required],
       start_date: [element.start_date, Validators.required],
       end_date: [element.end_date],
-      isEditable: [true]
+      isEditable: [false]
     });
   }
 

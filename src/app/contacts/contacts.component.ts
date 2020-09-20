@@ -85,7 +85,11 @@ export class ContactsComponent implements OnChanges {
     Details.map(element => {
       control.push(this.setForm(element));
     });
-    // this.deleteRow(0);    
+    this.contactForm.value.clientContactDetails.map((element, key) => {
+      const id = key + 1;
+      element.contact_id = id.toString();
+      delete element.isEditable;
+    });
     this.saveIndividuals.addToIndividual(this.contactForm.value);
   }
 
@@ -94,7 +98,7 @@ export class ContactsComponent implements OnChanges {
       email: [element.email, Validators.email],
       contact_type: [element.contact_type, Validators.required],
       phone: [element.phone],
-      isEditable: [true]
+      isEditable: [false]
     });
   }
 

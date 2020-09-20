@@ -70,25 +70,30 @@ export class AttachmentsComponent implements OnChanges {
   }
 
   setDetails() {
+    console.log("ji");
+    
     const control = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientAttachmentDetails;
     Details.map(element => {
-      console.log(element);
-
-      delete element.client_id;
+      delete element.attachment_id;
       control.push(this.setForm(element));
     });
-    //this.deleteRow(0);
+    this.attachmentForm.value.clientAttachmentDetails.map((element, key) => {
+      delete element.isEditable;
+      const id = key + 1;
+      element.attachment_id = id.toString();
+    });
     this.saveIndividuals.addToIndividual(this.attachmentForm.value);
 
   }
 
   setForm(element): FormGroup {
+    console.log(element);
     return this.fb.group({
       attachment_type: [element.attachment_type, Validators.required],
       attachment_location: [element.attachment_location, Validators.required],
       attachment_description: [element.attachment_description],
-      isEditable: [true]
+      isEditable: [false]
     });
   }
 
@@ -126,8 +131,10 @@ export class AttachmentsComponent implements OnChanges {
     formData.append('file', File, File.name);
     formData.append('userId', localStorage.getItem('userId'));
 
+    this.spinner.show();
+
     this.api.uploadAttachment(formData).subscribe((data: any) => {
-      this.openModal();
+      // this.openModal();
       if (data.responseCode === 200) {
         this.spinner.hide();
         this.fileArray[index] = data.result.fileName;
@@ -160,12 +167,12 @@ export class AttachmentsComponent implements OnChanges {
       var contactsDetails = this.attachmentForm.value.clientAttachmentDetails;
       contactsDetails.forEach((element, key) => {
         delete element.isEditable;
-        delete element.attachment_location;
+
         const id = key + 1;
         element.attachment_description = element.attachment_description.toString();
         element.attachment_id = id.toString();
-        const fileName = this.fileArray[key];
-        element.attachment_location = fileName;
+        // const fileName = this.fileArray[key];
+        element.attachment_location = element.attachment_location._fileNames;
 
       });
       console.log(this.saveIndividuals.addToIndividual(this.attachmentForm.value));
