@@ -130,7 +130,7 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('address_type').value ? group.get('address_type').value :'NA'}}
+                        {{group.get('address_type').value ? addresstype[group.get('address_type').value] :'NA'}}
                     </td>
                     <td>
                         {{group.get('number').value ? group.get('number').value :'NA'}}
@@ -145,7 +145,7 @@
                         {{group.get('city').value?group.get('city').value:'NA'}}
                     </td>
                     <td>
-                        {{group.get('state').value?group.get('state').value:'NA'}}
+                        {{group.get('state').value? states[group.get('state').value]:'NA'}}
                     </td>
                     <td>
                         {{group.get('zip').value?group.get('zip').value:'NA'}}

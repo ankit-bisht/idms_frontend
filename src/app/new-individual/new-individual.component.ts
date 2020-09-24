@@ -39,6 +39,7 @@ export class NewIndividualComponent implements OnInit {
   states: any;
   clientType: any;
   disable: boolean = false;
+  userEdit:Boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -104,7 +105,30 @@ export class NewIndividualComponent implements OnInit {
       this.driverNumber = Client.driver_license_number ? Client.driver_license_number : '';
       this.clienttype = Client.client_type ? Client.client_type : '';
       this.notes = Client.notes ? Client.notes : '';
+
+      if(Client.user_id != JSON.parse(localStorage.getItem('userId'))){
+        this.userEdit = true;
+      }
     }
+  }
+
+  
+  delete(){
+    const obj={
+      clientId :JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
+      userId : localStorage.getItem('userId')
+    }
+    this.api.deleteClient(obj).subscribe((data: any) => {
+      this.spinner.show();
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        this.redirect();
+      } else {
+        this.spinner.hide();
+        this.modalMessage = data.error;
+        return this.modalRef = this.modalService.show(this.templateRef);
+      }
+    });
   }
 
   /**

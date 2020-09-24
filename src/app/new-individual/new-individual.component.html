@@ -22,6 +22,8 @@
     <div class="card-title" style="padding: 10px 0px 0px 10px;">
       <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="disable"><i
           class="mdi mdi-pencil"></i>Edit</button>
+      <button class="btn btn-primary btn-sm" (click)="delete()" *ngIf="userEdit"><i
+            class="mdi mdi-delete"></i>Delete</button>
       <button class="btn btn-primary btn-sm float-right" (click)="redirect()"><i
           class="mdi mdi-keyboard-backspace"></i>Back</button>
     </div>

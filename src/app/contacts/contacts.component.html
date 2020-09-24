@@ -65,13 +65,13 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('email').value?group.get('email').value:'NA'}}
-                    </td>
-                    <td>
-                        {{group.get('contact_type').value?group.get('contact_type').value:'NA'}}
+                        {{group.get('contact_type').value?contactype[group.get('contact_type').value]:'NA'}}
                     </td>
                     <td>
                         {{group.get('phone').value?group.get('phone').value:'NA'}}
+                    </td>
+                    <td>
+                        {{group.get('email').value?group.get('email').value:'NA'}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
