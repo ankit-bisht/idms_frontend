@@ -39,7 +39,8 @@ export class NewIndividualComponent implements OnInit {
   states: any;
   clientType: any;
   disable: boolean = false;
-  userEdit:Boolean = false;
+  userEdit: Boolean = false;
+  deleteClient: boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -106,17 +107,23 @@ export class NewIndividualComponent implements OnInit {
       this.clienttype = Client.client_type ? Client.client_type : '';
       this.notes = Client.notes ? Client.notes : '';
 
-      if(Client.user_id != JSON.parse(localStorage.getItem('userId'))){
+      if (Client.user_id != JSON.parse(localStorage.getItem('userId'))) {
         this.userEdit = true;
       }
     }
   }
 
-  
-  delete(){
-    const obj={
-      clientId :JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
-      userId : localStorage.getItem('userId')
+  openDelete() {
+    this.deleteClient = true;
+    this.modalMessage = 'Are you sure you want to delete this Individual?';
+    return this.modalRef = this.modalService.show(this.templateRef);
+  }
+
+  delete() {
+    this.modalService.hide(1);
+    const obj = {
+      clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
+      userId: localStorage.getItem('userId')
     }
     this.api.deleteClient(obj).subscribe((data: any) => {
       this.spinner.show();

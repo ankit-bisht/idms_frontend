@@ -92,7 +92,7 @@
                         {{group.get('status').value?group.get('status').value:'NA'}}
                     </td>
                     <td>
-                        <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
+                        <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
                     </td>
                 </tr>
             </ng-container>

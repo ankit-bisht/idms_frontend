@@ -77,7 +77,7 @@
                         {{group.get('attachment_location').value?group.get('attachment_location').value:'NA'}}
                     </td>
                     <td>
-                        <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
+                        <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
                     </td>
                 </tr>
             </ng-container>
