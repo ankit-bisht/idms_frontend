@@ -24,6 +24,7 @@ export class DocumentsComponent implements OnChanges {
   modalMessage: any;
   modalRef: BsModalRef;
   touchedRows: any;
+  document_status:any;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -41,8 +42,6 @@ export class DocumentsComponent implements OnChanges {
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientDocumentDetails.length >= 1) {
         this.setDetails();
-      } else {
-        this.addRow();
       }
     } else {
       this.addRow();
@@ -51,11 +50,13 @@ export class DocumentsComponent implements OnChanges {
       this.documentForm.disable();
     } else {
       this.documentForm.enable();
+      this.addRow();
     }
   }
 
   ngAfterOnInit() {
     this.control = this.documentForm.get('clientDocumentDetails') as FormArray;
+    this.document_status = ['Submmitted','Open'];
   }
 
   initiateForm(): FormGroup {

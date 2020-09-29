@@ -49,8 +49,6 @@ export class AddressComponent implements OnChanges {
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientAddressDetails.length >= 1) {
         this.setDetails();
-      } else {
-        this.addRow();
       }
     } else {
       this.addRow();
@@ -60,6 +58,7 @@ export class AddressComponent implements OnChanges {
       this.addressForm.disable();
     } else {
       this.addressForm.enable();
+      this.addRow();
     }
   }
 

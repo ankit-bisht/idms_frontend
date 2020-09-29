@@ -83,14 +83,15 @@ export class NewIndividualComponent implements OnInit {
       "notes": new FormControl(''),
     });
 
-    const getClientDetail = JSON.parse(localStorage.getItem('ClientDetails'));
+    let getClientDetail = JSON.parse(localStorage.getItem('ClientDetails'));
+
 
     if (getClientDetail) {
+      const Client = getClientDetail.clientDetails[0];
 
       this.individualForm.disable();
       this.disable = true;
 
-      const Client = getClientDetail.clientDetails[0];
       this.firstName = Client.first_name;
       this.middleName = Client.middle_name ? Client.middle_name : '';
       this.lastName = Client.last_name;
@@ -107,7 +108,7 @@ export class NewIndividualComponent implements OnInit {
       this.clienttype = Client.client_type ? Client.client_type : '';
       this.notes = Client.notes ? Client.notes : '';
 
-      if (Client.user_id != JSON.parse(localStorage.getItem('userId'))) {
+      if (Client.user_id == JSON.parse(localStorage.getItem('userId'))) {
         this.userEdit = true;
       }
     }
@@ -177,17 +178,28 @@ export class NewIndividualComponent implements OnInit {
 
       this.api.updateClient(obj).subscribe((data: any) => {
         this.spinner.show();
-        if (data.responseCode === 200) {
-          this.spinner.hide();
-          this.individualForm.disable();
-          this.disable = true;
-          this.modalMessage = data.message;
-          return this.modalRef = this.modalService.show(this.templateRef);
-        } else {
-          this.spinner.hide();
-          this.modalMessage = data.error;
-          return this.modalRef = this.modalService.show(this.templateRef);
+        const Obj = {
+          userId: localStorage.getItem('userId'),
+          clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id
         }
+        this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
+          if (getdata.responseCode === 200) {
+            this.spinner.hide();
+            localStorage.setItem('ClientDetails', JSON.stringify(getdata.result));
+          }
+          if (data.responseCode === 200) {
+            this.spinner.hide();
+            this.individualForm.disable();
+            this.disable = true;
+            this.modalMessage = data.message;
+            return this.modalRef = this.modalService.show(this.templateRef);
+          } else {
+            this.spinner.hide();
+            this.modalMessage = data.error;
+            return this.modalRef = this.modalService.show(this.templateRef);
+          }
+        });
+
       });
     } else {
       this.api.createClient(obj).subscribe((data: any) => {
@@ -205,6 +217,7 @@ export class NewIndividualComponent implements OnInit {
         }
       });
     }
+
   }
 
 }

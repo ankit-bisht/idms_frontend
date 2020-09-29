@@ -43,8 +43,6 @@ export class PaymentComponent implements OnChanges {
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientPaymentMethods.length >= 1) {
         this.setDetails();
-      }else{
-        this.addRow();
       }
     } else {
       this.addRow();
@@ -57,6 +55,7 @@ export class PaymentComponent implements OnChanges {
       this.paymentForm.disable();
     } else {
       this.paymentForm.enable();
+      this.addRow();
     }
   }
 

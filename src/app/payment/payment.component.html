@@ -131,28 +131,28 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('payment_type').value ? group.get('payment_type').value :'NA'}}
+                        {{group.get('payment_type').value ? group.get('payment_type').value :''}}
                     </td>
                     <td>
-                        {{group.get('account_number').value ? group.get('account_number').value :'NA'}}
+                        {{group.get('account_number').value ? group.get('account_number').value :''}}
                     </td>
                     <td>
-                        {{group.get('account_name').value ? group.get('account_name').value:'NA'}}
+                        {{group.get('account_name').value ? group.get('account_name').value:''}}
                     </td>
                     <td>
-                        {{group.get('routing_number').value ? group.get('routing_number').value:'NA'}}
+                        {{group.get('routing_number').value ? group.get('routing_number').value:''}}
                     </td>
                     <td>
-                        {{group.get('cvv').value?group.get('cvv').value:'NA'}}
+                        {{group.get('cvv').value?group.get('cvv').value:''}}
                     </td>
                     <td>
-                        {{group.get('expiry_month').value?group.get('expiry_month').value:'NA'}}
+                        {{group.get('expiry_month').value?group.get('expiry_month').value:''}}
                     </td>
                     <td>
-                        {{group.get('expiry_year').value?group.get('expiry_year').value:'NA'}}
+                        {{group.get('expiry_year').value?group.get('expiry_year').value:''}}
                     </td>
                     <td>
-                        {{group.get('valid').value?group.get('valid').value:'NA'}}
+                        {{group.get('valid').value?group.get('valid').value:''}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

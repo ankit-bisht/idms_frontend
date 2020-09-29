@@ -42,8 +42,6 @@ export class ContactsComponent implements OnChanges {
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails.length >= 1) {
         this.setDetails();
-      } else {
-        this.addRow();
       }
     } else {
       this.addRow();
@@ -102,9 +100,21 @@ export class ContactsComponent implements OnChanges {
     });
   }
 
+  disableField(index) {
+
+    const Form = this.contactForm.controls.clientContactDetails['controls'][index].controls;
+    if (Form.contact_type.value == '1' || Form.contact_type.value == '2') {
+      Form.phone.disable();
+    } else {
+      Form.email.disable();
+      Form.phone.enable();
+    }
+  }
+
   deleteRow(index: number) {
     const control = this.contactForm.get('clientContactDetails') as FormArray;
     control.removeAt(index);
+    this.submitForm();
   }
 
   editRow(group: FormGroup) {
@@ -134,7 +144,7 @@ export class ContactsComponent implements OnChanges {
       contactsDetails.map((element, key) => {
         delete element.isEditable;
         const id = key + 1;
-        element.phone = element.phone.toString();
+        element.phone = element.phone?element.phone.toString():'';
         element.contact_id = id.toString();
       });
       console.log(this.saveIndividuals.addToIndividual(this.contactForm.value));

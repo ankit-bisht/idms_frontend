@@ -68,13 +68,13 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('attachment_type').value? group.get('attachment_type').value:'NA'}}
+                        {{group.get('attachment_type').value? group.get('attachment_type').value:''}}
                     </td>
                     <td>
-                        {{group.get('attachment_description').value?group.get('attachment_description').value:'NA'}}
+                        {{group.get('attachment_description').value?group.get('attachment_description').value:''}}
                     </td>
                     <td>
-                        {{group.get('attachment_location').value?group.get('attachment_location').value:'NA'}}
+                        {{group.get('attachment_location').value?group.get('attachment_location').value:''}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

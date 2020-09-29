@@ -9,7 +9,8 @@
 </style>
 
 <div class="action-container" style="padding: 3%;">
-    <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add Row</button>
+    <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+        Row</button>
     &nbsp;
     <!-- <button mat-raised-button class="btn btn-primary" [disabled]="contactForm.invalid" type="submit"
         (click)="submitForm()">Submit</button> -->
@@ -68,8 +69,8 @@
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Status</mat-label>
                             <mat-select formControlName="status" (selectionChange)="submitForm()">
-                                <mat-option value="1">Valid</mat-option>
-                                <mat-option value="0">Invalid</mat-option>
+                                <mat-option value="1">Open</mat-option>
+                                <mat-option value="0">Submitted</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </td>
@@ -80,16 +81,16 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('document_type_id').value?group.get('document_type_id').value:'NA'}}
+                        {{group.get('document_type_id').value?group.get('document_type_id').value:''}}
                     </td>
                     <td>
-                        {{group.get('due_date').value?group.get('due_date').value:'NA'}}
+                        {{group.get('due_date').value?group.get('due_date').value:''}}
                     </td>
                     <td>
-                        {{group.get('date_submitted').value?group.get('date_submitted').value:'NA'}}
+                        {{group.get('date_submitted').value?group.get('date_submitted').value:''}}
                     </td>
                     <td>
-                        {{group.get('status').value?group.get('status').value:'NA'}}
+                        {{group.get('status').value == 1?'Open':'Submitted'}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

@@ -130,31 +130,31 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('address_type').value ? addresstype[group.get('address_type').value] :'NA'}}
+                        {{group.get('address_type').value ? addresstype[group.get('address_type').value] :''}}
                     </td>
                     <td>
-                        {{group.get('number').value ? group.get('number').value :'NA'}}
+                        {{group.get('number').value ? group.get('number').value :''}}
                     </td>
                     <td>
-                        {{group.get('street').value ? group.get('street').value:'NA'}}
+                        {{group.get('street').value ? group.get('street').value:''}}
                     </td>
                     <td>
-                        {{group.get('suite').value ? group.get('suite').value:'NA'}}
+                        {{group.get('suite').value ? group.get('suite').value:''}}
                     </td>
                     <td>
-                        {{group.get('city').value?group.get('city').value:'NA'}}
+                        {{group.get('city').value?group.get('city').value:''}}
                     </td>
                     <td>
-                        {{group.get('state').value? states[group.get('state').value]:'NA'}}
+                        {{group.get('state').value? states[group.get('state').value]:''}}
                     </td>
                     <td>
-                        {{group.get('zip').value?group.get('zip').value:'NA'}}
+                        {{group.get('zip').value?group.get('zip').value:''}}
                     </td>
                     <td>
-                        {{group.get('from_date').value?group.get('from_date').value:'NA'}}
+                        {{group.get('from_date').value?group.get('from_date').value:''}}
                     </td>
                     <td>
-                        {{group.get('to_date').value?group.get('to_date').value:'NA'}}
+                        {{group.get('to_date').value?group.get('to_date').value:''}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

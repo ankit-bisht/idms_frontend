@@ -41,8 +41,6 @@ export class EmploymentComponent implements OnChanges {
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails.length >= 1) {
         this.setDetails();
-      } else {
-        this.addRow();
       }
     } else {
       this.addRow();
@@ -51,6 +49,7 @@ export class EmploymentComponent implements OnChanges {
       this.employmentForm.disable();
     } else {
       this.employmentForm.enable();
+      this.addRow();
     }
   }
 

@@ -37,7 +37,7 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Contact Type</mat-label>
-                            <mat-select formControlName="contact_type" (selectionChange)="submitForm()" required>
+                            <mat-select formControlName="contact_type" (selectionChange)="disableField(i)" required>
                                 <mat-option *ngFor="let item of contactype | keyvalue" value={{item.key}}>
                                     {{item.value}}
                                 </mat-option>
@@ -65,13 +65,13 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('contact_type').value?contactype[group.get('contact_type').value]:'NA'}}
+                        {{group.get('contact_type').value?contactype[group.get('contact_type').value]:''}}
                     </td>
                     <td>
-                        {{group.get('phone').value?group.get('phone').value:'NA'}}
+                        {{group.get('phone').value?group.get('phone').value:''}}
                     </td>
                     <td>
-                        {{group.get('email').value?group.get('email').value:'NA'}}
+                        {{group.get('email').value?group.get('email').value:''}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

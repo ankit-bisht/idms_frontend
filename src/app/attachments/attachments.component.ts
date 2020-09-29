@@ -43,8 +43,6 @@ export class AttachmentsComponent implements OnChanges {
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientAttachmentDetails.length >= 1) {
         this.setDetails();
-      } else {
-        this.addRow();
       }
     } else {
       this.addRow();
@@ -53,6 +51,7 @@ export class AttachmentsComponent implements OnChanges {
       this.attachmentForm.disable();
     } else {
       this.attachmentForm.enable();
+      this.addRow();
     }
   }
 
