@@ -122,6 +122,7 @@ export class EmploymentComponent implements OnChanges {
   deleteRow(index: number) {
     const control = this.employmentForm.get('clientEmploymentDetails') as FormArray;
     control.removeAt(index);
+    this.submitForm();
   }
 
   editRow(group: FormGroup) {

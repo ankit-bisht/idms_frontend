@@ -129,6 +129,7 @@ export class AddressComponent implements OnChanges {
   deleteRow(index: number) {
     const control = this.addressForm.get('clientAddressDetails') as FormArray;
     control.removeAt(index);
+    this.submitForm();
   }
 
   editRow(group: FormGroup) {

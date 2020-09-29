@@ -112,6 +112,7 @@ export class DocumentsComponent implements OnChanges {
   deleteRow(index: number) {
     const control = this.documentForm.get('clientDocumentDetails') as FormArray;
     control.removeAt(index);
+    this.submitForm();
   }
 
   editRow(group: FormGroup) {

@@ -116,6 +116,7 @@ export class PaymentComponent implements OnChanges {
   deleteRow(index: number) {
     const control = this.paymentForm.get('clientPaymentMethods') as FormArray;
     control.removeAt(index);
+    this.submitForm();
   }
 
   editRow(group: FormGroup) {
