@@ -44,8 +44,6 @@ export class PaymentComponent implements OnChanges {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientPaymentMethods.length >= 1) {
         this.setDetails();
       }
-    } else {
-      this.addRow();
     }
     for (var i = 0; i < 25; i++) {
       this.range.push(this.year + i,);
@@ -55,7 +53,7 @@ export class PaymentComponent implements OnChanges {
       this.paymentForm.disable();
     } else {
       this.paymentForm.enable();
-      this.addRow();
+      // this.addRow();
     }
   }
 

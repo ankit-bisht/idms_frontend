@@ -42,14 +42,12 @@ export class EmploymentComponent implements OnChanges {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientEmploymentDetails.length >= 1) {
         this.setDetails();
       }
-    } else {
-      this.addRow();
     }
     if (disable.disable.currentValue) {
       this.employmentForm.disable();
     } else {
       this.employmentForm.enable();
-      this.addRow();
+      // this.addRow();
     }
   }
 

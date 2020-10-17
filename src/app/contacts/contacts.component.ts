@@ -38,13 +38,10 @@ export class ContactsComponent implements OnChanges {
     this.contactForm = this.fb.group({
       clientContactDetails: this.fb.array([])
     });
-
     if (localStorage.getItem('ClientDetails')) {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientContactDetails.length >= 1) {
         this.setDetails();
       }
-    } else {
-      this.addRow();
     }
 
     if (disable.disable.currentValue) {
@@ -105,6 +102,7 @@ export class ContactsComponent implements OnChanges {
     const Form = this.contactForm.controls.clientContactDetails['controls'][index].controls;
     if (Form.contact_type.value == '1' || Form.contact_type.value == '2') {
       Form.phone.disable();
+      Form.email.enable();
     } else {
       Form.email.disable();
       Form.phone.enable();
@@ -144,7 +142,7 @@ export class ContactsComponent implements OnChanges {
       contactsDetails.map((element, key) => {
         delete element.isEditable;
         const id = key + 1;
-        element.phone = element.phone?element.phone.toString():'';
+        element.phone = element.phone ? element.phone.toString() : '';
         element.contact_id = id.toString();
       });
       console.log(this.saveIndividuals.addToIndividual(this.contactForm.value));

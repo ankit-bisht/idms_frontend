@@ -68,7 +68,7 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('attachment_type').value? group.get('attachment_type').value:''}}
+                        {{group.get('attachment_type').value? group.get('attachment_type').value == 1 ?'PAN':'':''}}
                     </td>
                     <td>
                         {{group.get('attachment_description').value?group.get('attachment_description').value:''}}

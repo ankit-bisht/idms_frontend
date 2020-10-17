@@ -81,7 +81,7 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('document_type_id').value?group.get('document_type_id').value:''}}
+                        {{group.get('document_type_id').value? group.get('document_type_id').value == 1 ?'PAN':'':''}}
                     </td>
                     <td>
                         {{group.get('due_date').value?group.get('due_date').value:''}}

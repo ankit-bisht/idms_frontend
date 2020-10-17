@@ -98,9 +98,9 @@ export class NewIndividualComponent implements OnInit {
       this.DOB = new Date(Client.DOB);
       this.sex = Client.sex ? Client.sex : '';
       this.ssn = Client.ssn ? Client.ssn : '';
-      this.weight = Client.weight ? Client.weight : '';
-      this.height_feet = Client.height_feet ? Client.height_feet : '';
-      this.height_inches = Client.height_inches ? Client.height_inches : '';
+      this.weight = Client.weight ? Client.weight.toString() : '';
+      this.height_feet = Client.height_feet ? Client.height_feet.toString() : '';
+      this.height_inches = Client.height_inches ? Client.height_inches.toString() : '';
       this.mpUserId = Client.mp_user_id ? Client.mp_user_id : '';
       this.mpPassword = Client.mp_password ? Client.mp_password : '';
       this.driverState = Client.driver_license_state ? Client.driver_license_state : '';
@@ -167,7 +167,7 @@ export class NewIndividualComponent implements OnInit {
     this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
     this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
     this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
-    console.log(this.saveIndividuals.addToIndividual(this.individualForm.value));
+    this.saveIndividuals.addToIndividual(this.individualForm.value);
     var obj: any = this.saveIndividuals.getIndividual();
     obj.userId = localStorage.getItem('userId');
     delete obj.height;
@@ -217,6 +217,16 @@ export class NewIndividualComponent implements OnInit {
         }
       });
     }
+    const Obj = {
+      userId: localStorage.getItem('userId'),
+      clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id
+    }
+    this.api.getClientAllDetails(Obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        localStorage.setItem('ClientDetails', JSON.stringify(data.result));
+        window.location.reload();      }
+    });
 
   }
 

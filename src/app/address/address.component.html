@@ -84,10 +84,12 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>City</mat-label>
-                            <mat-select formControlName="city" (selectionChange)="submitForm()">
+                            <input matInput type="text" formControlName="city" (keyup)="submitForm()"
+                                autocomplete="off" />
+                            <!-- <mat-select formControlName="city" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of city" value={{item}}>{{item}}
                                 </mat-option>
-                            </mat-select>
+                            </mat-select> -->
                         </mat-form-field>
                     </td>
                     <td>

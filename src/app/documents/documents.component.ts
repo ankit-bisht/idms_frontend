@@ -43,14 +43,12 @@ export class DocumentsComponent implements OnChanges {
       if (JSON.parse(localStorage.getItem('ClientDetails')).clientDocumentDetails.length >= 1) {
         this.setDetails();
       }
-    } else {
-      this.addRow();
     }
     if (disable.disable.currentValue) {
       this.documentForm.disable();
     } else {
       this.documentForm.enable();
-      this.addRow();
+      // this.addRow();
     }
   }
 
