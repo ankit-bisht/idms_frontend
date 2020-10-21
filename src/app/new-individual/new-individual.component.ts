@@ -39,7 +39,7 @@ export class NewIndividualComponent implements OnInit {
   states: any;
   clientType: any;
   disable: boolean = false;
-  userEdit: Boolean = false;
+  userEdit: Boolean = true;
   deleteClient: boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
@@ -108,9 +108,9 @@ export class NewIndividualComponent implements OnInit {
       this.clienttype = Client.client_type ? Client.client_type : '';
       this.notes = Client.notes ? Client.notes : '';
 
-      if (Client.user_id == JSON.parse(localStorage.getItem('userId'))) {
-        this.userEdit = true;
-      }
+      // if (Client.user_id == JSON.parse(localStorage.getItem('userId'))) {
+      //   this.userEdit = true;
+      // }
     }
   }
 
