@@ -59,8 +59,8 @@ export class AttachmentsComponent implements OnChanges {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      attachment_type: ['', Validators.required],
-      attachment_location: ['', Validators.required],
+      attachment_type: [''],
+      attachment_location: [''],
       attachment_description: [''],
       isEditable: [true]
     });
@@ -68,7 +68,7 @@ export class AttachmentsComponent implements OnChanges {
 
   setDetails() {
     console.log("ji");
-    
+
     const control = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientAttachmentDetails;
     Details.map(element => {
@@ -85,7 +85,6 @@ export class AttachmentsComponent implements OnChanges {
   }
 
   setForm(element): FormGroup {
-    console.log(element);
     return this.fb.group({
       attachment_type: [element.attachment_type, Validators.required],
       attachment_location: [element.attachment_location, Validators.required],
@@ -132,9 +131,11 @@ export class AttachmentsComponent implements OnChanges {
     this.spinner.show();
 
     this.api.uploadAttachment(formData).subscribe((data: any) => {
-      // this.openModal();
       if (data.responseCode === 200) {
         this.spinner.hide();
+        const form = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
+
+        form.controls[index].get('attachment_type').setValue(File.type);
         this.fileArray[index] = data.result.fileName;
         this.modalMessage = data.message;
         return this.modalRef = this.modalService.show(this.templateRef);
@@ -154,27 +155,18 @@ export class AttachmentsComponent implements OnChanges {
   submitForm() {
     const control = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    if (!this.attachmentForm.valid) {
+    var contactsDetails = this.attachmentForm.value.clientAttachmentDetails;
+    contactsDetails.forEach((element, key) => {
+      delete element.isEditable;
 
-      // setTimeout(() => {
-      //   this.modalMessage = "Please Fill All Details Correctly!!"
-      //   return this.modalRef = this.modalService.show(this.templateRef);
-      // }, 5000);
+      const id = key + 1;
+      element.attachment_description = element.attachment_description.toString();
+      element.attachment_id = id.toString();
+      element.attachment_type = element.attachment_location._files[0].type;
+      element.attachment_location = element.attachment_location._fileNames;
 
-    } else {
-      var contactsDetails = this.attachmentForm.value.clientAttachmentDetails;
-      contactsDetails.forEach((element, key) => {
-        delete element.isEditable;
-
-        const id = key + 1;
-        element.attachment_description = element.attachment_description.toString();
-        element.attachment_id = id.toString();
-        // const fileName = this.fileArray[key];
-        element.attachment_location = element.attachment_location._fileNames;
-
-      });
-      console.log(this.saveIndividuals.addToIndividual(this.attachmentForm.value));
-    }
+    });
+    console.log(this.saveIndividuals.addToIndividual(this.attachmentForm.value));
   }
 
 }

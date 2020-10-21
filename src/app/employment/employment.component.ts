@@ -57,11 +57,11 @@ export class EmploymentComponent implements OnChanges {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      employer_name: ['', Validators.required],
+      employer_name: [''],
       employer_phone: [''],
-      income_amount: ['', Validators.required],
-      income_frequency: ['', Validators.required],
-      start_date: ['', Validators.required],
+      income_amount: [''],
+      income_frequency: [''],
+      start_date: [''],
       end_date: [''],
       isEditable: [true]
     });

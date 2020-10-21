@@ -59,10 +59,10 @@ export class DocumentsComponent implements OnChanges {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      document_type_id: ['', Validators.required],
-      due_date: ['', Validators.required],
-      date_submitted: ['', Validators.required],
-      status: ['', Validators.required],
+      document_type_id: [''],
+      due_date: [''],
+      date_submitted: [''],
+      status: [''],
       isEditable: [true]
     });
   }

@@ -26,7 +26,7 @@
                 <h6>Due Date<span class="text-danger">*</span></h6> <span dragableColumn> </span>
             </th>
             <th>
-                <h6>Date Submitted<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+                <h6>Date Submitted</h6> <span dragableColumn> </span>
             </th>
             <th>
                 <h6>Status<span class="text-danger">*</span></h6> <span dragableColumn> </span>
@@ -59,7 +59,7 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Date Submitted</mat-label>
-                            <input matInput matInput [matDatepicker]="picker1" formControlName="date_submitted"
+                            <input matInput matInput [matDatepicker]="picker1" formControlName="daterequired_submitted"
                                 (dateChange)="submitForm()">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
@@ -90,7 +90,7 @@
                         {{group.get('date_submitted').value?group.get('date_submitted').value:''}}
                     </td>
                     <td>
-                        {{group.get('status').value == 1?'Open':'Submitted'}}
+                        {{group.get('status').value ?group.get('status').value==1?'Open':'Submitted':''}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

@@ -274,7 +274,7 @@
       </p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" *ngIf="!deleteClient" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="!deleteClient" (click)="updateDetails()">Ok</button>
       <button type="button" class="btn btn-success" *ngIf="deleteClient" (click)="delete()">Yes</button>
       <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
     </div>

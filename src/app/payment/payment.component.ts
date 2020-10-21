@@ -63,14 +63,14 @@ export class PaymentComponent implements OnChanges {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      payment_type: ['', Validators.required],
-      account_number: ['', Validators.required],
-      account_name: ['', Validators.required],
+      payment_type: [''],
+      account_number: [''],
+      account_name: [''],
       routing_number: [''],
       cvv: [''],
       expiry_month: [''],
       expiry_year: [''],
-      valid: ['', Validators.required],
+      valid: [''],
       isEditable: [true]
     });
   }

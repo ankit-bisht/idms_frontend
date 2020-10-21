@@ -67,12 +67,12 @@ export class AddressComponent implements OnChanges {
   initiateForm(): FormGroup {
     return this.fb.group({
       suite: [''],
-      number: ['', Validators.required],
-      street: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zip: ['', Validators.required],
-      address_type: ['', Validators.required],
+      number: [''],
+      street: [''],
+      city: [''],
+      state: [''],
+      zip: [''],
+      address_type: [''],
       from_date: [''],
       to_date: [''],
       isEditable: [true]

@@ -217,6 +217,10 @@ export class NewIndividualComponent implements OnInit {
         }
       });
     }
+  }
+
+  updateDetails() {
+    this.modalService.hide(1);
     const Obj = {
       userId: localStorage.getItem('userId'),
       clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id
@@ -225,9 +229,9 @@ export class NewIndividualComponent implements OnInit {
       if (data.responseCode === 200) {
         this.spinner.hide();
         localStorage.setItem('ClientDetails', JSON.stringify(data.result));
-        window.location.reload();      }
+        window.location.reload();
+      }
     });
-
   }
 
 }

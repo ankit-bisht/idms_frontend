@@ -36,11 +36,12 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Attachment Type</mat-label>
-                            <mat-select formControlName="attachment_type" (selectionChange)="submitForm()">
+                            <input matInput type="text" formControlName="attachment_type" (keyup)="submitForm()" readonly>
+                            <!-- <mat-select formControlName="attachment_type" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of docType" value={{item.document_type_id}}>
                                     {{item.doc_type_description}}
                                 </mat-option>
-                            </mat-select>
+                            </mat-select> -->
                         </mat-form-field>
                     </td>
                     <td>
@@ -68,7 +69,7 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('attachment_type').value? group.get('attachment_type').value == 1 ?'PAN':'':''}}
+                        {{group.get('attachment_type').value? group.get('attachment_type').value :''}}
                     </td>
                     <td>
                         {{group.get('attachment_description').value?group.get('attachment_description').value:''}}
