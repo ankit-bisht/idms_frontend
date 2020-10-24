@@ -67,8 +67,6 @@ export class AttachmentsComponent implements OnChanges {
   }
 
   setDetails() {
-    console.log("ji");
-
     const control = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientAttachmentDetails;
     Details.map(element => {
@@ -86,6 +84,7 @@ export class AttachmentsComponent implements OnChanges {
 
   setForm(element): FormGroup {
     return this.fb.group({
+      attachment_link:["http://67.200.244.131:81/documents/"+element.attachment_location],
       attachment_type: [element.attachment_type, Validators.required],
       attachment_location: [element.attachment_location, Validators.required],
       attachment_description: [element.attachment_description],

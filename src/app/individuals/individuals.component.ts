@@ -16,7 +16,7 @@ export class IndividualsComponent implements OnInit {
 
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['first_name', 'middle_name', 'last_name','DOB', 'phone', 'email', ];
+  displayedColumns = ['first_name', 'middle_name', 'last_name', 'DOB', 'phone', 'email',];
   dataSource: any;
   data: any = [];
   length: any = 0;
@@ -68,7 +68,13 @@ export class IndividualsComponent implements OnInit {
       if (data.responseCode === 200) {
         this.spinner.hide();
         localStorage.setItem('ClientDetails', JSON.stringify(data.result));
-        this.Router.navigate(['individuals/newIndividual']);
+        console.log();
+        if (data.result.clientDetails.edit == 2) {
+          var edit = 1
+        } else {
+          edit = 2
+        }
+        this.Router.navigate([`individuals/newIndividual/${edit}`]);
       }
     });
   }

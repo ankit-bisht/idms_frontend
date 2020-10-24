@@ -15,5 +15,6 @@ export class Configuration {
         deleteClient : this.baseUrl + "deleteClient",
         searchClientDetails: this.baseUrl + "searchClientDetails",
         getClientAllDetails: this.baseUrl + "getClientAllDetails",
+        updateEditStatus: this.baseUrl+ "updateEditStatus",
     }
 }

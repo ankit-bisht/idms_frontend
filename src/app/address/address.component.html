@@ -95,13 +95,11 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>State</mat-label>
-                            <input matInput type="text" formControlName="state" (keyup)="submitForm()"
-                                autocomplete="off" />
-                            <!-- <mat-select formControlName="state" (selectionChange)="submitForm()">
+                            <mat-select formControlName="state" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>
                                     {{item.value}}
                                 </mat-option>
-                            </mat-select> -->
+                            </mat-select>
                         </mat-form-field>
                     </td>
                     <td>

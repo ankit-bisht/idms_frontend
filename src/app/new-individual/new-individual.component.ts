@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Constants } from '../configuration/constants';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { IndividualDetailServiceService } from '../individual-detail-service.service';
@@ -44,11 +44,17 @@ export class NewIndividualComponent implements OnInit {
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
-  constructor(private modalService: BsModalService, private saveIndividuals: IndividualDetailServiceService, private spinner: NgxSpinnerService, private fb: FormBuilder, private api: ApiService, public Router: Router, public States: Constants) {
+  constructor(private activatedRoute: ActivatedRoute, private modalService: BsModalService, private saveIndividuals: IndividualDetailServiceService, private spinner: NgxSpinnerService, private fb: FormBuilder, private api: ApiService, public Router: Router, public States: Constants) {
     this.states = States.stateValue;
   }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(params => {
+      if (params.edit == 1) {
+        this.userEdit = false
+      }
+    });
+    this.updateEditStatus(1);
     this.getConstants();
     this.buildIndividualForm();
   }
@@ -58,6 +64,23 @@ export class NewIndividualComponent implements OnInit {
     this.disable = false;
   }
 
+  updateEditStatus(status) {
+    const obj = {
+      clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
+      userId: localStorage.getItem('userId'),
+      status: status
+    }
+    this.api.updateEditStatus(obj).subscribe((data: any) => {
+      this.spinner.show();
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
+        this.modalMessage = data.error;
+        return this.modalRef = this.modalService.show(this.templateRef);
+      }
+    });
+  }
 
   redirect() {
     this.Router.navigate(['/individuals']);
@@ -199,7 +222,6 @@ export class NewIndividualComponent implements OnInit {
             return this.modalRef = this.modalService.show(this.templateRef);
           }
         });
-
       });
     } else {
       this.api.createClient(obj).subscribe((data: any) => {
@@ -232,6 +254,7 @@ export class NewIndividualComponent implements OnInit {
         window.location.reload();
       }
     });
+    this.updateEditStatus(0);
   }
 
 }

@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoginGuard] },
   { path: 'groups', component: GroupsComponent, canActivate: [LoginGuard] },
   { path: 'individuals', component: IndividualsComponent, canActivate: [LoginGuard] },
-  { path: 'individuals/newIndividual', component: NewIndividualComponent, canActivate: [LoginGuard] },
+  { path: 'individuals/newIndividual/:edit', component: NewIndividualComponent, canActivate: [LoginGuard] },
   { path: 'policies', component: PoliciesComponent, canActivate: [LoginGuard] },
   { path: 'agents', component: AgentsComponent, canActivate: [LoginGuard] },
   { path: 'carriers', component: CarriersComponent, canActivate: [LoginGuard] },

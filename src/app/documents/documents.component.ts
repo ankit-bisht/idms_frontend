@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef,Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -24,7 +24,7 @@ export class DocumentsComponent implements OnChanges {
   modalMessage: any;
   modalRef: BsModalRef;
   touchedRows: any;
-  document_status:any;
+  document_status: any;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -54,7 +54,7 @@ export class DocumentsComponent implements OnChanges {
 
   ngAfterOnInit() {
     this.control = this.documentForm.get('clientDocumentDetails') as FormArray;
-    this.document_status = ['Submmitted','Open'];
+    this.document_status = ['Submmitted', 'Open'];
   }
 
   initiateForm(): FormGroup {

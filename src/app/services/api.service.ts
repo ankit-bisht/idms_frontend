@@ -22,6 +22,20 @@ export class ApiService {
         return this.httpClient.post(this.urlObject.UrlObj.loginApi, loginInfoObj);
     }
 
+    /**
+   * @method deleteClient()
+   * @desc update Status
+   */
+    updateEditStatus(obj) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('token')
+        });
+        this.options = {
+            headers: headers
+        }
+        return this.httpClient.post(this.urlObject.UrlObj.updateEditStatus, obj, this.options);
+    }
 
     /**
    * @method deleteClient()

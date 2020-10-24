@@ -19,6 +19,9 @@
     <table class="table table-bordered table-sm">
         <thead class="text-nowrap text-center">
             <th>
+                <h6>View</h6>
+            </th>
+            <th>
                 <h6>Attachment Type<span class="text-danger">*</span></h6><span dragableColumn> </span>
             </th>
             <th>
@@ -33,6 +36,9 @@
             <ng-container formArrayName="clientAttachmentDetails"
                 *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                    <td>
+                        <a [attr.href]="group.get('attachment_link').value" target="_blank">Click Here</a>
+                    </td>
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Attachment Type</mat-label>
@@ -68,6 +74,9 @@
                     </td>
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
+                    <td>
+                        <a [attr.href]="group.get('attachment_link').value" target="_blank">Click Here</a>
+                    </td>
                     <td>
                         {{group.get('attachment_type').value? group.get('attachment_type').value :''}}
                     </td>
