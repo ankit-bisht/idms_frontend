@@ -52,6 +52,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material';
 import {MatRadioModule} from '@angular/material/radio';
+import { RelationshipsComponent } from './relationships/relationships.component';
 
 
 
@@ -93,7 +94,8 @@ export const DateFormat = {
     EmploymentComponent,
     PaymentComponent,
     AttachmentsComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    RelationshipsComponent
   ],
   imports: [
     ModalModule.forRoot(),

@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { IndividualDetailServiceService } from '../individual-detail-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { param } from 'jquery';
 
 @Component({
   selector: 'app-new-individual',
@@ -50,17 +51,20 @@ export class NewIndividualComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      if (params.edit == 1) {
+      if (params.edit == 1 || params.edit == null) {
+        this.userEdit = true
+      }
+      if (params.edit == 2) {
         this.userEdit = false
       }
     });
-    this.updateEditStatus(1);
     this.getConstants();
     this.buildIndividualForm();
   }
 
   enable() {
     this.individualForm.enable();
+    this.updateEditStatus(2);
     this.disable = false;
   }
 
@@ -187,6 +191,7 @@ export class NewIndividualComponent implements OnInit {
   }
 
   submit() {
+    this.updateEditStatus(1);
     this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
     this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
     this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
@@ -194,7 +199,6 @@ export class NewIndividualComponent implements OnInit {
     var obj: any = this.saveIndividuals.getIndividual();
     obj.userId = localStorage.getItem('userId');
     delete obj.height;
-
     if (localStorage.getItem('ClientDetails')) {
 
       obj.client_id = JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id;
@@ -254,7 +258,6 @@ export class NewIndividualComponent implements OnInit {
         window.location.reload();
       }
     });
-    this.updateEditStatus(0);
   }
 
 }

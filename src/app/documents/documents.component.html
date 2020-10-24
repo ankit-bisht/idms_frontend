@@ -39,7 +39,7 @@
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Document Type</mat-label>
                             <mat-select formControlName="document_type_id" (selectionChange)="submitForm()">
-                                <mat-option *ngFor="let item of docType" value={{item.document_type_id}}>
+                                <mat-option *ngFor="let item of docType" [value]=item.document_type_id>
                                     {{item.doc_type_description}}
                                 </mat-option>
                             </mat-select>
@@ -82,10 +82,10 @@
                         {{group.get('document_type_id').value? group.get('document_type_id').value == 1 ?'PAN':'':''}}
                     </td>
                     <td>
-                        {{group.get('due_date').value?group.get('due_date').value:''}}
+                        {{getFormattedDate(group.get('due_date').value)}}
                     </td>
                     <td>
-                        {{group.get('date_submitted').value?group.get('date_submitted').value:''}}
+                        {{getFormattedDate(group.get('date_submitted').value)}}
                     </td>
                     <td>
                         {{group.get('status').value ?group.get('status').value==1?'Open':'Submitted':''}}

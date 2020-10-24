@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Configuration } from '../configuration/config';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 import { User } from "./user";
 @Injectable()
 export class ApiService {
@@ -146,7 +147,9 @@ export class ApiService {
         this.options = {
             headers: headers
         }
-        return this.httpClient.post(this.urlObject.UrlObj.clients, Obj, this.options);
+        return this.httpClient.post(this.urlObject.UrlObj.clients, Obj, this.options).pipe(
+            tap(c => localStorage.setItem('clients', JSON.stringify(c['result'])))
+        );
     }
 
     /**

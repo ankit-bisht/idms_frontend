@@ -9,6 +9,7 @@ import {
 import { IndividualDetailServiceService } from '../individual-detail-service.service';
 import { ApiService } from '../services/api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-documents',
@@ -85,8 +86,8 @@ export class DocumentsComponent implements OnChanges {
   setForm(element): FormGroup {
     return this.fb.group({
       document_type_id: [element.document_type_id, Validators.required],
-      due_date: [element.due_date, Validators.required],
-      date_submitted: [element.date_submitted, Validators.required],
+      due_date: [moment(element.due_date).format("MM/DD/YYYY"), Validators.required],
+      date_submitted: [moment(element.date_submitted).format("MM/DD/YYYY"), Validators.required],
       status: [element.status, Validators.required],
       isEditable: [false]
     });
@@ -151,15 +152,18 @@ export class DocumentsComponent implements OnChanges {
         const id = key + 1;
         element.document_id = id.toString();
         if (element.due_date != '') {
-          element.due_date = new Date(element.due_date).toISOString().split('T')[0];
-          element.due_date = this.format(element.due_date);
+          element.due_date =  moment(element.due_date).format("MM/DD/YYYY"); //new Date(element.due_date).toISOString().split('T')[0];
+          // element.due_date = this.format(element.due_date);
         }
         if (element.date_submitted != "") {
-          element.date_submitted = new Date(element.date_submitted).toISOString().split('T')[0];
-          element.due_date = this.format(element.date_submitted);
+          element.date_submitted = moment(element.date_submitted).format("MM/DD/YYYY"); //new Date(element.date_submitted).toISOString().split('T')[0];
+          // element.due_date = this.format(element.date_submitted);
         }
       });
       console.log(this.saveIndividuals.addToIndividual(this.documentForm.value));
     }
+  }
+  getFormattedDate(date) {
+    return !!date ? moment(date).format('MM/DD/YYYY') : '';
   }
 }

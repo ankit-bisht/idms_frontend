@@ -68,13 +68,12 @@ export class IndividualsComponent implements OnInit {
       if (data.responseCode === 200) {
         this.spinner.hide();
         localStorage.setItem('ClientDetails', JSON.stringify(data.result));
-        console.log();
-        if (data.result.clientDetails.edit == 2) {
+        if (data.result.clientDetails[0].edit == 2) {
           var edit = 1
         } else {
           edit = 2
         }
-        this.Router.navigate([`individuals/newIndividual/${edit}`]);
+        this.Router.navigate(['individuals/newIndividual', {edit: data.result.clientDetails[0].edit}]);
       }
     });
   }
