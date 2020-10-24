@@ -91,9 +91,9 @@ export class RelationshipsComponent implements OnChanges {
   }, []);
   this.clientDetails = JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0];
   this.clients = JSON.parse(localStorage.getItem('clients'));
-  this.filteredClients = this.clients.filter(c => c.client_id != this.clientDetails.client_id);
   const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientRelationShipDetails;
   this.filterIndividualsArray(Details.map(d => d.id2));
+  this.filterIndividualsArray(this.clientDetails.client_id);
   }
 
 
