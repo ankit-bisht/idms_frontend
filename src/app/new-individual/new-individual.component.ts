@@ -50,6 +50,7 @@ export class NewIndividualComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.saveIndividuals.clearIndividual();
     this.activatedRoute.params.subscribe(params => {
       if (params.edit == 1 || params.edit == null) {
         this.userEdit = true
@@ -233,6 +234,7 @@ export class NewIndividualComponent implements OnInit {
           if (data.responseCode === 200) {
             this.spinner.hide();
             this.individualForm.disable();
+            this.saveIndividuals.clearIndividual();
             this.disable = true;
             this.modalMessage = data.message;
             return this.modalRef = this.modalService.show(this.templateRef);
@@ -249,6 +251,7 @@ export class NewIndividualComponent implements OnInit {
         if (data.responseCode === 200) {
           this.spinner.hide();
           this.individualForm.disable();
+          this.saveIndividuals.clearIndividual();
           this.disable = true;
           this.modalMessage = data.message;
           return this.modalRef = this.modalService.show(this.templateRef);
@@ -265,6 +268,7 @@ export class NewIndividualComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       if (params.edit == 0) {
         this.modalService.hide(1);
+        this.saveIndividuals.clearIndividual();
         window.location.reload();
       } else {
         const Obj = {
@@ -275,6 +279,7 @@ export class NewIndividualComponent implements OnInit {
           if (data.responseCode === 200) {
             this.spinner.hide();
             localStorage.setItem('ClientDetails', JSON.stringify(data.result));
+            this.saveIndividuals.clearIndividual();
             window.location.reload();
           }
         });
