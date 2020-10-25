@@ -89,11 +89,15 @@ export class RelationshipsComponent implements OnChanges {
       })
   return acc;
   }, []);
-  this.clientDetails = JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0];
   this.clients = JSON.parse(localStorage.getItem('clients'));
-  const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientRelationShipDetails;
-  this.filterIndividualsArray(Details.map(d => d.id2));
-  this.filterIndividualsArray(this.clientDetails.client_id);
+  if(localStorage.getItem('ClientDetails')){
+    this.clientDetails = JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0];
+    const Details = JSON.parse(localStorage.getItem('ClientDetails')).clientRelationShipDetails;
+    this.filterIndividualsArray(Details.map(d => d.id2));
+    this.filterIndividualsArray(this.clientDetails.client_id);
+  }else{
+    this.filterIndividualsArray(0);
+  }
   }
 
 

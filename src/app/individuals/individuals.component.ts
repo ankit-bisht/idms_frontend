@@ -55,7 +55,7 @@ export class IndividualsComponent implements OnInit {
   }
 
   newIndividual() {
-    this.Router.navigate(['individuals/newIndividual']);
+    this.Router.navigate(['individuals/newIndividual', {edit: 0}]);
   }
 
   getSingleIndividual(clientId) {

@@ -40,7 +40,7 @@ export class NewIndividualComponent implements OnInit {
   states: any;
   clientType: any;
   disable: boolean = false;
-  userEdit: Boolean = true;
+  userEdit: Boolean = false;
   deleteClient: boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
@@ -104,7 +104,7 @@ export class NewIndividualComponent implements OnInit {
   }
 
   redirect() {
-    if(this.userEdit == true){
+    if (this.userEdit == true) {
       this.updateEditStatus(1);
     }
     this.Router.navigate(['/individuals']);
@@ -248,7 +248,6 @@ export class NewIndividualComponent implements OnInit {
         this.spinner.show();
         if (data.responseCode === 200) {
           this.spinner.hide();
-          this.updateEditStatus(1);
           this.individualForm.disable();
           this.disable = true;
           this.modalMessage = data.message;
@@ -263,16 +262,22 @@ export class NewIndividualComponent implements OnInit {
   }
 
   updateDetails() {
-    this.modalService.hide(1);
-    const Obj = {
-      userId: localStorage.getItem('userId'),
-      clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id
-    }
-    this.api.getClientAllDetails(Obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        this.spinner.hide();
-        localStorage.setItem('ClientDetails', JSON.stringify(data.result));
+    this.activatedRoute.params.subscribe(params => {
+      if (params.edit == 0) {
+        this.modalService.hide(1);
         window.location.reload();
+      } else {
+        const Obj = {
+          userId: localStorage.getItem('userId'),
+          clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id
+        }
+        this.api.getClientAllDetails(Obj).subscribe((data: any) => {
+          if (data.responseCode === 200) {
+            this.spinner.hide();
+            localStorage.setItem('ClientDetails', JSON.stringify(data.result));
+            window.location.reload();
+          }
+        });
       }
     });
   }
