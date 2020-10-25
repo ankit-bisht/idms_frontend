@@ -63,9 +63,26 @@ export class NewIndividualComponent implements OnInit {
   }
 
   enable() {
-    this.individualForm.enable();
-    this.updateEditStatus(2);
-    this.disable = false;
+    this.checkUpdate();
+  }
+
+  checkUpdate() {
+    const Obj = {
+      userId: localStorage.getItem('userId'),
+      clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id
+    }
+    this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
+      if (getdata.responseCode === 200) {
+        if (getdata.result.clientDetails[0].edit == 2) {
+          this.modalMessage = "This individual is currently being updated by some other user.";
+          return this.modalRef = this.modalService.show(this.templateRef);
+        } else {
+          this.updateEditStatus(2);
+          this.individualForm.enable();
+          this.disable = false;
+        }
+      }
+    });
   }
 
   updateEditStatus(status) {
@@ -87,6 +104,9 @@ export class NewIndividualComponent implements OnInit {
   }
 
   redirect() {
+    if(this.userEdit == true){
+      this.updateEditStatus(1);
+    }
     this.Router.navigate(['/individuals']);
   }
 
@@ -134,10 +154,6 @@ export class NewIndividualComponent implements OnInit {
       this.driverNumber = Client.driver_license_number ? Client.driver_license_number : '';
       this.clienttype = Client.client_type ? Client.client_type : '';
       this.notes = Client.notes ? Client.notes : '';
-
-      // if (Client.user_id == JSON.parse(localStorage.getItem('userId'))) {
-      //   this.userEdit = true;
-      // }
     }
   }
 
@@ -191,7 +207,6 @@ export class NewIndividualComponent implements OnInit {
   }
 
   submit() {
-    this.updateEditStatus(1);
     this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
     this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
     this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
@@ -212,6 +227,7 @@ export class NewIndividualComponent implements OnInit {
         this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
           if (getdata.responseCode === 200) {
             this.spinner.hide();
+            this.updateEditStatus(1);
             localStorage.setItem('ClientDetails', JSON.stringify(getdata.result));
           }
           if (data.responseCode === 200) {
@@ -232,6 +248,7 @@ export class NewIndividualComponent implements OnInit {
         this.spinner.show();
         if (data.responseCode === 200) {
           this.spinner.hide();
+          this.updateEditStatus(1);
           this.individualForm.disable();
           this.disable = true;
           this.modalMessage = data.message;

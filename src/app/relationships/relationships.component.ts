@@ -101,7 +101,7 @@ export class RelationshipsComponent implements OnChanges {
     return this.fb.group({
       id2: [''],
       relationshipId: [''],
-      isEditable: [false]
+      isEditable: [true]
     });
   }
 

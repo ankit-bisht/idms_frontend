@@ -11,10 +11,10 @@ export class Configuration {
         createClient: this.baseUrl + "createClient",
         updateClient: this.baseUrl + "updateClient",
         clients: this.baseUrl + "clients",
-        upload : this.baseUrl + "upload",
-        deleteClient : this.baseUrl + "deleteClient",
+        upload: this.baseUrl + "upload",
+        deleteClient: this.baseUrl + "deleteClient",
         searchClientDetails: this.baseUrl + "searchClientDetails",
         getClientAllDetails: this.baseUrl + "getClientAllDetails",
-        updateEditStatus: this.baseUrl+ "updateEditStatus",
+        updateEditStatus: this.baseUrl + "updateEditStatus",
     }
 }
