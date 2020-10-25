@@ -84,7 +84,7 @@ export class AttachmentsComponent implements OnChanges {
 
   setForm(element): FormGroup {
     return this.fb.group({
-      attachment_link:["http://67.200.244.131:81/documents/"+ element.attachment_location],
+      attachment_link: ["http://67.200.244.131:81/documents/" + element.attachment_location],
       attachment_type: [element.attachment_type, Validators.required],
       attachment_location: [element.attachment_location, Validators.required],
       attachment_description: [element.attachment_description],
@@ -126,16 +126,14 @@ export class AttachmentsComponent implements OnChanges {
     const formData = new FormData();
     formData.append('file', File, File.name);
     formData.append('userId', localStorage.getItem('userId'));
-
     this.spinner.show();
 
     this.api.uploadAttachment(formData).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.spinner.hide();
         const form = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
-
         form.controls[index].get('attachment_type').setValue(File.type);
-        this.fileArray[index] = data.result.fileName;
+        // form.controls[index].get('attachment_location').setValue(File.name);
         this.modalMessage = data.message;
         return this.modalRef = this.modalService.show(this.templateRef);
       } else {
@@ -157,12 +155,11 @@ export class AttachmentsComponent implements OnChanges {
     var contactsDetails = this.attachmentForm.value.clientAttachmentDetails;
     contactsDetails.forEach((element, key) => {
       delete element.isEditable;
-
       const id = key + 1;
       element.attachment_description = element.attachment_description.toString();
       element.attachment_id = id.toString();
-      element.attachment_type = element.attachment_location._files[0].type;
-      element.attachment_location = element.attachment_location._fileNames;
+      element.attachment_type = element.attachment_location._fileNames ? element.attachment_location._fileNames.slice(element.attachment_location._fileNames.lastIndexOf('.') + 1) : element.attachment_location.slice(element.attachment_location.lastIndexOf('.') + 1);
+      element.attachment_location = element.attachment_location._fileNames ? element.attachment_location._fileNames : element.attachment_location;
 
     });
     console.log(this.saveIndividuals.addToIndividual(this.attachmentForm.value));
