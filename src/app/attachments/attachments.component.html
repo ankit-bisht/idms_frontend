@@ -37,7 +37,7 @@
                 *ngFor="let group of getFormControls.controls ; let i=index">
                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                     <td>
-                        <a [attr.href]="group.get('attachment_link').value" target="_blank">Click Here</a>
+                        <a  *ngIf="group.get('attachment_link')" [attr.href]="group.get('attachment_link').value" target="_blank">Click Here</a>
                     </td>
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
