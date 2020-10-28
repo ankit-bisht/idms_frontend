@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
     };
     this.api.loginApi(loginObj).subscribe((data: any) => {
       let array = new Array();
+      let object = new Object();
       if (data.responseCode === 200) {
         localStorage.setItem('token', data.result.authorizationToken);
         localStorage.setItem('userId', data.result.userDetails.user_id);
@@ -64,10 +65,10 @@ export class LoginComponent implements OnInit {
         this.api.documentDropDownValues(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             for (let index = 0; index < data.result.length; index++) {
-              array[data.result[index].document_type_id]= data.result[index].doc_type_description;
+              object[data.result[index].document_type_id]= data.result[index].doc_type_description;
             }
           }
-          localStorage.setItem('docType', JSON.stringify(array));
+          localStorage.setItem('docType', JSON.stringify(object));
         });
         this.Router.navigate(['/dashboard']);
       } else {

@@ -122,7 +122,7 @@ export class AttachmentsComponent implements OnChanges {
 
 
   uploadFile(file, index) {
-    const File = <File>file[0];
+    const File = file[0];
     const formData = new FormData();
     formData.append('file', File, File.name);
     formData.append('userId', localStorage.getItem('userId'));
@@ -132,8 +132,10 @@ export class AttachmentsComponent implements OnChanges {
       if (data.responseCode === 200) {
         this.spinner.hide();
         const form = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
-        form.controls[index].get('attachment_type').setValue(File.type);
-        // form.controls[index].get('attachment_location').setValue(File.name);
+        form.controls[index].patchValue({
+          attachment_type: File.type,
+        });
+
         this.modalMessage = data.message;
         return this.modalRef = this.modalService.show(this.templateRef);
       } else {

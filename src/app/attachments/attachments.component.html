@@ -1,115 +1,117 @@
 <style>
-    ::ng-deep .mat-form-field-wrapper {
-        margin-top: -1.25em;
-    }
+  ::ng-deep .mat-form-field-wrapper {
+    margin-top: -1.25em;
+  }
 
-    mat-icon {
-        cursor: pointer;
-    }
+  mat-icon {
+    cursor: pointer;
+  }
 </style>
 
 <div class="action-container" style="padding: 3%;">
-    <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add Row</button>
-    &nbsp;
-    <!-- <button mat-raised-button class="btn btn-primary" [disabled]="contactForm.invalid" type="submit"
+  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+    Row</button>
+  &nbsp;
+  <!-- <button mat-raised-button class="btn btn-primary" [disabled]="contactForm.invalid" type="submit"
         (click)="submitForm()">Submit</button> -->
 </div>
 
 <form [formGroup]="attachmentForm" style="font-size: 12px">
-    <table class="table table-bordered table-sm">
-        <thead class="text-nowrap text-center">
-            <th>
-                <h6>View</h6>
-            </th>
-            <th>
-                <h6>Attachment Type<span class="text-danger">*</span></h6><span dragableColumn> </span>
-            </th>
-            <th>
-                <h6>Attachment Description</h6><span dragableColumn> </span>
-            </th>
-            <th>
-                <h6>Upload File<span class="text-danger">*</span></h6>
-            </th>
-            <th></th>
-        </thead>
-        <tbody class="text-center">
-            <ng-container formArrayName="clientAttachmentDetails"
-                *ngFor="let group of getFormControls.controls ; let i=index">
-                <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-                    <td>
-                        <a  *ngIf="group.get('attachment_link')" [attr.href]="group.get('attachment_link').value" target="_blank">Click Here</a>
-                    </td>
-                    <td>
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Attachment Type</mat-label>
-                            <input matInput type="text" formControlName="attachment_type" (keyup)="submitForm()" readonly>
-                            <!-- <mat-select formControlName="attachment_type" (selectionChange)="submitForm()">
+  <table class="table table-bordered table-sm">
+    <thead class="text-nowrap text-center">
+      <th>
+        <h6>View</h6>
+      </th>
+      <th>
+        <h6>Attachment Type<span class="text-danger">*</span></h6><span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Attachment Description</h6><span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Upload File<span class="text-danger">*</span></h6>
+      </th>
+      <th></th>
+    </thead>
+    <tbody class="text-center">
+      <ng-container formArrayName="clientAttachmentDetails"
+        *ngFor="let group of getFormControls.controls ; let i=index">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+          <td>
+            <a *ngIf="group.get('attachment_link')" [attr.href]="group.get('attachment_link').value"
+              target="_blank">Click Here</a>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Attachment Type</mat-label>
+              <input matInput type="text" formControlName="attachment_type" (keyup)="submitForm()" readonly>
+              <!-- <mat-select formControlName="attachment_type" (selectionChange)="submitForm()">
                                 <mat-option *ngFor="let item of docType" value={{item.document_type_id}}>
                                     {{item.doc_type_description}}
                                 </mat-option>
                             </mat-select> -->
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Attachment Description</mat-label>
-                            <input matInput type="text" formControlName="attachment_description" (keyup)="submitForm()">
-                        </mat-form-field>
-                    </td>
-                    <td>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Attachment Description</mat-label>
+              <input matInput type="text" formControlName="attachment_description" (keyup)="submitForm()">
+            </mat-form-field>
+          </td>
+          <td>
 
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>File Upload</mat-label>
-                            <ngx-mat-file-input #removableInput formControlName="attachment_location"
-                            (change)="uploadFile($event.target.files,i)"></ngx-mat-file-input>
-                            <button mat-icon-button matSuffix *ngIf="!removableInput.empty"
-                                (click)="removableInput.clear($event)">
-                                <mat-icon>clear</mat-icon>
-                            </button>
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
-                        <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
-                    </td>
-                </tr>
-                <tr *ngIf="!group.get('isEditable').value">
-                    <td>
-                        <a [attr.href]="group.get('attachment_link').value" target="_blank">Click Here</a>
-                    </td>
-                    <td>
-                        {{group.get('attachment_type').value? group.get('attachment_type').value :''}}
-                    </td>
-                    <td>
-                        {{group.get('attachment_description').value?group.get('attachment_description').value:''}}
-                    </td>
-                    <td>
-                        {{group.get('attachment_location').value?group.get('attachment_location').value:''}}
-                    </td>
-                    <td>
-                        <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
-                    </td>
-                </tr>
-            </ng-container>
-        </tbody>
-    </table>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>File Upload</mat-label>
+              <ngx-mat-file-input #removableInput formControlName="attachment_location"
+                (change)="uploadFile($event.target.files,i)"></ngx-mat-file-input>
+              <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+            <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+          </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value">
+          <td>
+            <a [attr.href]="group.get('attachment_link').value" *ngIf="group.get('attachment_link')"
+              target="_blank">Click Here</a>
+          </td>
+          <td>
+            {{group.get('attachment_type').value? group.get('attachment_type').value :''}}
+          </td>
+          <td>
+            {{group.get('attachment_description').value?group.get('attachment_description').value:''}}
+          </td>
+          <td>
+            {{group.get('attachment_location').value? (!group.get('attachment_location').value._fileNames?group.get('attachment_location').value:group.get('attachment_location').value._fileNames):''}}
+          </td>
+          <td>
+            <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
 </form>
 
 <ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
-            <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p> {{modalMessage}}
-            </p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
-            <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
-        </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
 </ng-template>
