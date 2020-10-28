@@ -1,119 +1,117 @@
 <style>
-    ::ng-deep .mat-form-field-wrapper {
-        margin-top: -1.25em;
-    }
+  ::ng-deep .mat-form-field-wrapper {
+    margin-top: -1.25em;
+  }
 
-    mat-icon {
-        cursor: pointer;
-    }
+  mat-icon {
+    cursor: pointer;
+  }
 </style>
 
 <div class="action-container" style="padding: 3%;">
-    <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
-        Row</button>
-    &nbsp;
+  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+    Row</button>
+  &nbsp;
 </div>
 
 <form [formGroup]="documentForm" style="font-size: 12px">
-    <table class="table table-bordered table-sm">
-        <thead class="text-nowrap text-center">
-            <th>
-                <h6>Document Type<span class="text-danger">*</span></h6><span dragableColumn> </span>
-            </th>
-            <th>
-                <h6>Due Date<span class="text-danger">*</span></h6> <span dragableColumn> </span>
-            </th>
-            <th>
-                <h6>Date Submitted</h6> <span dragableColumn> </span>
-            </th>
-            <th>
-                <h6>Status<span class="text-danger">*</span></h6> <span dragableColumn> </span>
-            </th>
-            <th></th>
-        </thead>
-        <tbody class="text-center">
-            <ng-container formArrayName="clientDocumentDetails"
-                *ngFor="let group of getFormControls.controls ; let i=index">
-                <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-                    <td>
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Document Type</mat-label>
-                            <mat-select formControlName="document_type_id" (selectionChange)="submitForm()">
-                                <mat-option *ngFor="let item of docType" [value]=item.document_type_id>
-                                    {{item.doc_type_description}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Due Date</mat-label>
-                            <input matInput matInput [matDatepicker]="picker" formControlName="due_date"
-                                (dateChange)="submitForm()">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Date Submitted</mat-label>
-                            <input matInput matInput [matDatepicker]="picker1" formControlName="date_submitted"
-                                (dateChange)="submitForm()">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Status</mat-label>
-                            <mat-select formControlName="status" (selectionChange)="submitForm()">
-                                <mat-option value="1">Open</mat-option>
-                                <mat-option value="0">Submitted</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </td>
-                    <td>
-                        <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
-                        <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
-                    </td>
-                </tr>
-                <tr *ngIf="!group.get('isEditable').value">
-                    <td>
-                        {{group.get('document_type_id').value? group.get('document_type_id').value == 1 ?'PAN':'':''}}
-                    </td>
-                    <td>
-                        {{getFormattedDate(group.get('due_date').value)}}
-                    </td>
-                    <td>
-                        {{getFormattedDate(group.get('date_submitted').value)}}
-                    </td>
-                    <td>
-                        {{group.get('status').value ?group.get('status').value==1?'Open':'Submitted':''}}
-                    </td>
-                    <td>
-                        <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
-                    </td>
-                </tr>
-            </ng-container>
-        </tbody>
-    </table>
+  <table class="table table-bordered table-sm">
+    <thead class="text-nowrap text-center">
+      <th>
+        <h6>Document Type<span class="text-danger">*</span></h6><span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Due Date<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Date Submitted</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Status<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+      </th>
+      <th></th>
+    </thead>
+    <tbody class="text-center">
+      <ng-container formArrayName="clientDocumentDetails" *ngFor="let group of getFormControls.controls ; let i=index">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Document Type</mat-label>
+              <mat-select formControlName="document_type_id" (selectionChange)="submitForm()">
+                <mat-option *ngFor="let item of docType| keyvalue" value={{item.key}}>
+                  {{item.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Due Date</mat-label>
+              <input matInput matInput [matDatepicker]="picker" formControlName="due_date" (dateChange)="submitForm()">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Date Submitted</mat-label>
+              <input matInput matInput [matDatepicker]="picker1" formControlName="date_submitted"
+                (dateChange)="submitForm()">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status" (selectionChange)="submitForm()">
+                <mat-option value="1">Open</mat-option>
+                <mat-option value="0">Submitted</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+            <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+          </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value">
+          <td>
+            {{group.get('document_type_id').value? docType[group.get('document_type_id').value]:''}}
+          </td>
+          <td>
+            {{getFormattedDate(group.get('due_date').value)}}
+          </td>
+          <td>
+            {{getFormattedDate(group.get('date_submitted').value)}}
+          </td>
+          <td>
+            {{group.get('status').value ?group.get('status').value==1?'Open':'Submitted':''}}
+          </td>
+          <td>
+            <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
 </form>
 
 <ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
-            <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p> {{modalMessage}}
-            </p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
-            <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
-        </div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
 </ng-template>

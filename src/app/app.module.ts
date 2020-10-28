@@ -44,6 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { PhoneMaskDirective } from './phone-mask.directive';
 import { SSNMaskDirective } from './ssn-mask.directive';
+import { SalaryMaskDirective } from './salary-mask.directive';
 import { EmploymentComponent } from './employment/employment.component';
 import { PaymentComponent } from './payment/payment.component';
 import { AttachmentsComponent } from './attachments/attachments.component';
@@ -91,6 +92,7 @@ export const DateFormat = {
     AddressComponent,
     PhoneMaskDirective,
     SSNMaskDirective,
+    SalaryMaskDirective,
     EmploymentComponent,
     PaymentComponent,
     AttachmentsComponent,
@@ -120,9 +122,9 @@ export const DateFormat = {
     MatButtonModule,
     MatIconModule,
     MatSelectModule
-  ], 
+  ],
   exports: [
-    PhoneMaskDirective,SSNMaskDirective,MatMomentDateModule
+    PhoneMaskDirective,SSNMaskDirective,MatMomentDateModule,SalaryMaskDirective
   ],
   providers: [LoginGuard, CommonService, ApiService, Configuration, Constants,  { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
 ],

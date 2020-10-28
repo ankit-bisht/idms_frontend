@@ -59,7 +59,7 @@
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Income Amount</mat-label>
                             <input matInput type="text" formControlName="income_amount" (keyup)="submitForm()"
-                                autocomplete="off" />
+                                autocomplete="off" appSalaryMask/>
                         </mat-form-field>
                     </td>
                     <td>
@@ -101,7 +101,7 @@
                         {{group.get('employer_phone').value?group.get('employer_phone').value:'NA'}}
                     </td>
                     <td>
-                        {{group.get('income_amount').value?group.get('income_amount').value:'NA'}}
+                        ${{group.get('income_amount').value?group.get('income_amount').value:'NA'}}
                     </td>
                     <td>
                         {{group.get('income_frequency').value? incomeFrequency[group.get('income_frequency').value]:'NA'}}

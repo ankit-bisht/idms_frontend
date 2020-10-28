@@ -98,7 +98,7 @@ export class PaymentComponent implements OnChanges {
       expiry_month: [element.expiry_month],
       expiry_year: [element.expiry_year],
       valid: [element.valid, Validators.required],
-      isEditable: [true]
+      isEditable: [false]
     });
   }
 

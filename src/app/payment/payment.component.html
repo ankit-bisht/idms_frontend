@@ -21,10 +21,10 @@
                 <h6>Payment Type<span class="text-danger">*</span></h6><span dragableColumn> </span>
             </th>
             <th>
-                <h6>Account Number<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+                <h6>Account Name<span class="text-danger">*</span></h6> <span dragableColumn> </span>
             </th>
             <th>
-                <h6>Account Name<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+                <h6>Account Number<span class="text-danger">*</span></h6> <span dragableColumn> </span>
             </th>
             <th>
                 <h6>Routing Number</h6> <span dragableColumn> </span>
@@ -59,15 +59,15 @@
                     </td>
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Account Number</mat-label>
-                            <input matInput type="text" formControlName="account_number" (keyup)="submitForm()"
+                            <mat-label>Account Name</mat-label>
+                            <input matInput type="text" formControlName="account_name" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
-                            <mat-label>Account Name</mat-label>
-                            <input matInput type="text" formControlName="account_name" (keyup)="submitForm()"
+                            <mat-label>Account Number</mat-label>
+                            <input matInput type="text" formControlName="account_number" (keyup)="submitForm()"
                                 autocomplete="off" />
                         </mat-form-field>
                     </td>
@@ -131,13 +131,13 @@
                 </tr>
                 <tr *ngIf="!group.get('isEditable').value">
                     <td>
-                        {{group.get('payment_type').value ? group.get('payment_type').value :''}}
-                    </td>
-                    <td>
-                        {{group.get('account_number').value ? group.get('account_number').value :''}}
+                        {{group.get('payment_type').value ? paymentType[group.get('payment_type').value] :''}}
                     </td>
                     <td>
                         {{group.get('account_name').value ? group.get('account_name').value:''}}
+                    </td>
+                    <td>
+                        {{group.get('account_number').value ? group.get('account_number').value :''}}
                     </td>
                     <td>
                         {{group.get('routing_number').value ? group.get('routing_number').value:''}}
@@ -152,7 +152,7 @@
                         {{group.get('expiry_year').value?group.get('expiry_year').value:''}}
                     </td>
                     <td>
-                        {{group.get('valid').value?group.get('valid').value:''}}
+                      {{group.get('valid').value ?group.get('valid').value==1?'Valid':'Not Valid':''}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

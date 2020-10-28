@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
       'password': this.hashedPassword,
     };
     this.api.loginApi(loginObj).subscribe((data: any) => {
+      let array = new Array();
       if (data.responseCode === 200) {
         localStorage.setItem('token', data.result.authorizationToken);
         localStorage.setItem('userId', data.result.userDetails.user_id);
@@ -62,10 +63,12 @@ export class LoginComponent implements OnInit {
         });
         this.api.documentDropDownValues(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
-            localStorage.setItem('docType', JSON.stringify(data.result));
+            for (let index = 0; index < data.result.length; index++) {
+              array[data.result[index].document_type_id]= data.result[index].doc_type_description;
+            }
           }
+          localStorage.setItem('docType', JSON.stringify(array));
         });
-
         this.Router.navigate(['/dashboard']);
       } else {
         this.FormError = data.error;

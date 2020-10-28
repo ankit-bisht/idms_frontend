@@ -184,7 +184,7 @@ export class NewIndividualComponent implements OnInit {
   }
 
   /**
-   * get constants 
+   * get constants
    */
   getConstants() {
     this.clientType = JSON.parse(localStorage.getItem('constants')).clientType;
@@ -265,7 +265,9 @@ export class NewIndividualComponent implements OnInit {
   }
 
   updateDetails() {
+    this.spinner.show();
     this.activatedRoute.params.subscribe(params => {
+      this.spinner.hide();
       if (params.edit == 0) {
         this.modalService.hide(1);
         this.saveIndividuals.clearIndividual();
