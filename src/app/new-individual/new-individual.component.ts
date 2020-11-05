@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Constants } from '../configuration/constants';
@@ -13,7 +13,7 @@ import { param } from 'jquery';
   templateUrl: './new-individual.component.html',
   styleUrls: ['./new-individual.component.scss']
 })
-export class NewIndividualComponent implements OnInit {
+export class NewIndividualComponent implements OnInit, OnDestroy {
 
   @ViewChild('mediumModalContent', { static: true }) modal: TemplateRef<any>;
 
@@ -42,11 +42,16 @@ export class NewIndividualComponent implements OnInit {
   disable: boolean = false;
   userEdit: Boolean = false;
   deleteClient: boolean = false;
+  errorModal: boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
   constructor(private activatedRoute: ActivatedRoute, private modalService: BsModalService, private saveIndividuals: IndividualDetailServiceService, private spinner: NgxSpinnerService, private fb: FormBuilder, private api: ApiService, public Router: Router, public States: Constants) {
     this.states = States.stateValue;
+  }
+
+  ngOnDestroy() {
+    this.updateEditStatus(1);
   }
 
   ngOnInit() {
@@ -74,6 +79,7 @@ export class NewIndividualComponent implements OnInit {
     }
     this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
       if (getdata.responseCode === 200) {
+        this.errorModal = false;
         if (getdata.result.clientDetails[0].edit == 2) {
           this.modalMessage = "This individual is currently being updated by some other user.";
           return this.modalRef = this.modalService.show(this.templateRef);
@@ -96,8 +102,10 @@ export class NewIndividualComponent implements OnInit {
       this.spinner.show();
       if (data.responseCode === 200) {
         this.spinner.hide();
+        this.errorModal = false;
       } else {
         this.spinner.hide();
+        this.errorModal = true;
         this.modalMessage = data.error;
         return this.modalRef = this.modalService.show(this.templateRef);
       }
@@ -175,8 +183,10 @@ export class NewIndividualComponent implements OnInit {
       if (data.responseCode === 200) {
         this.spinner.hide();
         this.redirect();
+        this.errorModal = false;
       } else {
         this.spinner.hide();
+        this.errorModal = true;
         this.modalMessage = data.error;
         return this.modalRef = this.modalService.show(this.templateRef);
       }
@@ -228,6 +238,7 @@ export class NewIndividualComponent implements OnInit {
         this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
           if (getdata.responseCode === 200) {
             this.spinner.hide();
+            this.errorModal = false;
             this.updateEditStatus(1);
             localStorage.setItem('ClientDetails', JSON.stringify(getdata.result));
           }
@@ -236,10 +247,12 @@ export class NewIndividualComponent implements OnInit {
             this.individualForm.disable();
             this.saveIndividuals.clearIndividual();
             this.disable = true;
+            this.errorModal = false;
             this.modalMessage = data.message;
             return this.modalRef = this.modalService.show(this.templateRef);
           } else {
             this.spinner.hide();
+            this.errorModal = true;
             this.modalMessage = data.error;
             return this.modalRef = this.modalService.show(this.templateRef);
           }
@@ -250,6 +263,7 @@ export class NewIndividualComponent implements OnInit {
         this.spinner.show();
         if (data.responseCode === 200) {
           this.spinner.hide();
+          this.errorModal = false;
           this.individualForm.disable();
           this.saveIndividuals.clearIndividual();
           this.disable = true;
@@ -258,6 +272,7 @@ export class NewIndividualComponent implements OnInit {
         } else {
           this.spinner.hide();
           this.modalMessage = data.error;
+          this.errorModal = true;
           return this.modalRef = this.modalService.show(this.templateRef);
         }
       });
@@ -280,6 +295,7 @@ export class NewIndividualComponent implements OnInit {
         this.api.getClientAllDetails(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             this.spinner.hide();
+            this.errorModal = false;
             localStorage.setItem('ClientDetails', JSON.stringify(data.result));
             this.saveIndividuals.clearIndividual();
             window.location.reload();

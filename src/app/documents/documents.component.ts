@@ -86,8 +86,8 @@ export class DocumentsComponent implements OnChanges {
   setForm(element): FormGroup {
     return this.fb.group({
       document_type_id: [element.document_type_id, Validators.required],
-      due_date: [new Date(element.due_date)],
-      date_submitted: [new Date(element.date_submitted)],
+      due_date: [element.due_date ? new Date(element.due_date) : ''],
+      date_submitted: [element.date_submitted ? new Date(element.date_submitted) : ''],
       status: [element.status],
       isEditable: [false]
     });
@@ -163,6 +163,8 @@ export class DocumentsComponent implements OnChanges {
       console.log(this.saveIndividuals.addToIndividual(this.documentForm.value));
     }
   }
+
+
   getFormattedDate(date) {
     return !!date ? moment(date).format('MM/DD/YYYY') : '';
   }

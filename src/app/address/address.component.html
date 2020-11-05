@@ -153,10 +153,10 @@
                         {{group.get('zip').value?group.get('zip').value:''}}
                     </td>
                     <td>
-                        {{group.get('from_date').value?group.get('from_date').value:''}}
+                        {{group.get('from_date').value?getFormattedDate(group.get('from_date').value):''}}
                     </td>
                     <td>
-                        {{group.get('to_date').value?group.get('to_date').value:''}}
+                        {{group.get('to_date').value?getFormattedDate(group.get('to_date').value):''}}
                     </td>
                     <td>
                         <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

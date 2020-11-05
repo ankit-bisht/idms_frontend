@@ -11,6 +11,7 @@ import { IndividualDetailServiceService } from '../individual-detail-service.ser
 import { ApiService } from '../services/api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Constants } from '../configuration/constants';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-address',
@@ -180,5 +181,9 @@ export class AddressComponent implements OnChanges {
       });
       console.log(this.saveIndividuals.addToIndividual(this.addressForm.value));
     }
+  }
+
+  getFormattedDate(date) {
+    return !!date ? moment(date).format('MM/DD/YYYY') : '';
   }
 }

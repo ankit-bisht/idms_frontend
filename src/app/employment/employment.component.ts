@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef,Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef, Input, OnChanges, SimpleChanges } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -9,6 +9,7 @@ import {
 import { IndividualDetailServiceService } from '../individual-detail-service.service';
 import { ApiService } from '../services/api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-employment',
@@ -153,17 +154,21 @@ export class EmploymentComponent implements OnChanges {
         const id = key + 1;
         element.employment_id = id.toString();
         if (element.start_date != '') {
-          element.start_date = new Date(element.start_date).toISOString().split('T')[0];
-          element.start_date = this.format(element.start_date);
+          element.start_date = moment(element.start_date).format("MM/DD/YYYY");;
+          // element.start_date = this.format(element.start_date);
         }
         if (element.end_date != "") {
-          element.end_date = new Date(element.end_date).toISOString().split('T')[0];
-          element.start_date = this.format(element.end_date);
+          element.end_date = moment(element.end_date).format("MM/DD/YYYY");;
+          // element.start_date = this.format(element.end_date);
 
         }
       });
       console.log(this.saveIndividuals.addToIndividual(this.employmentForm.value));
     }
+  }
+
+  getFormattedDate(date) {
+    return !!date ? moment(date).format('MM/DD/YYYY') : '';
   }
 
 }
