@@ -79,7 +79,6 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
     }
     this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
       if (getdata.responseCode === 200) {
-        this.errorModal = false;
         if (getdata.result.clientDetails[0].edit == 2) {
           this.modalMessage = "This individual is currently being updated by some other user.";
           return this.modalRef = this.modalService.show(this.templateRef);
@@ -102,10 +101,8 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
       this.spinner.show();
       if (data.responseCode === 200) {
         this.spinner.hide();
-        this.errorModal = false;
       } else {
         this.spinner.hide();
-        this.errorModal = true;
         this.modalMessage = data.error;
         return this.modalRef = this.modalService.show(this.templateRef);
       }
@@ -183,7 +180,6 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
       if (data.responseCode === 200) {
         this.spinner.hide();
         this.redirect();
-        this.errorModal = false;
       } else {
         this.spinner.hide();
         this.errorModal = true;
@@ -238,7 +234,6 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
         this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
           if (getdata.responseCode === 200) {
             this.spinner.hide();
-            this.errorModal = false;
             this.updateEditStatus(1);
             localStorage.setItem('ClientDetails', JSON.stringify(getdata.result));
           }
@@ -263,10 +258,10 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
         this.spinner.show();
         if (data.responseCode === 200) {
           this.spinner.hide();
-          this.errorModal = false;
           this.individualForm.disable();
           this.saveIndividuals.clearIndividual();
           this.disable = true;
+          this.errorModal = false;
           this.modalMessage = data.message;
           return this.modalRef = this.modalService.show(this.templateRef);
         } else {
@@ -295,7 +290,6 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
         this.api.getClientAllDetails(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             this.spinner.hide();
-            this.errorModal = false;
             localStorage.setItem('ClientDetails', JSON.stringify(data.result));
             this.saveIndividuals.clearIndividual();
             window.location.reload();
