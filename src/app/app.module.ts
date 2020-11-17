@@ -18,23 +18,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from './services/api.service';
 import { Configuration } from './configuration/config';
 import { GroupsComponent } from './groups/groups.component';
-import { IndividualsComponent } from './individuals/individuals.component';
+import { IndividualsComponent } from './Individuals/individuals/individuals.component';
 import { PoliciesComponent } from './policies/policies.component';
 import { AgentsComponent } from './agents/agents.component';
 import { CarriersComponent } from './carriers/carriers.component';
 import { ReportsComponent } from './reports/reports.component';
 import { CommisionComponent } from './commision/commision.component';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { NewIndividualComponent } from './new-individual/new-individual.component';
+import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Constants } from './configuration/constants';
 import { JwPaginationModule } from 'jw-angular-pagination';
 import { MatTabsModule } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
-import { ContactsComponent } from './contacts/contacts.component';
+import { ContactsComponent } from './Individuals/contacts/contacts.component';
 import { NgxBootstrapModalComponent } from './ngx-bootstrap-modal/ngx-bootstrap-modal.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { AddressComponent } from './address/address.component';
+import { AddressComponent } from './Individuals/address/address.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -44,29 +44,29 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { PhoneMaskDirective } from './phone-mask.directive';
 import { SSNMaskDirective } from './ssn-mask.directive';
-import { EmploymentComponent } from './employment/employment.component';
-import { PaymentComponent } from './payment/payment.component';
-import { AttachmentsComponent } from './attachments/attachments.component';
-import { DocumentsComponent } from './documents/documents.component';
+import { EmploymentComponent } from './Individuals/employment/employment.component';
+import { PaymentComponent } from './Individuals/payment/payment.component';
+import { AttachmentsComponent } from './Individuals/attachments/attachments.component';
+import { DocumentsComponent } from './Individuals/documents/documents.component';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material';
-import {MatRadioModule} from '@angular/material/radio';
-import { RelationshipsComponent } from './relationships/relationships.component';
-
+import { MatRadioModule } from '@angular/material/radio';
+import { RelationshipsComponent } from './Individuals/relationships/relationships.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 export const DateFormat = {
   parse: {
     dateInput: 'input',
-    },
-    display: {
+  },
+  display: {
     dateInput: 'MM/DD/YYYY',
     monthYearLabel: 'MMMM YYYY',
     dateA11yLabel: 'MM/DD/YYYY',
     monthYearA11yLabel: 'MMMM YYYY',
-    }
-  };
+  }
+};
 
 @NgModule({
   declarations: [
@@ -95,7 +95,7 @@ export const DateFormat = {
     PaymentComponent,
     AttachmentsComponent,
     DocumentsComponent,
-    RelationshipsComponent
+    RelationshipsComponent,
   ],
   imports: [
     ModalModule.forRoot(),
@@ -119,13 +119,14 @@ export const DateFormat = {
     MatRadioModule,
     MatButtonModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   exports: [
-    PhoneMaskDirective,SSNMaskDirective,MatMomentDateModule
+    PhoneMaskDirective, SSNMaskDirective, MatMomentDateModule
   ],
-  providers: [LoginGuard, CommonService, ApiService, Configuration, Constants,  { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
-],
+  providers: [LoginGuard, CommonService, ApiService, Configuration, Constants, { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

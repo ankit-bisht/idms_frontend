@@ -4,12 +4,12 @@ import { LoginComponent } from './login/login.component';
 import { LoginGuard } from './guards/login.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GroupsComponent } from './groups/groups.component';
-import { IndividualsComponent } from './individuals/individuals.component';
+import { IndividualsComponent } from './Individuals/individuals/individuals.component';
 import { PoliciesComponent } from './policies/policies.component';
 import { AgentsComponent } from './agents/agents.component';
 import { CarriersComponent } from './carriers/carriers.component';
 import { ReportsComponent } from './reports/reports.component';
-import { NewIndividualComponent } from './new-individual/new-individual.component';
+import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

@@ -1,0 +1,142 @@
+<style>
+  ::ng-deep .mat-form-field-wrapper {
+    margin-top: -1.25em;
+  }
+
+  mat-icon {
+    cursor: pointer;
+  }
+</style>
+
+<div class="action-container" style="padding: 3%;">
+  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+    Row</button>
+  &nbsp;
+</div>
+
+<form [formGroup]="documentForm" style="font-size: 12px">
+  <table class="table table-bordered table-sm">
+    <thead class="text-nowrap text-center">
+      <th>
+        <h6>Individual<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Relationship<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+      </th>
+      <th></th>
+    </thead>
+    <tbody class="text-center">
+      <ng-container formArrayName="clientRelationShipDetails"
+        *ngFor="let group of getFormControls.controls ; let i=index">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+          <td>
+            <!-- <mat-form-field appearance="outline" style="font-size: 10px"> -->
+            <!-- <mat-label>Individual</mat-label> -->
+            <!-- <mat-select formControlName="id2" (selectionChange)="submitForm()">
+                <mat-option *ngFor="let item of filteredClients" [value]=item.client_id>
+                  {{item.first_name}} {{item.last_name}} ({{item.DOB}})
+                </mat-option>
+              </mat-select> -->
+            {{getIndividual(group.get('id2').value)}}
+            <!-- </mat-form-field>  -->
+            &nbsp;
+            <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Individual</button>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Relationships</mat-label>
+              <mat-select formControlName="relationshipId" (selectionChange)="submitForm()">
+                <mat-option *ngFor="let item of relationshipType" [value]=item.id>
+                  {{item.relationship}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+            <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+          </td>
+
+          <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Individuals</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
+                      aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+                  </mat-form-field>
+                  <mat-table #table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="first_name">
+                      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+                      <mat-cell *matCellDef="let element"
+                        (click)="[submitForm(),setValue(group,element.client_id),onCloseHandled()]">
+                        {{element.first_name}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+                      <mat-cell *matCellDef="let element"
+                        (click)="[submitForm(),setValue(group,element.client_id),onCloseHandled()]">
+                        {{element.last_name}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="DOB">
+                      <mat-header-cell *matHeaderCellDef> DOB </mat-header-cell>
+                      <mat-cell *matCellDef="let element"
+                        (click)="[submitForm(),setValue(group,element.client_id),onCloseHandled()]">
+                        {{element.DOB}}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+                  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]">
+                  </mat-paginator>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" (click)="onCloseHandled()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value">
+          <td>
+            {{getIndividual(group.get('id2').value)}}
+          </td>
+          <td>
+            {{getRelationship(group.get('relationshipId').value)}}
+          </td>
+          <td>
+            <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</form>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>
