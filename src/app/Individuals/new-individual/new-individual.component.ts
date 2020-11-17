@@ -43,6 +43,7 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
   userEdit: Boolean = false;
   deleteClient: boolean = false;
   errorModal: boolean = false;
+  invalid: boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -93,21 +94,23 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
   }
 
   updateEditStatus(status) {
-    const obj = {
-      clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
-      userId: localStorage.getItem('userId'),
-      status: status
-    }
-    this.api.updateEditStatus(obj).subscribe((data: any) => {
-      this.spinner.show();
-      if (data.responseCode === 200) {
-        this.spinner.hide();
-      } else {
-        this.spinner.hide();
-        this.modalMessage = data.error;
-        return this.modalRef = this.modalService.show(this.templateRef);
+    if (localStorage.getItem('ClientDetails')) {
+      const obj = {
+        clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
+        userId: localStorage.getItem('userId'),
+        status: status
       }
-    });
+      this.api.updateEditStatus(obj).subscribe((data: any) => {
+        this.spinner.show();
+        if (data.responseCode === 200) {
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          this.modalMessage = data.error;
+          return this.modalRef = this.modalService.show(this.templateRef);
+        }
+      });
+    }
   }
 
   redirect() {
@@ -211,6 +214,111 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
       this.individualForm.value.DOB = new Date(this.individualForm.value.DOB).toISOString().split('T')[0];
       this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
       console.log(this.saveIndividuals.addToIndividual(this.individualForm.value));
+    }
+  }
+
+  validate(finalIndividual) {
+    var finalIndividual: any = this.saveIndividuals.getIndividual();
+
+    if (finalIndividual.hasOwnProperty("clientContactDetails")) {
+      finalIndividual.clientContactDetails.some(ele => {
+        if (!ele.contact_type) {
+          this.modalMessage = 'Please fill all the mandatory fields in Contact Form!!';
+          this.errorModal = true;
+          this.invalid = true;
+          return this.modalRef = this.modalService.show(this.templateRef)
+        } else {
+          this.invalid = false;
+        }
+      });
+    }
+    if (!this.invalid) {
+      if (finalIndividual.hasOwnProperty("clientAddressDetails")) {
+        finalIndividual.clientAddressDetails.some(ele => {
+          if (!ele.address_type || !ele.number || !ele.street || !ele.city || !ele.state || !ele.zip) {
+            this.modalMessage = 'Please fill all the mandatory fields in Address Form!!';
+            this.errorModal = true;
+            this.invalid = true;
+            return this.modalRef = this.modalService.show(this.templateRef)
+          } else {
+            this.invalid = false;
+          }
+        });
+      }
+      if (!this.invalid) {
+        if (finalIndividual.hasOwnProperty("clientEmploymentDetails")) {
+          finalIndividual.clientEmploymentDetails.map(ele => {
+            if (!ele.employer_name || !ele.income_amount || !ele.income_frequency || !ele.start_date || !ele.end_date) {
+              this.modalMessage = 'Please fill all the mandatory fields in Employment Form!!';
+              this.errorModal = true;
+              this.invalid = true;
+              return this.modalRef = this.modalService.show(this.templateRef)
+            } else {
+              this.invalid = false;
+            }
+          });
+        }
+        if (!this.invalid) {
+          if (finalIndividual.hasOwnProperty("clientPaymentMethods")) {
+            finalIndividual.clientPaymentMethods.map(ele => {
+              if (!ele.payment_type || !ele.account_name || !ele.account_number || !ele.valid) {
+                this.modalMessage = 'Please fill all the mandatory fields in Payment Form!!';
+                this.errorModal = true;
+                this.invalid = true;
+                return this.modalRef = this.modalService.show(this.templateRef)
+              } else {
+                this.invalid = false;
+              }
+            });
+          }
+          if (!this.invalid) {
+            if (finalIndividual.hasOwnProperty("clientAttachmentDetails")) {
+              finalIndividual.clientAttachmentDetails.map(ele => {
+                if (!ele.attachment_type || !ele.attachment_location) {
+                  this.modalMessage = 'Please fill all the mandatory fields in Attachment Form!!';
+                  this.errorModal = true;
+                  this.invalid = true;
+                  return this.modalRef = this.modalService.show(this.templateRef)
+                } else {
+                  this.invalid = false;
+                }
+              });
+            }
+            if (!this.invalid) {
+              if (finalIndividual.hasOwnProperty("clientDocumentDetails")) {
+                finalIndividual.clientDocumentDetails.map(ele => {
+                  if (!ele.document_type_id || !ele.due_date || !ele.status) {
+                    this.modalMessage = 'Please fill all the mandatory fields in Document Form!!';
+                    this.errorModal = true;
+                    this.invalid = true;
+                    return this.modalRef = this.modalService.show(this.templateRef)
+                  } else {
+                    this.invalid = false;
+                  }
+                });
+              }
+              if (!this.invalid) {
+                if (finalIndividual.hasOwnProperty("clientRelationShipDetails")) {
+                  finalIndividual.clientRelationShipDetails.map(ele => {
+                    if (!ele.relationshipId || !ele.id2) {
+                      this.modalMessage = 'Please fill all the mandatory fields in Relationship Form!!';
+                      this.errorModal = true;
+                      this.invalid = true;
+                      return this.modalRef = this.modalService.show(this.templateRef)
+                    } else {
+                      this.invalid = false;
+                    }
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    if (!this.invalid) {
+      this.submit();
     }
   }
 
