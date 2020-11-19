@@ -17,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from './services/api.service';
 import { Configuration } from './configuration/config';
-import { GroupsComponent } from './groups/groups.component';
+import { GroupsComponent } from './Groups/groups/groups.component';
 import { IndividualsComponent } from './Individuals/individuals/individuals.component';
 import { PoliciesComponent } from './policies/policies.component';
 import { AgentsComponent } from './agents/agents.component';
@@ -54,6 +54,7 @@ import { MatPaginatorModule } from '@angular/material';
 import { MatRadioModule } from '@angular/material/radio';
 import { RelationshipsComponent } from './Individuals/relationships/relationships.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NewGroupsComponent } from './Groups/new-groups/new-groups.component';
 
 
 export const DateFormat = {
@@ -96,6 +97,7 @@ export const DateFormat = {
     AttachmentsComponent,
     DocumentsComponent,
     RelationshipsComponent,
+    NewGroupsComponent,
   ],
   imports: [
     ModalModule.forRoot(),

@@ -1,0 +1,71 @@
+<style>
+  ::ng-deep.mat-tab-link,
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    min-width: 97px !important;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .form-check .form-check-label {
+    font-size: 10px;
+  }
+
+  ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
+    font-weight: 100;
+  }
+</style>
+<div class="grid-margin stretch-card">
+  <div class="card">
+    <div class="card-title" style="padding: 10px 0px 0px 10px;">
+      <span *ngIf="disable">
+        <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit">
+          <i class="mdi mdi-pencil"></i>Edit</button>
+      </span>
+      <button class="btn btn-primary btn-sm" (click)="openDelete()" *ngIf="userEdit"><i
+          class="mdi mdi-delete"></i>Delete</button>
+      <button class="btn btn-primary btn-sm float-right" (click)="redirect()"><i
+          class="mdi mdi-keyboard-backspace"></i>Back</button>
+    </div>
+    <div class="card-body" style="padding-top: 1.25rem;">
+      <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Individual Details">
+          hico
+        </mat-tab>
+        <mat-tab label="Contacts">
+          cjdh
+        </mat-tab>
+      </mat-tab-group>
+      <br />
+      <!-- <button class="btn btn-primary float-right" [disabled]="!individualForm.valid" (click)="validate()"
+        *ngIf="!disable">SUBMIT</button> -->
+    </div>
+  </div>
+</div>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" *ngIf="errorModal" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="!deleteClient && !errorModal"
+        (click)="updateDetails()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="deleteClient" (click)="delete()">Yes</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>
