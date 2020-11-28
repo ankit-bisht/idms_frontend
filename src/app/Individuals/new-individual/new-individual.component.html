@@ -9,6 +9,10 @@
     width: 100%;
   }
 
+  .grid-margin {
+    margin-bottom: 0rem;
+  }
+
   .form-check .form-check-label {
     font-size: 10px;
   }
@@ -277,7 +281,8 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-success" *ngIf="errorModal" (click)="modalRef.hide()">Ok</button>
-      <button type="button" class="btn btn-success" *ngIf="!deleteClient && !errorModal" (click)="updateDetails()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="!deleteClient && !errorModal"
+        (click)="updateDetails()">Ok</button>
       <button type="button" class="btn btn-success" *ngIf="deleteClient" (click)="delete()">Yes</button>
       <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
     </div>

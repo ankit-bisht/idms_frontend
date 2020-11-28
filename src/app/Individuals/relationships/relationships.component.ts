@@ -33,11 +33,12 @@ export class RelationshipsComponent implements OnChanges {
   touchedRows: any;
   document_status: any;
   display = "none";
-  @ViewChild(MatPaginator, {static: false}) set paginator(value: MatPaginator) {
-    if(this.dataSource) {
+  @ViewChild(MatPaginator, { static: false }) set paginator(value: MatPaginator) {
+    if (this.dataSource) {
       this.dataSource.paginator = value;
     }
-}  displayedColumns = ['first_name', 'last_name', 'DOB'];
+  }
+  displayedColumns = ['first_name', 'last_name', 'DOB'];
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
   dataSource: any;
   idVal = "";

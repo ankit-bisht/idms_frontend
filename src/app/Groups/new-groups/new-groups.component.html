@@ -9,6 +9,10 @@
     width: 100%;
   }
 
+  .grid-margin {
+    margin-bottom: 0rem;
+  }
+
   .form-check .form-check-label {
     font-size: 10px;
   }
@@ -34,16 +38,66 @@
         <p style="color: white"> Loading... </p>
       </ngx-spinner>
       <mat-tab-group mat-align-tabs="start">
-        <mat-tab label="Individual Details">
-          hico
+        <mat-tab label="Group Details">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <form class="form-sample" [formGroup]="groupForm" style="font-size: 12px">
+                  <div class="row mt-4">
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Group Name</mat-label>
+                        <input matInput placeholder="Group Name" (keyup)="onSubmit()" formControlName="group_name"
+                          [(ngModel)]="group_name" required>
+                        <mat-error *ngIf="groupForm.get('group_name').invalid && (groupForm.get('group_name').touched)">
+                          <span *ngIf="groupForm.get('group_name').errors.required">
+                            Group Name is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>FEIN</mat-label>
+                        <input matInput placeholder="FEIN" (keyup)="onSubmit()" formControlName="FEIN"
+                          [(ngModel)]="FEIN" required>
+                        <mat-error *ngIf="groupForm.get('FEIN').invalid && (groupForm.get('FEIN').touched)">
+                          <span *ngIf="groupForm.get('FEIN').errors.required">
+                            FEIN is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>SIC</mat-label>
+                        <input matInput placeholder="SIC" (keyup)="onSubmit()" formControlName="SIC" [(ngModel)]="SIC"
+                          required>
+                        <mat-error *ngIf="groupForm.get('SIC').invalid && (groupForm.get('SIC').touched)">
+                          <span *ngIf="groupForm.get('SIC').errors.required">
+                            SIC is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </form>
+                <app-group-address [disable]="disable"></app-group-address>
+              </div>
+            </div>
+          </div>
         </mat-tab>
         <mat-tab label="Contacts">
-          cjdh
+          <app-group-contacts [disable]="disable"></app-group-contacts>
+        </mat-tab>
+        <mat-tab label="Members">
+          <app-members [disable]="disable"></app-members>
         </mat-tab>
       </mat-tab-group>
       <br />
-      <!-- <button class="btn btn-primary float-right" [disabled]="!individualForm.valid" (click)="validate()"
-        *ngIf="!disable">SUBMIT</button> -->
+
+      <button class="btn btn-primary float-right" [disabled]="!groupForm.valid" (click)="validate()"
+      *ngIf="!disable" >SUBMIT</button>
     </div>
   </div>
 </div>

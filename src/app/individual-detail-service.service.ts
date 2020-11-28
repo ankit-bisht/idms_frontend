@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class IndividualDetailServiceService {
 
   individualDetails = {};
+  groupDetails = {};
 
   constructor() { }
 
@@ -21,5 +22,24 @@ export class IndividualDetailServiceService {
   clearIndividual() {
     this.individualDetails = {};
     return this.individualDetails;
+  }
+
+  /**
+   *
+   * @param GROUPS
+   */
+
+  addToGroup(details) {
+    Object.entries(details).forEach(([key, value]) => { this.groupDetails[key] = value })
+    return this.groupDetails;
+  }
+
+  getGroup() {
+    return this.groupDetails;
+  }
+
+  clearGroup() {
+    this.groupDetails = {};
+    return this.groupDetails;
   }
 }

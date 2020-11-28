@@ -15,7 +15,7 @@ export class GroupsComponent implements OnInit {
 
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['first_name', 'middle_name', 'last_name', 'DOB', 'phone', 'email',];
+  displayedColumns = ['group_name', 'SIC', 'FEIN','email','phone'];
   dataSource: any;
   data: any = [];
   length: any = 0;
@@ -25,7 +25,7 @@ export class GroupsComponent implements OnInit {
 
   ngOnInit() {
     this.getDetail();
-    localStorage.removeItem('ClientDetails')
+    localStorage.removeItem('GroupDetails')
   }
 
   applyFilter(filterValue: string) {
@@ -38,13 +38,13 @@ export class GroupsComponent implements OnInit {
     const Obj = {
       userId: localStorage.getItem('userId')
     }
-    this.api.getIndividuals(Obj).subscribe((data: any) => {
+    this.api.getGroups(Obj).subscribe((data: any) => {
       this.spinner.show();
       if (data.responseCode === 200) {
         setTimeout(() => {
           this.spinner.hide();
         }, 1000);
-        let users: User[] = [data.result];
+        let users: User[] = [data.result.groupDetails];
         this.data = users[0];
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.paginator = this.paginator;
@@ -57,22 +57,23 @@ export class GroupsComponent implements OnInit {
     this.Router.navigate(['groups/newGroups', { edit: 0 }]);
   }
 
-  getSingleIndividual(clientId) {
+  getSingleIndividual(group_id) {
+
     this.spinner.show();
     const Obj = {
       userId: localStorage.getItem('userId'),
-      clientId: clientId
+      group_id: group_id
     }
-    this.api.getClientAllDetails(Obj).subscribe((data: any) => {
+    this.api.getGroupAllDetails(Obj).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.spinner.hide();
-        localStorage.setItem('ClientDetails', JSON.stringify(data.result));
-        if (data.result.clientDetails[0].edit == 2) {
+        localStorage.setItem('GroupDetails', JSON.stringify(data.result));
+        if (data.result.groupDetails[0].edit == 2) {
           var edit = 1
         } else {
           edit = 2
         }
-        this.Router.navigate(['individuals/newIndividual', { edit: data.result.clientDetails[0].edit }]);
+        this.Router.navigate(['groups/newGroups', { edit: data.result.groupDetails[0].edit }]);
       }
     });
   }

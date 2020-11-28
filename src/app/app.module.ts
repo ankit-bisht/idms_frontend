@@ -55,6 +55,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { RelationshipsComponent } from './Individuals/relationships/relationships.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NewGroupsComponent } from './Groups/new-groups/new-groups.component';
+import { GroupAddressComponent } from './Groups/group-address/group-address.component';
+import { GroupContactsComponent } from './Groups/group-contacts/group-contacts.component';
+import { MembersComponent } from './Groups/members/members.component';
 
 
 export const DateFormat = {
@@ -98,6 +101,9 @@ export const DateFormat = {
     DocumentsComponent,
     RelationshipsComponent,
     NewGroupsComponent,
+    GroupAddressComponent,
+    GroupContactsComponent,
+    MembersComponent,
   ],
   imports: [
     ModalModule.forRoot(),

@@ -1,7 +1,7 @@
 <div class="template-demo">
   <h2>Groups</h2>
 </div>
-<!-- <div class="row">
+<div class="row">
   <div class="col-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body" style="padding: 1.0rem 1.0rem;">
@@ -18,29 +18,23 @@
 
         <mat-table #table [dataSource]="dataSource">
 
-          <ng-container matColumnDef="first_name">
-            <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
-            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
-              {{element.first_name}}</mat-cell>
+          <ng-container matColumnDef="group_name">
+            <mat-header-cell *matHeaderCellDef> Group Name </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
+              {{element.group_name}}</mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="middle_name">
-            <mat-header-cell *matHeaderCellDef> Middle Name </mat-header-cell>
-            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
-              {{element.middle_name}}</mat-cell>
+          <ng-container matColumnDef="FEIN">
+            <mat-header-cell *matHeaderCellDef> FEIN </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
+              {{element.FEIN}}</mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="last_name">
-            <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
-            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
-              {{element.last_name}}
+          <ng-container matColumnDef="SIC">
+            <mat-header-cell *matHeaderCellDef> SIC </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
+              {{element.SIC}}
             </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="DOB">
-            <mat-header-cell *matHeaderCellDef> DOB </mat-header-cell>
-            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.client_id)">
-              {{element.DOB}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="email">
@@ -62,4 +56,4 @@
         </mat-paginator>
       </div>
     </div>
-  </div> -->
+  </div>
