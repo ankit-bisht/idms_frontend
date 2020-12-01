@@ -193,14 +193,14 @@ export class NewGroupsComponent implements OnInit {
 
   openDelete() {
     this.deleteClient = true;
-    this.modalMessage = 'Are you sure you want to delete this Individual?';
+    this.modalMessage = 'Are you sure you want to delete this Group?';
     return this.modalRef = this.modalService.show(this.templateRef);
   }
 
   delete() {
     this.modalService.hide(1);
     const obj = {
-      group_id: JSON.parse(localStorage.getItem('GroupDetails')).groupDetails[0].group_id,
+      groupId: JSON.parse(localStorage.getItem('GroupDetails')).groupDetails[0].group_id,
       userId: localStorage.getItem('userId')
     }
     this.api.deleteGroup(obj).subscribe((data: any) => {
