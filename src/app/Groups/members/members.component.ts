@@ -59,8 +59,6 @@ export class MembersComponent implements OnChanges {
     if (localStorage.getItem('GroupDetails')) {
       if (JSON.parse(localStorage.getItem('GroupDetails')).groupMembersDetails.length >= 1) {
         this.setDetails();
-        console.log("jii");
-
       }
     }
     if (disable.disable.currentValue) {
