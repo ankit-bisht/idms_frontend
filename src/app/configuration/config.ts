@@ -20,6 +20,7 @@ export class Configuration {
     getGroupsDetails: this.baseUrl + "getGroupsDetails",
     createGroup: this.baseUrl + "createGroup",
     updateGroup: this.baseUrl + "updateGroup",
+    deleteGroup: this.baseUrl + "deleteGroup",
     updateGroupEditStatus:this.baseUrl + "updateGroupEditStatus"
   }
 }

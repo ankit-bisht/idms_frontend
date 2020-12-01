@@ -38,7 +38,7 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.updateEditStatus, obj, this.options);
   }
 
-  updateGroupEditStatus(obj){
+  updateGroupEditStatus(obj) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': localStorage.getItem('token')
@@ -63,6 +63,21 @@ export class ApiService {
       headers: headers
     }
     return this.httpClient.post(this.urlObject.UrlObj.deleteClient, obj, this.options);
+  }
+
+  /**
+ * @method deleteGroup()
+ * @desc delete group
+ */
+  deleteGroup(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.deleteGroup, obj, this.options);
   }
 
   /**

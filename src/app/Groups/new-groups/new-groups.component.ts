@@ -25,6 +25,7 @@ export class NewGroupsComponent implements OnInit {
   group_name: any;
   SIC: any;
   FEIN: any;
+  deleteClient:any;
   userEdit: Boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
@@ -186,6 +187,32 @@ export class NewGroupsComponent implements OnInit {
           this.groupForm.enable();
           this.disable = false;
         }
+      }
+    });
+  }
+
+  openDelete() {
+    this.deleteClient = true;
+    this.modalMessage = 'Are you sure you want to delete this Individual?';
+    return this.modalRef = this.modalService.show(this.templateRef);
+  }
+
+  delete() {
+    this.modalService.hide(1);
+    const obj = {
+      group_id: JSON.parse(localStorage.getItem('GroupDetails')).groupDetails[0].group_id,
+      userId: localStorage.getItem('userId')
+    }
+    this.api.deleteGroup(obj).subscribe((data: any) => {
+      this.spinner.show();
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        this.redirect();
+      } else {
+        this.spinner.hide();
+        this.errorModal = true;
+        this.modalMessage = data.error;
+        return this.modalRef = this.modalService.show(this.templateRef);
       }
     });
   }
