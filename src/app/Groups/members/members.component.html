@@ -6,10 +6,14 @@
   mat-icon {
     cursor: pointer;
   }
+
   .mat-row:hover {
     background-color: lightgray;
     cursor: pointer;
-}
+  }
+  .table{
+    width: 50%;
+  }
 </style>
 
 <div class="action-container" style="padding: 3%;">
@@ -26,9 +30,8 @@
       </th>
       <th></th>
     </thead>
-    <tbody class="text-center">
-      <ng-container formArrayName="groupMembersDetails"
-        *ngFor="let group of getFormControls.controls ; let i=index">
+    <tbody class="">
+      <ng-container formArrayName="groupMembersDetails" *ngFor="let group of getFormControls.controls ; let i=index">
         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
           <td>
             <!-- <mat-form-field appearance="outline" style="font-size: 10px"> -->
@@ -99,7 +102,8 @@
         </tr>
         <tr *ngIf="!group.get('isEditable').value">
           <td>
-            <a href="javascript:void(0);" (click)="goToIndividual(group)">{{getIndividual(group.get('client_id').value)}}</a>
+            <a href="javascript:void(0);"
+              (click)="goToIndividual(group)">{{getIndividual(group.get('client_id').value)}}</a>
           </td>
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

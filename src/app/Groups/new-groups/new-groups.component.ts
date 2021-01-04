@@ -25,7 +25,8 @@ export class NewGroupsComponent implements OnInit {
   group_name: any;
   SIC: any;
   FEIN: any;
-  deleteClient:any;
+  DBA: any;
+  deleteClient: any;
   userEdit: Boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
@@ -49,6 +50,7 @@ export class NewGroupsComponent implements OnInit {
       "group_name": new FormControl('', [Validators.required]),
       "FEIN": new FormControl('', [Validators.required]),
       "SIC": new FormControl('', [Validators.required]),
+      "DBA": new FormControl('', [Validators.required]),
     });
 
     let getClientDetail = JSON.parse(localStorage.getItem('GroupDetails'));
@@ -61,6 +63,7 @@ export class NewGroupsComponent implements OnInit {
       this.group_name = Client.group_name;
       this.FEIN = Client.FEIN;
       this.SIC = Client.SIC;
+      this.DBA = Client.DBA;
 
     }
 
