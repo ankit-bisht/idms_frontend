@@ -44,11 +44,11 @@
               <div class="card-body">
                 <form class="form-sample" [formGroup]="groupForm" style="font-size: 12px">
                   <div class="row mt-4">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <mat-form-field appearance="outline">
                         <mat-label>Legal Name</mat-label>
-                        <input matInput placeholder="Legal Name" (keyup)="onSubmit()" formControlName="group_name" maxlength="20"
-                          [(ngModel)]="group_name" required>
+                        <input matInput placeholder="Legal Name" (keyup)="onSubmit()" formControlName="group_name"
+                          maxlength="20" [(ngModel)]="group_name" required>
                         <mat-error *ngIf="groupForm.get('group_name').invalid && (groupForm.get('group_name').touched)">
                           <span *ngIf="groupForm.get('group_name').errors.required">
                             Legal Name is Required.
@@ -56,19 +56,14 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <mat-form-field appearance="outline">
                         <mat-label>DBA</mat-label>
-                        <input matInput placeholder="DBA" (keyup)="onSubmit()" formControlName="DBA" [(ngModel)]="DBA" maxlength="100"
-                          required>
-                        <mat-error *ngIf="groupForm.get('DBA').invalid && (groupForm.get('DBA').touched)">
-                          <span *ngIf="groupForm.get('DBA').errors.required">
-                            DBA is Required.
-                          </span>
-                        </mat-error>
+                        <input matInput placeholder="DBA" (keyup)="onSubmit()" formControlName="DBA" [(ngModel)]="DBA"
+                          maxlength="100">
                       </mat-form-field>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <mat-form-field appearance="outline">
                         <mat-label>FEIN</mat-label>
                         <input matInput placeholder="FEIN" (keyup)="onSubmit()" formControlName="FEIN" maxlength="10"
@@ -80,11 +75,11 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" style="max-width: 12%;">
                       <mat-form-field appearance="outline">
                         <mat-label>SIC</mat-label>
-                        <input matInput placeholder="SIC" (keyup)="onSubmit()" formControlName="SIC" [(ngModel)]="SIC" maxlength="5"
-                          required>
+                        <input matInput placeholder="SIC" (keyup)="onSubmit()" formControlName="SIC" [(ngModel)]="SIC"
+                          maxlength="5" required>
                         <mat-error *ngIf="groupForm.get('SIC').invalid && (groupForm.get('SIC').touched)">
                           <span *ngIf="groupForm.get('SIC').errors.required">
                             SIC is Required.

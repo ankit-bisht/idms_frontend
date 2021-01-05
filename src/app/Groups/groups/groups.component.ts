@@ -15,7 +15,7 @@ export class GroupsComponent implements OnInit {
 
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['group_name', 'SIC', 'FEIN','email','phone'];
+  displayedColumns = ['group_name', 'SIC', 'FEIN', 'email', 'phone'];
   dataSource: any;
   data: any = [];
   length: any = 0;

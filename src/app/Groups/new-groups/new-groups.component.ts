@@ -50,7 +50,7 @@ export class NewGroupsComponent implements OnInit {
       "group_name": new FormControl('', [Validators.required]),
       "FEIN": new FormControl('', [Validators.required]),
       "SIC": new FormControl('', [Validators.required]),
-      "DBA": new FormControl('', [Validators.required]),
+      "DBA": new FormControl(''),
     });
 
     let getClientDetail = JSON.parse(localStorage.getItem('GroupDetails'));
