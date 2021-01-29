@@ -1,0 +1,269 @@
+<style>
+  ::ng-deep.mat-tab-link,
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    min-width: 97px !important;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  tbody.text-center {
+    text-align: left !important;
+  }
+
+  .grid-margin {
+    margin-bottom: 0rem;
+  }
+
+  .form-check .form-check-label {
+    font-size: 10px;
+  }
+
+  ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
+    font-weight: 100;
+  }
+</style>
+<div class="grid-margin stretch-card">
+  <div class="card">
+    <div class="card-title" style="padding: 10px 0px 0px 10px;">
+      <span *ngIf="disable">
+        <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit">
+          <i class="mdi mdi-pencil"></i>Edit</button>
+      </span>
+      <button class="btn btn-primary btn-sm" (click)="openDelete()" *ngIf="userEdit"><i
+          class="mdi mdi-delete"></i>Delete</button>
+      <button class="btn btn-primary btn-sm float-right" (click)="redirect()"><i
+          class="mdi mdi-keyboard-backspace"></i>Back</button>
+    </div>
+    <div class="card-body" style="padding-top: 1.25rem;">
+      <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Agent Details">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <form class="form-sample" [formGroup]="individualForm" style="font-size: 12px">
+                  <div class="row mt-4">
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First Name" (keyup)="onSubmit()" formControlName="first_name"
+                          [(ngModel)]="firstName" required>
+                        <mat-error
+                          *ngIf="individualForm.get('first_name').invalid && (individualForm.get('first_name').touched)">
+                          <span *ngIf="individualForm.get('first_name').errors.required">
+                            First Name is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput placeholder="Middle Name" (keyup)="onSubmit()" formControlName="middle_name"
+                          [(ngModel)]="middleName">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last Name" (keyup)="onSubmit()" formControlName="last_name"
+                          [(ngModel)]="lastName" required>
+                        <mat-error
+                          *ngIf="individualForm.get('last_name').invalid && (individualForm.get('last_name').touched)">
+                          <span *ngIf="individualForm.get('last_name').errors.required">
+                            Last Name is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="DOB" [(ngModel)]="DOB" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="individualForm.get('DOB').invalid && (individualForm.get('DOB').touched)">
+                          <span *ngIf="individualForm.get('DOB').errors.required">
+                            Date Of Birth is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>SSN</mat-label>
+                        <input matInput placeholder="SSN" maxlength="11" (keyup)="onSubmit()" formControlName="ssn" [(ngModel)]="ssn" required
+                          appSSNMask>
+                          <mat-error *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)">
+                            <span *ngIf="individualForm.get('ssn').errors.required">
+                              SSN is Required.
+                            </span>
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Height in Feet</mat-label>
+                        <input matInput placeholder="Feet" (keyup)="onSubmit()" formControlName="height_feet"
+                          [(ngModel)]="height_feet">
+                      </mat-form-field>
+                    </div><span style="margin-left: -5px;margin-top: 20px;">/</span>
+                    <div class="col-md-2">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Height in Inches</mat-label>
+                        <input matInput placeholder="Inches" (keyup)="onSubmit()" formControlName="height_inches"
+                          [(ngModel)]="height_inches">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Weight</mat-label>
+                        <input matInput placeholder="Weight" (keyup)="onSubmit()" formControlName="weight"
+                          [(ngModel)]="weight">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group row" style="font-size: 12px">
+                        <label class="col-sm-4 col-form-label">
+                          <span style="font-size: 10px;">Gender *</span>
+                        </label>
+                        <div class="col-sm-4" style="padding: 0%;flex: 0 0 33.33333333%;
+                        max-width: 21.333333%;">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" style="font-size: 10px;" (keyup)="onSubmit()" class="form-check-input"
+                                id="membershipRadios1" formControlName="sex" value="M" [(ngModel)]="sex">
+                              Male
+                              <i class="input-helper"></i>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-4" style="padding: 0%;flex: 0 0 33.33333333%;
+                        max-width: 21.333333%;">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input type="radio" style="font-size: 10px;" (keyup)="onSubmit()" class="form-check-input"
+                                id="membershipRadios2" formControlName="sex" value="F" [(ngModel)]="sex">
+                              Female
+                              <i class="input-helper"></i>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Driver License State</mat-label>
+                        <mat-select formControlName="driver_license_state" (selectionChange)="submitForm()"
+                          [(ngModel)]="driverState">
+                          <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Driver License Number</mat-label>
+                        <input matInput placeholder="Driver License Number" (keyup)="onSubmit()"
+                          formControlName="driver_license_number" [(ngModel)]="driverNumber">
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Agenr License State</mat-label>
+                        <mat-select formControlName="agent_license_state" (selectionChange)="submitForm()"
+                          [(ngModel)]="agentState">
+                          <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Agent License Number</mat-label>
+                        <input matInput placeholder="Driver License Number" (keyup)="onSubmit()"
+                          formControlName="agent_license_number" [(ngModel)]="agentNumber">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>national_producer_number</mat-label>
+                        <input matInput placeholder="national_producer_number" (keyup)="onSubmit()"
+                          formControlName="national_producer_number" [(ngModel)]="nationalNumber">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row  mt-4">
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>MP User ID</mat-label>
+                        <input matInput placeholder="MP User ID" (keyup)="onSubmit()" formControlName="mp_user_id"
+                          [(ngModel)]="mpUserId">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>MP Password</mat-label>
+                        <input matInput placeholder="MP Password" (keyup)="onSubmit()" formControlName="mp_password"
+                          [(ngModel)]="mpPassword">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-12">
+                      <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput formControlName="notes" rows="5" placeholder="Notes.." [(ngModel)]="notes"
+                          (keyup)="onSubmit()"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+      <br />
+      <button class="btn btn-primary float-right" [disabled]="!individualForm.valid" (click)="validate()"
+        *ngIf="!disable">SUBMIT</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" *ngIf="errorModal" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="!deleteClient && !errorModal"
+        (click)="updateDetails()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="deleteClient" (click)="delete()">Yes</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

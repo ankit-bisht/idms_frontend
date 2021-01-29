@@ -1,0 +1,111 @@
+<style>
+  ::ng-deep.mat-tab-link,
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    min-width: 97px !important;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .grid-margin {
+    margin-bottom: 0rem;
+  }
+
+  .form-check .form-check-label {
+    font-size: 10px;
+  }
+
+  tbody.text-center {
+    text-align: left !important;
+}
+  ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
+    font-weight: 100;
+  }
+</style>
+<div class="grid-margin stretch-card">
+  <div class="card">
+    <div class="card-title" style="padding: 10px 0px 0px 10px;">
+      <span *ngIf="disable">
+        <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit">
+          <i class="mdi mdi-pencil"></i>Edit</button>
+      </span>
+      <button class="btn btn-primary btn-sm" (click)="openDelete()" *ngIf="userEdit"><i
+          class="mdi mdi-delete"></i>Delete</button>
+      <button class="btn btn-primary btn-sm float-right" (click)="redirect()"><i
+          class="mdi mdi-keyboard-backspace"></i>Back</button>
+    </div>
+    <div class="card-body" style="padding-top: 1.25rem;">
+      <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Carrier Details">
+          <div class="grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <form class="form-sample" [formGroup]="groupForm" style="font-size: 12px">
+                  <div class="row mt-4">
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>carrier Name</mat-label>
+                        <input matInput placeholder="carrier Name" (keyup)="onSubmit()" formControlName="carrierName"
+                          maxlength="20" [(ngModel)]="carrierName" required>
+                        <mat-error *ngIf="groupForm.get('carrierName').invalid && (groupForm.get('carrierName').touched)">
+                          <span *ngIf="groupForm.get('carrierName').errors.required">
+                            carrier Name is Required.
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Website</mat-label>
+                        <input matInput placeholder="website" (keyup)="onSubmit()" formControlName="website" [(ngModel)]="website"
+                          maxlength="100">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </form>
+                <app-new-carrier-address [disable]="disable"></app-new-carrier-address>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Contacts">
+          <app-new-carrier-contacts [disable]="disable"></app-new-carrier-contacts>
+        </mat-tab>
+        <mat-tab label="Agents">
+          <app-new-carrier-agents [disable]="disable"></app-new-carrier-agents>
+        </mat-tab>
+      </mat-tab-group>
+      <br />
+
+      <button class="btn btn-primary float-right" [disabled]="!groupForm.valid" (click)="validate()"
+        *ngIf="!disable">SUBMIT</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" *ngIf="errorModal" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="!deleteClient && !errorModal"
+        (click)="updateDetails()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="deleteClient" (click)="delete()">Yes</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

@@ -38,6 +38,35 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.updateEditStatus, obj, this.options);
   }
 
+
+  /**
+ * @method deleteClient()
+ * @desc update Status
+ */
+  updateAgentEditStatus(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.updateAgentEditStatus, obj, this.options);
+  }
+
+  updateCarrierEditStatus(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.updateCarrierEditStatus, obj, this.options);
+  }
+
+
+
   updateGroupEditStatus(obj) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -66,6 +95,21 @@ export class ApiService {
   }
 
   /**
+ * @method deleteClient()
+ * @desc delete client
+ */
+  deleteAgent(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.deleteAgent, obj, this.options);
+  }
+
+  /**
  * @method deleteGroup()
  * @desc delete group
  */
@@ -78,6 +122,21 @@ export class ApiService {
       headers: headers
     }
     return this.httpClient.post(this.urlObject.UrlObj.deleteGroup, obj, this.options);
+  }
+
+  /**
+ * @method deleteGroup()
+ * @desc delete group
+ */
+  deleteCarrier(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.deleteCarrier, obj, this.options);
   }
 
   /**
@@ -94,6 +153,22 @@ export class ApiService {
       headers: headers
     }
     return this.httpClient.post(this.urlObject.UrlObj.clientDropDownValues, Obj, this.options);
+  }
+
+  /**
+* @method getConstants()
+* @desc get constants
+*/
+  getAllProductsDetails(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getAllProductsDetails, Obj, this.options);
   }
 
   /**
@@ -163,6 +238,38 @@ export class ApiService {
   }
 
   /**
+ * @method createClient()
+ * @desc create client
+ */
+updateCarrier(Obj) {
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': localStorage.getItem('token')
+  });
+  this.options = {
+    headers: headers
+  }
+  return this.httpClient.post(this.urlObject.UrlObj.updateCarrier, Obj, this.options);
+}
+
+  /**
+ * @method createClient()
+ * @desc create client
+ */
+  updateAgent(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.updateAgent, Obj, this.options);
+  }
+
+  /**
  * @method uploadAttachment()
  * @desc create client
  */
@@ -196,6 +303,22 @@ export class ApiService {
   }
 
   /**
+ * @method createIndividuals()
+ * @desc create client
+ */
+  getCarrierAllDetails(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getCarrierDetails, Obj, this.options);
+  }
+
+  /**
 * @method createIndividuals()
 * @desc create client
 */
@@ -209,6 +332,71 @@ export class ApiService {
       headers: headers
     }
     return this.httpClient.post(this.urlObject.UrlObj.getGroupsDetails, Obj, this.options);
+  }
+
+  /**
+* @method createIndividuals()
+* @desc create client
+*/
+  getCarriers(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getCarriers, Obj, this.options);
+  }
+
+
+  /**
+* @method createIndividuals()
+* @desc create client
+*/
+  getAgents(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getAgents, Obj, this.options);
+  }
+
+  /**
+* @method createClient()
+* @desc create client
+*/
+  createAgent(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.createAgent, Obj, this.options);
+  }
+
+  /**
+ * @method createIndividuals()
+ * @desc create client
+ */
+  getAgentAllDetails(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getAgentAllDetails, Obj, this.options);
   }
 
   /**
@@ -236,6 +424,17 @@ export class ApiService {
       headers: headers
     }
     return this.httpClient.post(this.urlObject.UrlObj.createGroup, Obj, this.options);
+  }
+
+  createCarrier(Obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.createCarrier, Obj, this.options);
   }
 
   /**

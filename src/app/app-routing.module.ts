@@ -6,11 +6,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { GroupsComponent } from './Groups/groups/groups.component';
 import { IndividualsComponent } from './Individuals/individuals/individuals.component';
 import { PoliciesComponent } from './policies/policies.component';
-import { AgentsComponent } from './agents/agents.component';
-import { CarriersComponent } from './carriers/carriers.component';
+import { AgentsComponent } from './Agents/agents/agents.component';
+import { NewAgentsComponent } from './Agents/new-agents/new-agents.component';
+import { CarriersComponent } from './Carriers/carriers/carriers.component';
 import { ReportsComponent } from './reports/reports.component';
 import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
 import { NewGroupsComponent} from './Groups/new-groups/new-groups.component';
+import { NewCarriersComponent } from './Carriers/new-carriers/new-carriers.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,6 +31,8 @@ const routes: Routes = [
   { path: 'individuals/newIndividual', component: NewIndividualComponent, canActivate: [LoginGuard] },
   { path: 'policies', component: PoliciesComponent, canActivate: [LoginGuard] },
   { path: 'agents', component: AgentsComponent, canActivate: [LoginGuard] },
+  { path: 'agents/newAgents', component:NewAgentsComponent , canActivate: [LoginGuard] },
+  { path: 'carriers/newCarriers', component:NewCarriersComponent , canActivate: [LoginGuard] },
   { path: 'carriers', component: CarriersComponent, canActivate: [LoginGuard] },
   { path: 'reports', component: ReportsComponent, canActivate: [LoginGuard] },
 ];

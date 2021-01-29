@@ -20,8 +20,8 @@ import { Configuration } from './configuration/config';
 import { GroupsComponent } from './Groups/groups/groups.component';
 import { IndividualsComponent } from './Individuals/individuals/individuals.component';
 import { PoliciesComponent } from './policies/policies.component';
-import { AgentsComponent } from './agents/agents.component';
-import { CarriersComponent } from './carriers/carriers.component';
+import { AgentsComponent } from './Agents/agents/agents.component';
+import { CarriersComponent } from './Carriers/carriers/carriers.component';
 import { ReportsComponent } from './reports/reports.component';
 import { CommisionComponent } from './commision/commision.component';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -58,6 +58,11 @@ import { NewGroupsComponent } from './Groups/new-groups/new-groups.component';
 import { GroupAddressComponent } from './Groups/group-address/group-address.component';
 import { GroupContactsComponent } from './Groups/group-contacts/group-contacts.component';
 import { MembersComponent } from './Groups/members/members.component';
+import { NewAgentsComponent } from './Agents/new-agents/new-agents.component';
+import { NewCarriersComponent } from './Carriers/new-carriers/new-carriers.component';
+import { NewCarrierAddressComponent } from './Carriers/new-carrier-address/new-carrier-address.component';
+import { NewCarrierContactsComponent } from './Carriers/new-carrier-contacts/new-carrier-contacts.component';
+import { NewCarrierAgentsComponent } from './Carriers/new-carrier-agents/new-carrier-agents.component';
 
 
 export const DateFormat = {
@@ -104,6 +109,11 @@ export const DateFormat = {
     GroupAddressComponent,
     GroupContactsComponent,
     MembersComponent,
+    NewAgentsComponent,
+    NewCarriersComponent,
+    NewCarrierAddressComponent,
+    NewCarrierContactsComponent,
+    NewCarrierAgentsComponent,
   ],
   imports: [
     ModalModule.forRoot(),

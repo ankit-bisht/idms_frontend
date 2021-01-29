@@ -1,0 +1,65 @@
+<div class="template-demo">
+  <h2>Carriers</h2>
+</div>
+<style>
+  .mat-row:hover {
+    background-color: lightgray;
+    cursor: pointer;
+  }
+  mat-header-cell {
+    display: flex;
+    justify-content: center;
+  }
+  tbody.text-center {
+    text-align: left !important;
+}
+</style>
+<div class="row">
+  <div class="col-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body" style="padding: 1.0rem 1.0rem;">
+        <button type="button" class="btn btn-primary btn-sm float-right" (click)="newCarrier()">New
+          Carrier</button>
+
+        <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+          <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+        </mat-form-field>
+
+        <mat-table #table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="carrier_name">
+            <mat-header-cell *matHeaderCellDef> Carrier Name </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.carrier_id)">
+              {{element.carrier_name}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="website">
+            <mat-header-cell *matHeaderCellDef> Website </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.carrier_id)">
+              {{element.website}}</mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
+              {{element.email}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
+              {{element.phone}} </mat-cell>
+          </ng-container> -->
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>

@@ -7,6 +7,8 @@ export class IndividualDetailServiceService {
 
   individualDetails = {};
   groupDetails = {};
+  agentDetails = {};
+  carrierDetails = {};
 
   constructor() { }
 
@@ -41,5 +43,43 @@ export class IndividualDetailServiceService {
   clearGroup() {
     this.groupDetails = {};
     return this.groupDetails;
+  }
+
+  /**
+  *
+  * @param GROUPS
+  */
+
+  addToAgent(details) {
+    Object.entries(details).forEach(([key, value]) => { this.agentDetails[key] = value })
+    return this.agentDetails;
+  }
+
+  getAgent() {
+    return this.agentDetails;
+  }
+
+  clearAgent() {
+    this.agentDetails = {};
+    return this.agentDetails;
+  }
+
+  /**
+  *
+  * @param GROUPS
+  */
+
+  addToCarrier(details) {
+    Object.entries(details).forEach(([key, value]) => { this.carrierDetails[key] = value })
+    return this.carrierDetails;
+  }
+
+  getCarrier() {
+    return this.carrierDetails;
+  }
+
+  clearCarrier() {
+    this.carrierDetails = {};
+    return this.carrierDetails;
   }
 }
