@@ -47,10 +47,10 @@ export class NewCarrierContactsComponent implements OnChanges {
     this.getConstants();
     this.touchedRows = [];
     this.contactForm = this.fb.group({
-      carrierContactsDetails: this.fb.array([])
+      carrierContactDetails: this.fb.array([])
     });
     if (localStorage.getItem('CarrierDetails')) {
-      if (JSON.parse(localStorage.getItem('CarrierDetails')).carrierContactsDetails.length >= 1) {
+      if (JSON.parse(localStorage.getItem('CarrierDetails')).carrierContactDetails.length >= 1) {
         this.setDetails();
       }
     }
@@ -76,7 +76,7 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   ngAfterOnInit() {
-    this.control = this.contactForm.get('carrierContactsDetails') as FormArray;
+    this.control = this.contactForm.get('carrierContactDetails') as FormArray;
   }
 
   initiateForm(): FormGroup {
@@ -86,7 +86,7 @@ export class NewCarrierContactsComponent implements OnChanges {
       department: [''],
       fax: [''],
       notes: [''],
-      valid: [''],
+      valid: ['1'],
       address_id: [''],
       email: ['', Validators.email],
       // contact_type: [''],
@@ -100,21 +100,21 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   addRow() {
-    const control = this.contactForm.get('carrierContactsDetails') as FormArray;
+    const control = this.contactForm.get('carrierContactDetails') as FormArray;
     control.push(this.initiateForm());
     this.address = this.saveGroup.getCarrier()['carrierAddressDetails'];
     this.filterIndividualsArray(0);
   }
 
   setDetails() {
-    const control = this.contactForm.get('carrierContactsDetails') as FormArray;
-    const Details = JSON.parse(localStorage.getItem('CarrierDetails')).carrierContactsDetails;
+    const control = this.contactForm.get('carrierContactDetails') as FormArray;
+    const Details = JSON.parse(localStorage.getItem('CarrierDetails')).carrierContactDetails;
     this.address = this.saveGroup.getCarrier()['carrierAddressDetails'];
 
     Details.map(element => {
       control.push(this.setForm(element));
     });
-    this.contactForm.value.carrierContactsDetails.map((element, key) => {
+    this.contactForm.value.carrierContactDetails.map((element, key) => {
       const id = key + 1;
       element.contact_id = id.toString();
       delete element.isEditable;
@@ -139,7 +139,7 @@ export class NewCarrierContactsComponent implements OnChanges {
 
   disableField(index) {
 
-    const Form = this.contactForm.controls.carrierContactsDetails['controls'][index].controls;
+    const Form = this.contactForm.controls.carrierContactDetails['controls'][index].controls;
     if (Form.contact_type.value == '1' || Form.contact_type.value == '2') {
       Form.phone.disable();
       Form.email.enable();
@@ -155,7 +155,7 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   deleteRow(index: number) {
-    const control = this.contactForm.get('carrierContactsDetails') as FormArray;
+    const control = this.contactForm.get('carrierContactDetails') as FormArray;
     control.removeAt(index);
     this.submitForm();
   }
@@ -174,7 +174,7 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   get getFormControls() {
-    const control = this.contactForm.get('carrierContactsDetails') as FormArray;
+    const control = this.contactForm.get('carrierContactDetails') as FormArray;
     return control;
   }
 
@@ -189,10 +189,12 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   submitForm() {
-    const control = this.contactForm.get('carrierContactsDetails') as FormArray;
+    const control = this.contactForm.get('carrierContactDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    var contactsDetails = this.contactForm.value.carrierContactsDetails;
+    var contactsDetails = this.contactForm.value.carrierContactDetails;
     contactsDetails.map((element, key) => {
+      console.log(element);
+
       delete element.isEditable;
       const id = key + 1;
       element.address_id = element.address_id ? element.address_id.toString() : '';

@@ -52,7 +52,7 @@
       <th></th>
     </thead>
     <tbody class="text-center">
-      <ng-container formArrayName="carrierContactsDetails" *ngFor="let group of getFormControls.controls ; let i=index">
+      <ng-container formArrayName="carrierContactDetails" *ngFor="let group of getFormControls.controls ; let i=index">
         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
           <td>
             {{getIndividual(group.get('address_id').value)}}
@@ -107,7 +107,7 @@
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>Valid</mat-label>
-              <mat-select formControlName="valid" (selectionChange)="submitForm()">
+              <mat-select formControlName="valid" (selectionChange)="submitForm()" [placeholder]="Valid">
                 <mat-option value="1">Valid
                 </mat-option>
                 <mat-option value="0">Not Valid
