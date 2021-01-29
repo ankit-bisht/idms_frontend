@@ -40,7 +40,7 @@ export class NewCarrierAgentsComponent implements OnChanges {
       this.dataSource.paginator = value;
     }
   }
-  displayedColumns = ['product_class', 'carrier', 'product_description'];
+  displayedColumns = ['product_class', 'product_description'];
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
   dataSource: any;
   idVal = "";
@@ -186,7 +186,7 @@ export class NewCarrierAgentsComponent implements OnChanges {
 
   getIndividual(val) {
     let client = this.clients.find(r => r.product_id == val);
-    return !!client ? `${client.carrier} ${client.product_class}` : '';
+    return !!client ? `${client.product_class} ${client.product_description}` : '';
   }
 
   filterIndividualsArray(id) {
@@ -197,5 +197,8 @@ export class NewCarrierAgentsComponent implements OnChanges {
     }
     this.filteredClients = this.clients.filter(c => this.filterArr.indexOf(c.product_id) == -1);
     this.filterArr = [...new Set(this.filterArr)];
+    this.dataSource = new MatTableDataSource(this.filteredClients);
+    // this.dataSource.paginator = this.paginator;
+    this.length = this.filteredClients.length;
   }
 }

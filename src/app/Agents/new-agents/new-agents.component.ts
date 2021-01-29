@@ -29,8 +29,6 @@ export class NewAgentsComponent implements OnInit, OnDestroy {
   weight: string;
   height_feet: string;
   height_inches: string;
-  mpUserId: string;
-  mpPassword: string;
   driverState: string;
   driverNumber: string;
   clienttype: string
@@ -135,8 +133,6 @@ export class NewAgentsComponent implements OnInit, OnDestroy {
       "height_feet": new FormControl(''),
       "height_inches": new FormControl(''),
       "weight": new FormControl(''),
-      "mp_user_id": new FormControl(''),
-      "mp_password": new FormControl(''),
       "driver_license_state": new FormControl(''),
       "driver_license_number": new FormControl(''),
       "agent_license_state": new FormControl(''),
@@ -163,8 +159,6 @@ export class NewAgentsComponent implements OnInit, OnDestroy {
       this.weight = Client.weight ? Client.weight.toString() : '';
       this.height_feet = Client.height_feet ? Client.height_feet.toString() : '';
       this.height_inches = Client.height_inches ? Client.height_inches.toString() : '';
-      this.mpUserId = Client.mp_user_id ? Client.mp_user_id : '';
-      this.mpPassword = Client.mp_password ? Client.mp_password : '';
       this.driverState = Client.driver_license_state ? Client.driver_license_state : '';
       this.driverNumber = Client.driver_license_number ? Client.driver_license_number : '';
       this.agentState = Client.agent_license_state ? Client.agent_license_state : '';

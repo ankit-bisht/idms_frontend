@@ -64,14 +64,6 @@
                         (click)="[submitForm(),setValue(group,element.product_id),onCloseHandled()]">
                         {{element.product_class}}</mat-cell>
                     </ng-container>
-
-                    <ng-container matColumnDef="carrier">
-                      <mat-header-cell *matHeaderCellDef> Carrier </mat-header-cell>
-                      <mat-cell *matCellDef="let element"
-                        (click)="[submitForm(),setValue(group,element.product_id),onCloseHandled()]">
-                        {{element.carrier}}</mat-cell>
-                    </ng-container>
-
                     <ng-container matColumnDef="product_description">
                       <mat-header-cell *matHeaderCellDef> Product Description </mat-header-cell>
                       <mat-cell *matCellDef="let element"

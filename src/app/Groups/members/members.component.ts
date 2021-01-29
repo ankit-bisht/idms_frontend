@@ -219,5 +219,8 @@ export class MembersComponent implements OnChanges {
     }
     this.filteredClients = this.clients.filter(c => this.filterArr.indexOf(c.client_id) == -1);
     this.filterArr = [...new Set(this.filterArr)];
+    this.dataSource = new MatTableDataSource(this.filteredClients);
+    // this.dataSource.paginator = this.paginator;
+    this.length = this.filteredClients.length;
   }
 }
