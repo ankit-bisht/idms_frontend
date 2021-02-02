@@ -12,9 +12,9 @@
     cursor: pointer;
   }
 
-  .table {
+  /* .table {
     width: 50%;
-  }
+  } */
 </style>
 
 <div class="action-container" style="padding: 3%;">
@@ -29,15 +29,34 @@
       <th>
         <h6>Select Products<span class="text-danger">*</span></h6> <span dragableColumn> </span>
       </th>
+      <th>
+        <h6>Class</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Product</h6> <span dragableColumn> </span>
+      </th>
       <th></th>
     </thead>
     <tbody class="">
       <ng-container formArrayName="carrierAgentDetails" *ngFor="let group of getFormControls.controls ; let i=index">
         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
           <td>
-            {{getIndividual(group.get('product_id').value)}}
-            &nbsp;
+            <!-- <b>Class</b> - {{getIndividual(group.get('product_id').value)[0]}} &nbsp;
+            <b>Product</b> - {{getIndividual(group.get('product_id').value).substring(1)}}
+            &nbsp; -->
             <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Products</button>
+          </td>
+          <td>
+            {{getIndividual(group.get('product_id').value)[0]}} &nbsp;
+            <!-- <b>Product</b> - {{getIndividual(group.get('product_id').value).substring(1)}} -->
+            &nbsp;
+            <!-- <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Products</button> -->
+          </td>
+          <td>
+            <!-- <b>Class</b> - {{getIndividual(group.get('product_id').value)[0]}} &nbsp; -->
+            {{getIndividual(group.get('product_id').value).substring(1)}}
+            &nbsp;
+            <!-- <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Products</button> -->
           </td>
           <td>
             <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
@@ -86,7 +105,11 @@
 
         </tr>
         <tr *ngIf="!group.get('isEditable').value">
-          <td>{{getIndividual(group.get('product_id').value)}}
+          <td>
+          </td>
+          <td>{{getIndividual(group.get('product_id').value)[0]}}
+          </td>
+          <td>{{getIndividual(group.get('product_id').value).substring(1)}}
           </td>
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
