@@ -28,9 +28,10 @@ export class NewCarriersComponent implements OnInit {
   userEdit: Boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
-  constructor(private activatedRoute: ActivatedRoute, private modalService: BsModalService, private saveGroup: IndividualDetailServiceService, private spinner: NgxSpinnerService, private fb: FormBuilder, private api: ApiService, public Router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private modalService: BsModalService, private saveCarrier: IndividualDetailServiceService, private spinner: NgxSpinnerService, private fb: FormBuilder, private api: ApiService, public Router: Router) {
   }
   ngOnInit() {
+    this.saveCarrier.clearCarrier();
     this.setProduct();
     this.activatedRoute.params.subscribe(params => {
       if (params.edit == 1 || params.edit == null) {
@@ -75,11 +76,11 @@ export class NewCarriersComponent implements OnInit {
   }
 
   validate() {
-    this.saveGroup.addToCarrier(this.groupForm.value);
+    this.saveCarrier.addToCarrier(this.groupForm.value);
 
     if (this.groupForm.valid) {
 
-      var obj: any = this.saveGroup.getCarrier();
+      var obj: any = this.saveCarrier.getCarrier();
       obj.userId = localStorage.getItem('userId');
 
       if (localStorage.getItem('CarrierDetails')) {
@@ -100,7 +101,7 @@ export class NewCarriersComponent implements OnInit {
             if (data.responseCode === 200) {
               this.spinner.hide();
               this.groupForm.disable();
-              this.saveGroup.clearCarrier();
+              this.saveCarrier.clearCarrier();
               this.disable = true;
               this.errorModal = false;
               this.modalMessage = data.message;
@@ -120,7 +121,7 @@ export class NewCarriersComponent implements OnInit {
           if (data.responseCode === 200) {
             this.spinner.hide();
             this.groupForm.disable();
-            this.saveGroup.clearCarrier();
+            this.saveCarrier.clearCarrier();
             this.disable = true;
             this.errorModal = false;
             this.modalMessage = data.message;
@@ -139,7 +140,7 @@ export class NewCarriersComponent implements OnInit {
 
   onSubmit() {
     this.groupForm.value.userId = localStorage.getItem('userId');
-    console.log(this.saveGroup.addToCarrier(this.groupForm.value));
+    console.log(this.saveCarrier.addToCarrier(this.groupForm.value));
   }
 
   redirect() {
@@ -225,7 +226,7 @@ export class NewCarriersComponent implements OnInit {
       this.spinner.hide();
       if (params.edit == 0) {
         this.modalService.hide(1);
-        this.saveGroup.clearCarrier();
+        this.saveCarrier.clearCarrier();
         window.location.reload();
       } else {
         const Obj = {

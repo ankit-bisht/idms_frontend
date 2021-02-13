@@ -13,7 +13,7 @@
   }
 
   .table {
-    width: 60%;
+    width: 50%;
   }
 </style>
 
@@ -26,8 +26,8 @@
 <form [formGroup]="memberForm" style="font-size: 12px">
   <table class="table table-bordered table-sm">
     <thead class="text-nowrap text-center">
-      <th>
-        <h6>Select Products<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+      <th style="width: 147px;">
+        <h6></h6> <span dragableColumn> </span>
       </th>
       <th>
         <h6>Class</h6> <span dragableColumn> </span>
@@ -44,7 +44,7 @@
             <!-- <b>Class</b> - {{getIndividual(group.get('product_id').value)[0]}} &nbsp;
             <b>Product</b> - {{getIndividual(group.get('product_id').value).substring(1)}}
             &nbsp; -->
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
             <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Products</button>
           </td>
           <td>
