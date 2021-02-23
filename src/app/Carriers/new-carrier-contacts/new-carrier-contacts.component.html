@@ -20,7 +20,7 @@
   <table class="table table-bordered table-sm">
     <thead class="text-nowrap text-center">
       <th>
-        <h6>Select Address</h6> <span dragableColumn> </span>
+        <h6>Address</h6> <span dragableColumn> </span>
       </th>
       <!-- <th>
         <h6>Contact Type</h6> <span dragableColumn> </span>
@@ -35,19 +35,19 @@
         <h6>Department</h6> <span dragableColumn> </span>
       </th>
       <th>
-        <h6>FAX</h6> <span dragableColumn> </span>
+        <h6>Phone</h6><span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Fax</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Email</h6>
       </th>
       <th>
         <h6>Notes</h6> <span dragableColumn> </span>
       </th>
       <th>
         <h6>Valid<span class="text-danger">*</span></h6> <span dragableColumn> </span>
-      </th>
-      <th>
-        <h6>Phone Number</h6><span dragableColumn> </span>
-      </th>
-      <th>
-        <h6>Email</h6>
       </th>
       <th></th>
     </thead>
@@ -92,9 +92,23 @@
           </td>
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>FAX</mat-label>
+              <mat-label>Phone No</mat-label>
+              <input matInput type="text" placeholder="Phone no" formControlName="phone" maxlength="13" appPhoneMask
+                (keyup)="submitForm()" autocomplete="off" appPhoneMask />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Fax</mat-label>
               <input matInput type="text" placeholder="FAX" formControlName="fax" (keyup)="submitForm()"
                 autocomplete="off" appPhoneMask/>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" placeholder="Email" formControlName="email" (keyup)="submitForm()"
+                autocomplete="off" />
             </mat-form-field>
           </td>
           <td>
@@ -113,20 +127,6 @@
                 <mat-option value="0">Not Valid
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>Phone No</mat-label>
-              <input matInput type="text" placeholder="Phone no" formControlName="phone" maxlength="13" appPhoneMask
-                (keyup)="submitForm()" autocomplete="off" appPhoneMask />
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>Email</mat-label>
-              <input matInput type="email" placeholder="Email" formControlName="email" (keyup)="submitForm()"
-                autocomplete="off" />
             </mat-form-field>
           </td>
           <td>
@@ -217,19 +217,19 @@
             {{group.get('department').value?group.get('department').value:''}}
           </td>
           <td>
+            {{group.get('phone').value?group.get('phone').value:''}}
+          </td>
+          <td>
             {{group.get('fax').value?group.get('fax').value:''}}
+          </td>
+          <td>
+            {{group.get('email').value?group.get('email').value:''}}
           </td>
           <td>
             {{group.get('notes').value?group.get('notes').value:''}}
           </td>
           <td>
             {{group.get('valid').value ?group.get('valid').value==1?'Valid':'Not Valid':'Valid'}}
-          </td>
-          <td>
-            {{group.get('phone').value?group.get('phone').value:''}}
-          </td>
-          <td>
-            {{group.get('email').value?group.get('email').value:''}}
           </td>
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
