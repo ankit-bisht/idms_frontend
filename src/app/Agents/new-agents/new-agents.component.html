@@ -46,7 +46,7 @@
           <div class="grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <form class="form-sample" [formGroup]="individualForm" style="font-size: 12px">
+                <form class="form-sample" [formGroup]="individualForm" style="font-size: 13px">
                   <div class="row mt-4">
                     <div class="col-md-4">
                       <mat-form-field appearance="outline">
@@ -125,7 +125,7 @@
                           [(ngModel)]="height_inches">
                       </mat-form-field>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <mat-form-field appearance="outline">
                         <mat-label>Weight</mat-label>
                         <input matInput placeholder="Weight" (keyup)="onSubmit()" formControlName="weight"
