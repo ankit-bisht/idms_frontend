@@ -129,7 +129,7 @@ export class NewAgentsComponent implements OnInit, OnDestroy {
       "last_name": new FormControl('', [Validators.required]),
       "DOB": new FormControl('', [Validators.required]),
       "sex": new FormControl('', [Validators.required]),
-      "ssn": new FormControl('', [Validators.required]),
+      // "ssn": new FormControl('', [Validators.required]),
       "height_feet": new FormControl(''),
       "height_inches": new FormControl(''),
       "weight": new FormControl(''),
@@ -155,7 +155,7 @@ export class NewAgentsComponent implements OnInit, OnDestroy {
       this.lastName = Client.last_name;
       this.DOB = new Date(Client.DOB);
       this.sex = Client.sex ? Client.sex : '';
-      this.ssn = Client.ssn ? Client.ssn : '';
+      // this.ssn = Client.ssn ? Client.ssn : '';
       this.weight = Client.weight ? Client.weight.toString() : '';
       this.height_feet = Client.height_feet ? Client.height_feet.toString() : '';
       this.height_inches = Client.height_inches ? Client.height_inches.toString() : '';

@@ -98,41 +98,6 @@
                       </mat-form-field>
                     </div>
                     <div class="col-md-6">
-                      <mat-form-field appearance="outline">
-                        <mat-label>SSN</mat-label>
-                        <input matInput placeholder="SSN" maxlength="11" (keyup)="onSubmit()" formControlName="ssn" [(ngModel)]="ssn" required
-                          appSSNMask>
-                          <mat-error *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)">
-                            <span *ngIf="individualForm.get('ssn').errors.required">
-                              SSN is Required.
-                            </span>
-                          </mat-error>
-                      </mat-form-field>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-2">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Height in Feet</mat-label>
-                        <input matInput placeholder="Feet" (keyup)="onSubmit()" formControlName="height_feet"
-                          [(ngModel)]="height_feet">
-                      </mat-form-field>
-                    </div><span style="margin-left: -5px;margin-top: 20px;">/</span>
-                    <div class="col-md-2">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Height in Inches</mat-label>
-                        <input matInput placeholder="Inches" (keyup)="onSubmit()" formControlName="height_inches"
-                          [(ngModel)]="height_inches">
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-3">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Weight</mat-label>
-                        <input matInput placeholder="Weight" (keyup)="onSubmit()" formControlName="weight"
-                          [(ngModel)]="weight">
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
                       <div class="form-group row" style="font-size: 12px">
                         <label class="col-sm-4 col-form-label">
                           <span style="font-size: 10px;">Gender *</span>
@@ -160,6 +125,41 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>SSN</mat-label>
+                        <input matInput placeholder="SSN" maxlength="11" (keyup)="onSubmit()" formControlName="ssn" [(ngModel)]="ssn" required
+                          appSSNMask>
+                          <mat-error *ngIf="individualForm.get('ssn').invalid && (individualForm.get('ssn').touched)">
+                            <span *ngIf="individualForm.get('ssn').errors.required">
+                              SSN is Required.
+                            </span>
+                          </mat-error>
+                      </mat-form-field>
+                    </div> -->
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Height in Feet</mat-label>
+                        <input matInput placeholder="Feet" (keyup)="onSubmit()" formControlName="height_feet"
+                          [(ngModel)]="height_feet">
+                      </mat-form-field>
+                    </div><span style="margin-left: -5px;margin-top: 20px;">/</span>
+                    <div class="col-md-3">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Height in Inches</mat-label>
+                        <input matInput placeholder="Inches" (keyup)="onSubmit()" formControlName="height_inches"
+                          [(ngModel)]="height_inches">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-5" >
+                      <mat-form-field appearance="outline" style="width: 390px;">
+                        <mat-label>Weight</mat-label>
+                        <input matInput placeholder="Weight" (keyup)="onSubmit()" formControlName="weight"
+                          [(ngModel)]="weight">
+                      </mat-form-field>
                     </div>
                   </div>
                   <div class="row mt-3">

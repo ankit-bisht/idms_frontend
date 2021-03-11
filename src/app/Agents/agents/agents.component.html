@@ -47,16 +47,17 @@
               {{element.last_name}}</mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="sex">
-            <mat-header-cell *matHeaderCellDef> sex </mat-header-cell>
+          <ng-container matColumnDef="agent_license_number">
+            <mat-header-cell *matHeaderCellDef> Lisense Number </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleAgent(element.agent_id)">
-              {{element.sex}}</mat-cell>
+              {{element.agent_license_number}}
+            </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="ssn">
-            <mat-header-cell *matHeaderCellDef> ssn </mat-header-cell>
+          <ng-container matColumnDef="national_producer_number">
+            <mat-header-cell *matHeaderCellDef> National Producer Number </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleAgent(element.agent_id)">
-              {{element.ssn}}
+              {{element.national_producer_number}}
             </mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

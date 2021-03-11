@@ -54,7 +54,7 @@
                       <mat-form-field appearance="outline">
                         <mat-label>carrier Name</mat-label>
                         <input matInput placeholder="carrier Name" (keyup)="onSubmit()" formControlName="carrierName"
-                          maxlength="20" [(ngModel)]="carrierName" required>
+                          maxlength="30" [(ngModel)]="carrierName" required>
                         <mat-error *ngIf="groupForm.get('carrierName').invalid && (groupForm.get('carrierName').touched)">
                           <span *ngIf="groupForm.get('carrierName').errors.required">
                             carrier Name is Required.

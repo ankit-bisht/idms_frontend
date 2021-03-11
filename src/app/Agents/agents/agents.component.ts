@@ -14,7 +14,7 @@ import { User } from "../../services/user";
 export class AgentsComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['first_name', 'last_name', 'sex', 'ssn'];
+  displayedColumns = ['first_name', 'last_name','agent_license_number','national_producer_number'];
   dataSource: any;
   data: any = [];
   length: any = 0;
