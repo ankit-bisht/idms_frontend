@@ -48,10 +48,15 @@
           <div [ngClass]="policytype == 'I'||policytype=='|' ? 'col-md-4' : 'col-md-6'">
             <mat-form-field appearance="outline">
               <mat-label>Status</mat-label>
-              <mat-select formControlName="status" (selectionChange)="onSubmit()" [(ngModel)]="status">
+              <mat-select formControlName="status" (selectionChange)="onSubmit()" [(ngModel)]="status" required>
                 <mat-option *ngFor="let item of constants.status | keyvalue" [value]=item.key>{{item.value}}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="mainForm.get('status').invalid && (mainForm.get('status').touched)">
+                <span *ngIf="mainForm.get('status').errors.required">
+                  Status is Required.
+                </span>
+              </mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-4" *ngIf = "policytype == 'I'||policytype=='|'">
@@ -70,7 +75,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Premium</mat-label>
               <input matInput placeholder="Premium" (keyup)="onSubmit()" formControlName="premium" [(ngModel)]="premium"
-                required>
+                >
             </mat-form-field>
           </div>
           <div class="col-md-4">
@@ -98,7 +103,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Application Date</mat-label>
               <input matInput [matDatepicker]="picker" (dateChange)="onSubmit()" formControlName="application_date"
-                [(ngModel)]="application_date">
+                [(ngModel)]="application_date" required>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

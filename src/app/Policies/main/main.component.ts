@@ -97,10 +97,10 @@ export class MainComponent implements OnChanges, OnDestroy {
         if (this.policytype == 'I' || this.policytype == "|") {
           this.mainForm = new FormGroup({
             "policy_number": new FormControl('', [Validators.required]),
-            "status": new FormControl(''),
+            "status": new FormControl('',[Validators.required]),
             "election": new FormControl(''),
             "premium": new FormControl(''),
-            "application_date": new FormControl(''),
+            "application_date": new FormControl('',[Validators.required]),
             "effective_date": new FormControl('', [Validators.required]),
             "pay_frequency": new FormControl(''),
             "payment_mode": new FormControl(''),
@@ -110,9 +110,9 @@ export class MainComponent implements OnChanges, OnDestroy {
         } else {
           this.mainForm = new FormGroup({
             "policy_number": new FormControl('', [Validators.required]),
-            "status": new FormControl(''),
+            "status": new FormControl('',[Validators.required]),
             "premium": new FormControl(''),
-            "application_date": new FormControl(''),
+            "application_date": new FormControl('',[Validators.required]),
             "effective_date": new FormControl('', [Validators.required]),
             "pay_frequency": new FormControl(''),
             "payment_mode": new FormControl(''),
@@ -169,6 +169,8 @@ export class MainComponent implements OnChanges, OnDestroy {
   };
 
   onSubmit() {
+    console.log(this.mainForm);
+
     if (this.mainForm.valid) {
       this.mainForm.value.userId = localStorage.getItem('userId');
       this.mainForm.value.application_date = moment(this.mainForm.value.application_date).format('MM/DD/YYYY');

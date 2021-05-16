@@ -107,6 +107,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     if (this.userEdit == true) {
       this.updateEditStatus(1);
     }
+    this.updateEditStatus(1);
     this.Router.navigate(['/policies']);
   }
 
@@ -116,7 +117,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       "product_id": new FormControl(''),
     });
 
-    let getClientDetail = localStorage.getItem('PoliciesDetails')?JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails:false;
+    let getClientDetail = localStorage.getItem('PoliciesDetails') ? JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails : false;
 
 
     if (getClientDetail) {
@@ -126,6 +127,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       this.disable = true;
       this.carrier = Client.carrier_id;
       this.product = Client.product_id;
+      console.log(this.savePolicies.addToPolicy(Client));
     }
   }
 
@@ -176,13 +178,13 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       if (data.responseCode === 200) {
         this.spinner.hide();
         this.productList = data.result;
-        let getClientDetail = localStorage.getItem('PoliciesDetails')?JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails:false;
+        let getClientDetail = localStorage.getItem('PoliciesDetails') ? JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails : false;
 
 
         if (getClientDetail) {
           const Client = getClientDetail[0];
           this.policyType = this.productList.filter(x => x.product_id === Client.product_id)[0].product_class;
-          localStorage.setItem('policyType',this.policyType);
+          localStorage.setItem('policyType', this.policyType);
         }
       }
     });
@@ -211,7 +213,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
 
   submitSelection(type) {
     this.policyType = type.filter(x => x.product_id === this.policyForm.value.product_id)[0].product_class;
-    localStorage.setItem('policyType',this.policyType);
+    localStorage.setItem('policyType', this.policyType);
     console.log(this.savePolicies.addToPolicy(this.policyForm.value));
   }
 
@@ -220,12 +222,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       this.policyForm.value.userId = localStorage.getItem('userId');
       this.policyForm.value.DOB = new Date(this.policyForm.value.DOB).toISOString().split('T')[0];
       this.policyForm.value.DOB = this.format(this.policyForm.value.DOB);
-      console.log(this.savePolicies.addToIndividual(this.policyForm.value));
+      console.log(this.savePolicies.addToPolicy(this.policyForm.value));
     }
   }
 
   validate(finalIndividual) {
-    var finalIndividual: any = this.savePolicies.getIndividual();
+    var finalIndividual: any = this.savePolicies.getPolicy();
     this.submit();
   }
 
@@ -240,9 +242,9 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       this.api.updatePolicy(obj).subscribe((data: any) => {
         const Obj = {
           userId: localStorage.getItem('userId'),
-          clientId: JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0].policy_id
+          policy_id: JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0].policy_id
         }
-        this.api.getClientAllDetails(Obj).subscribe((getdata: any) => {
+        this.api.getPolicyDetails(Obj).subscribe((getdata: any) => {
           if (getdata.responseCode === 200) {
             this.spinner.hide();
             this.updateEditStatus(1);
@@ -251,7 +253,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
           if (data.responseCode === 200) {
             this.spinner.hide();
             this.policyForm.disable();
-            this.savePolicies.clearIndividual();
+            this.savePolicies.clearPolicy();
             this.disable = true;
             this.errorModal = false;
             this.modalMessage = data.message;
@@ -289,18 +291,18 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       this.spinner.hide();
       if (params.edit == 0) {
         this.modalService.hide(1);
-        this.savePolicies.clearIndividual();
+        this.savePolicies.clearPolicy();
         window.location.reload();
       } else {
         const Obj = {
           userId: localStorage.getItem('userId'),
-          clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id
+          policy_id: JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0].policy_id
         }
-        this.api.getClientAllDetails(Obj).subscribe((data: any) => {
+        this.api.getPolicyDetails(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             this.spinner.hide();
-            localStorage.setItem('ClientDetails', JSON.stringify(data.result));
-            this.savePolicies.clearIndividual();
+            localStorage.setItem('PoliciesDetails', JSON.stringify(data.result));
+            this.savePolicies.clearPolicy();
             window.location.reload();
           }
         });
