@@ -41,10 +41,10 @@
               {{element.policy_number}}</mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="premium">
-            <mat-header-cell *matHeaderCellDef> Premium </mat-header-cell>
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
-              {{element.premium}}</mat-cell>
+              {{constants[element.status]}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="effective_date">

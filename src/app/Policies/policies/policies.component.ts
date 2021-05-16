@@ -14,10 +14,11 @@ import { User } from "../../services/user";
 export class PoliciesComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['policy_number', 'premium', 'effective_date', 'end_date'];
+  displayedColumns = ['policy_number', 'status', 'effective_date', 'end_date'];
   dataSource: any;
   data: any = [];
   length: any = 0;
+  constants:any = [];
 
   constructor(private spinner: NgxSpinnerService, private api: ApiService, public Router: Router) {
   }
@@ -34,6 +35,7 @@ export class PoliciesComponent implements OnInit {
   }
 
   getDetail() {
+    this.constants = JSON.parse(localStorage.getItem("policy_constants")).status;
     const Obj = {
       userId: localStorage.getItem('userId')
     }
