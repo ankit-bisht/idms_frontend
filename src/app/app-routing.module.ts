@@ -5,7 +5,8 @@ import { LoginGuard } from './guards/login.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GroupsComponent } from './Groups/groups/groups.component';
 import { IndividualsComponent } from './Individuals/individuals/individuals.component';
-import { PoliciesComponent } from './policies/policies.component';
+import { PoliciesComponent } from './Policies/policies/policies.component';
+import { NewPoliciesComponent } from './Policies/new-policies/new-policies.component';
 import { AgentsComponent } from './Agents/agents/agents.component';
 import { NewAgentsComponent } from './Agents/new-agents/new-agents.component';
 import { CarriersComponent } from './Carriers/carriers/carriers.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'groups/newGroups', component: NewGroupsComponent, canActivate: [LoginGuard] },
   { path: 'individuals/newIndividual', component: NewIndividualComponent, canActivate: [LoginGuard] },
   { path: 'policies', component: PoliciesComponent, canActivate: [LoginGuard] },
+  { path: 'policies/newPolicies', component: NewPoliciesComponent, canActivate: [LoginGuard] },
   { path: 'agents', component: AgentsComponent, canActivate: [LoginGuard] },
   { path: 'agents/newAgents', component:NewAgentsComponent , canActivate: [LoginGuard] },
   { path: 'carriers/newCarriers', component:NewCarriersComponent , canActivate: [LoginGuard] },

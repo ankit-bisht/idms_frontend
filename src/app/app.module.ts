@@ -19,7 +19,7 @@ import { ApiService } from './services/api.service';
 import { Configuration } from './configuration/config';
 import { GroupsComponent } from './Groups/groups/groups.component';
 import { IndividualsComponent } from './Individuals/individuals/individuals.component';
-import { PoliciesComponent } from './policies/policies.component';
+import { PoliciesComponent } from './Policies/policies/policies.component';
 import { AgentsComponent } from './Agents/agents/agents.component';
 import { CarriersComponent } from './Carriers/carriers/carriers.component';
 import { ReportsComponent } from './reports/reports.component';
@@ -29,7 +29,7 @@ import { NewIndividualComponent } from './Individuals/new-individual/new-individ
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Constants } from './configuration/constants';
 import { JwPaginationModule } from 'jw-angular-pagination';
-import { MatTabsModule } from '@angular/material';
+import { MatListModule, MatTabsModule } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ContactsComponent } from './Individuals/contacts/contacts.component';
 import { NgxBootstrapModalComponent } from './ngx-bootstrap-modal/ngx-bootstrap-modal.component';
@@ -63,6 +63,9 @@ import { NewCarriersComponent } from './Carriers/new-carriers/new-carriers.compo
 import { NewCarrierAddressComponent } from './Carriers/new-carrier-address/new-carrier-address.component';
 import { NewCarrierContactsComponent } from './Carriers/new-carrier-contacts/new-carrier-contacts.component';
 import { NewCarrierAgentsComponent } from './Carriers/new-carrier-agents/new-carrier-agents.component';
+import { NewPoliciesComponent } from './Policies/new-policies/new-policies.component';
+import { MainComponent } from './Policies/main/main.component';
+import { PolicyMembersComponent } from './Policies/policy-members/policy-members.component';
 
 
 export const DateFormat = {
@@ -114,6 +117,9 @@ export const DateFormat = {
     NewCarrierAddressComponent,
     NewCarrierContactsComponent,
     NewCarrierAgentsComponent,
+    NewPoliciesComponent,
+    MainComponent,
+    PolicyMembersComponent,
   ],
   imports: [
     ModalModule.forRoot(),
@@ -136,6 +142,7 @@ export const DateFormat = {
     MatDatepickerModule,
     MatRadioModule,
     MatButtonModule,
+    MatListModule,
     MatIconModule,
     MatSelectModule,
     MatDialogModule

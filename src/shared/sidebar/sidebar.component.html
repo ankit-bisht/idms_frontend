@@ -10,7 +10,7 @@
       <a href="javascript:;" class="nav-link">
         <div class="nav-profile-image">
           <img src="assets/images/faces/face1.jpg" alt="profile">
-          <span class="login-status online"></span> 
+          <span class="login-status online"></span>
         </div>
         <div class="nav-profile-text">
           <span class="font-weight-bold mb-2">{{username}}</span>
@@ -95,15 +95,15 @@
 
     <span class="nav-link" style="padding-top: 20px;">
       <div class="border-bottom">
-        <h6 class="font-weight-normal mb-3">USE YOUR DATA</h6>
+        <h6 class="font-weight-bold mb-3">USE YOUR DATA</h6>
       </div>
-      <li class="nav-item" [ngClass]="{ 'active': reports.isActive }">
+      <li class="nav-item" [ngClass]="{ 'active': reports.isActive }" style="margin-left: -7%;">
         <a class="nav-link" routerLink="/reports" routerLinkActive #reports="routerLinkActive">
           <span class="menu-title">Reports</span>
           <i class="mdi mdi-format-list-bulleted-type menu-icon"></i>
         </a>
       </li>
-      <li class="nav-item" [ngClass]="{ 'active': emailMarketing.isActive }">
+      <li class="nav-item" [ngClass]="{ 'active': emailMarketing.isActive }" style="margin-left: -7%;">
         <a class="nav-link" routerLink="/emailMarketing" routerLinkActive #emailMarketing="routerLinkActive">
           <span class="menu-title">Email Marketing</span>
           <i class="mdi mdi-view-list menu-icon"></i>

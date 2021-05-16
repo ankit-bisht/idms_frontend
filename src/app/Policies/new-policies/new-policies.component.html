@@ -1,0 +1,109 @@
+<style>
+  ::ng-deep.mat-tab-link,
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    min-width: 97px !important;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  tbody.text-center {
+    text-align: left !important;
+  }
+
+  .grid-margin {
+    margin-bottom: 0rem;
+  }
+
+  .form-check .form-check-label {
+    font-size: 10px;
+  }
+
+  ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
+    font-weight: 100;
+  }
+</style>
+<div class="grid-margin stretch-card">
+  <div class="card">
+    <div class="card-title" style="padding: 10px 0px 0px 10px;">
+      <span *ngIf="disable">
+        <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit">
+          <i class="mdi mdi-pencil"></i>Edit</button>
+      </span>
+      <button class="btn btn-primary btn-sm" (click)="openDelete()" *ngIf="userEdit"><i
+          class="mdi mdi-delete"></i>Delete</button>
+      <button class="btn btn-primary btn-sm float-right" (click)="redirect()"><i
+          class="mdi mdi-keyboard-backspace"></i>Back</button>
+    </div>
+    <div class="card-body">
+      <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
+
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Main">
+          <form class="form-sample" [formGroup]="policyForm" style="font-size: 13px">
+            <div class="row mt-3" style="max-width: 102%;">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Carrier </mat-label>
+                  <mat-select formControlName="carrier_id" (selectionChange)="submitCarrier()"
+                    [(ngModel)]="carrier">
+                    <mat-option *ngFor="let item of clientType" [value]=item.carrier_id>{{item.carrier_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Product</mat-label>
+                  <mat-select formControlName="product_id" (selectionChange)="submitSelection(productList)" [(ngModel)]="product">
+                    <mat-option *ngFor="let item of productList" [value]=item.product_id>{{item.product_description}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+          <div *ngIf="product">
+            <app-main [disable]="disable" [type]="policyType"></app-main>
+          </div>
+        </mat-tab>
+        <mat-tab label="Members">
+          <app-policy-members [disable]="disable"></app-policy-members>
+        </mat-tab>
+        <mat-tab label="Commission">
+        </mat-tab>
+      </mat-tab-group>
+      <br />
+      <div *ngIf="product">
+        <button class="btn btn-primary float-right" [disabled]="!policyForm.valid" (click)="validate()"
+          *ngIf="!disable">SUBMIT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" *ngIf="errorModal" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="!deleteClient && !errorModal"
+        (click)="updateDetails()">Ok</button>
+      <button type="button" class="btn btn-success" *ngIf="deleteClient" (click)="delete()">Yes</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

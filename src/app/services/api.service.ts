@@ -23,6 +23,30 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.loginApi, loginInfoObj);
   }
 
+  deletePolicy(obj){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.deletePolicy, obj, this.options);
+
+  }
+
+  getClientRelationships(obj){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getClientRelationships, obj, this.options);
+
+  }
+
   /**
  * @method deleteClient()
  * @desc update Status
@@ -38,6 +62,39 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.updateEditStatus, obj, this.options);
   }
 
+  getPolicyDetails(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getPolicyDetails, obj, this.options);
+  }
+
+  getAllProductIds(obj){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getAllProductIds, obj, this.options);
+
+  }
+
+  getAllPoliciesDetails(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getAllPoliciesDetails, obj, this.options);
+  }
 
   /**
  * @method deleteClient()
@@ -54,6 +111,17 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.updateAgentEditStatus, obj, this.options);
   }
 
+  updatePolicyEditStatus(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.updatePolicyEditStatus, obj, this.options);
+  }
+
   updateCarrierEditStatus(obj) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -65,6 +133,16 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.updateCarrierEditStatus, obj, this.options);
   }
 
+  getPolicyConstants(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getPolicyConstants, obj, this.options);
+  }
 
 
   updateGroupEditStatus(obj) {
@@ -221,6 +299,33 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.createClient, Obj, this.options);
   }
 
+  updatePolicy(Obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.updatePolicy, Obj, this.options);
+  }
+
+  /**
+* @method createPolicy()
+* @desc create policy
+*/
+  createPolicy(Obj) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.createPolicy, Obj, this.options);
+  }
+
   /**
  * @method createClient()
  * @desc create client
@@ -241,17 +346,17 @@ export class ApiService {
  * @method createClient()
  * @desc create client
  */
-updateCarrier(Obj) {
+  updateCarrier(Obj) {
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': localStorage.getItem('token')
-  });
-  this.options = {
-    headers: headers
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.updateCarrier, Obj, this.options);
   }
-  return this.httpClient.post(this.urlObject.UrlObj.updateCarrier, Obj, this.options);
-}
 
   /**
  * @method createClient()

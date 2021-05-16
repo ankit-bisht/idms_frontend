@@ -35,5 +35,14 @@ export class Configuration {
     getCarriers: this.baseUrl + "getAllCarriersDetails",
     getCarrierDetails: this.baseUrl + "getCarrierDetails",
     createCarrier: this.baseUrl + "createCarrier",
+    getPolicyConstants: this.baseUrl+ "getPolicyConstants",
+    createPolicy: this.baseUrl+"createPolicy",
+    updatePolicyEditStatus : this.baseUrl + "updatePolicyEditStatus",
+    updatePolicy: this.baseUrl + "updatePolicy",
+    getPolicyDetails: this.baseUrl + "getPolicyDetails",
+    getAllPoliciesDetails : this.baseUrl+"getAllPoliciesDetails",
+    getAllProductIds: this.baseUrl + "getAllProductIds",
+    deletePolicy: this.baseUrl + "deletePolicy",
+    getClientRelationships: this.baseUrl + "getClientRelationships"
   }
 }

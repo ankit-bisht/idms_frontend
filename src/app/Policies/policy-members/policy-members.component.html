@@ -1,0 +1,180 @@
+<style>
+  ::ng-deep .mat-form-field-wrapper {
+    /* margin-top: -1.25em; */
+  }
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  .mat-row:hover {
+    background-color: lightgray;
+    cursor: pointer;
+  }
+
+  .table {
+    width: 80%;
+  }
+
+  ::ng-deep.mat-tab-link,
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    min-width: 97px !important;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  tbody.text-center {
+    text-align: left !important;
+  }
+
+  .grid-margin {
+    margin-bottom: 0rem;
+  }
+
+  .form-check .form-check-label {
+    font-size: 10px;
+  }
+
+  ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
+    font-weight: 100;
+  }
+</style>
+<div class="action-container" style="padding: 3%;">
+  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+    Row</button>
+  &nbsp;
+</div>
+
+<form [formGroup]="memberForm" style="font-size: 12px;margin-left: 50px;">
+  <table class="table table-bordered table-sm">
+    <thead class="text-nowrap text-center">
+      <th>
+        <h6>Select Individuals<span class="text-danger">*</span></h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Relationships</h6> <span dragableColumn> </span>
+      </th>
+      <th></th>
+    </thead>
+    <tbody class="">
+      <ng-container formArrayName="policyMembersDetails" *ngFor="let group of getFormControls.controls ; let i=index">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+          <td>
+            <div class="text-center">
+              {{getIndividual(group.get('member_id').value)}}
+              &nbsp;
+              <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Individual</button>
+            </div>
+          </td>
+
+          <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Individuals</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
+                      aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+                  </mat-form-field>
+                  <mat-table #table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="first_name">
+                      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+                      <mat-cell *matCellDef="let element"
+                        (click)="[submitForm(),setValue(group,element.client_id),onCloseHandled()]">
+                        {{element.first_name}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="last_name">
+                      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+                      <mat-cell *matCellDef="let element"
+                        (click)="[submitForm(),setValue(group,element.client_id),onCloseHandled()]">
+                        {{element.last_name}}</mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="DOB">
+                      <mat-header-cell *matHeaderCellDef> DOB </mat-header-cell>
+                      <mat-cell *matCellDef="let element"
+                        (click)="[submitForm(),setValue(group,element.client_id),onCloseHandled()]">
+                        {{element.DOB}}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+                  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]">
+                  </mat-paginator>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" (click)="onCloseHandled()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <td>
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>Relations</mat-label>
+              <mat-select formControlName="relations" multiple (selectionChange)="setRelValue(group,$event)">
+                <mat-option *ngFor="let item of relations" [value]="item.client_id">{{item.first_name}} ({{item.relationship}})</mat-option>
+              </mat-select>
+            </mat-form-field> -->
+            <mat-list role="list">
+              <mat-list-item role="listitem" *ngFor="let item of relations">{{item.first_name}} ({{item.relationship}})
+              </mat-list-item>
+            </mat-list>
+          </td>
+          <td>
+            <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+            <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+          </td>
+
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value">
+          <td>
+            <div class="text-center">
+              <a href="javascript:void(0);"
+                (click)="goToIndividual(group)">{{getIndividual(group.get('member_id').value)}}</a>
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let item of relations">{{item.first_name}}
+                  ({{item.relationship}})</mat-list-item>
+              </mat-list>
+            </div>
+          </td>
+          <td>
+            <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</form>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

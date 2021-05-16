@@ -9,6 +9,7 @@ export class IndividualDetailServiceService {
   groupDetails = {};
   agentDetails = {};
   carrierDetails = {};
+  policyDetails = {};
 
   constructor() { }
 
@@ -47,7 +48,7 @@ export class IndividualDetailServiceService {
 
   /**
   *
-  * @param GROUPS
+  * @param AGENTS
   */
 
   addToAgent(details) {
@@ -66,7 +67,7 @@ export class IndividualDetailServiceService {
 
   /**
   *
-  * @param GROUPS
+  * @param CARRIER
   */
 
   addToCarrier(details) {
@@ -81,5 +82,25 @@ export class IndividualDetailServiceService {
   clearCarrier() {
     this.carrierDetails = {};
     return this.carrierDetails;
+  }
+
+
+  /**
+  *
+  * @param POLCIES
+  */
+
+  addToPolicy(details) {
+    Object.entries(details).forEach(([key, value]) => { this.policyDetails[key] = value })
+    return this.policyDetails;
+  }
+
+  getPolicy() {
+    return this.policyDetails;
+  }
+
+  clearPolicy() {
+    this.policyDetails = {};
+    return this.policyDetails;
   }
 }

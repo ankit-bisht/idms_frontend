@@ -56,10 +56,20 @@ export class LoginComponent implements OnInit {
         const Obj = {
           userId: data.result.userDetails.user_id
         }
+        this.api.getPolicyConstants(Obj).subscribe((data: any) => {
+          if (data.responseCode === 200) {
+            localStorage.setItem("policy_constants",JSON.stringify(data.result));
+          }
+        });
         this.api.getConstants(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             localStorage.setItem('constants', JSON.stringify(data.result));
             // this.clientType = data.result.clientType;
+          }
+        });
+        this.api.getIndividuals(Obj).subscribe((data: any) => {
+          if (data.responseCode === 200) {
+            localStorage.setItem('clients', JSON.stringify(data['result']))
           }
         });
         this.api.documentDropDownValues(Obj).subscribe((data: any) => {
