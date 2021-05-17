@@ -39,7 +39,9 @@ export class MainComponent implements OnChanges, OnDestroy {
   userEdit: Boolean = false;
   deleteClient: boolean = false;
   errorModal: boolean = false;
+  primary_id: any;
   invalid: boolean = false;
+  primary: any = [];
   policytype: any;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
@@ -56,6 +58,7 @@ export class MainComponent implements OnChanges, OnDestroy {
       if (disable.disable.currentValue) {
         if (this.policytype == 'I' || this.policytype == "|") {
           this.mainForm = new FormGroup({
+            "primary_id": new FormControl('', [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl(''),
             "election": new FormControl(''),
@@ -67,8 +70,11 @@ export class MainComponent implements OnChanges, OnDestroy {
             "end_date": new FormControl('', [Validators.required]),
             "notes": new FormControl(''),
           });
+          this.setIndividial();
         } else {
+          this.setGroup();
           this.mainForm = new FormGroup({
+            "primary_id": new FormControl('', [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl(''),
             "premium": new FormControl(''),
@@ -85,34 +91,39 @@ export class MainComponent implements OnChanges, OnDestroy {
         this.mainForm.disable();
       } else {
         if (localStorage.getItem("PoliciesDetails")) {
-        this.mainForm.enable();
+          this.mainForm.enable();
         }
       }
     }
     if (disable['type'] && disable['type'].previousValue != disable['type'].currentValue) {
 
-      this.policytype = disable.type.currentValue ? disable.type.currentValue : 'I';
-
+      this.policytype = disable.type.currentValue;
+      this.savePolicies.addToPolicy({ type: this.policytype });
       if (!localStorage.getItem("PoliciesDetails")) {
         if (this.policytype == 'I' || this.policytype == "|") {
           this.mainForm = new FormGroup({
+            "primary_id": new FormControl('', [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
-            "status": new FormControl('',[Validators.required]),
+            "status": new FormControl('', [Validators.required]),
             "election": new FormControl(''),
             "premium": new FormControl(''),
-            "application_date": new FormControl('',[Validators.required]),
+            "application_date": new FormControl('', [Validators.required]),
             "effective_date": new FormControl('', [Validators.required]),
             "pay_frequency": new FormControl(''),
             "payment_mode": new FormControl(''),
             "end_date": new FormControl('', [Validators.required]),
             "notes": new FormControl(''),
           });
+
+          this.setIndividial();
         } else {
+          this.setGroup();
           this.mainForm = new FormGroup({
+            "primary_id": new FormControl('', [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
-            "status": new FormControl('',[Validators.required]),
+            "status": new FormControl('', [Validators.required]),
             "premium": new FormControl(''),
-            "application_date": new FormControl('',[Validators.required]),
+            "application_date": new FormControl('', [Validators.required]),
             "effective_date": new FormControl('', [Validators.required]),
             "pay_frequency": new FormControl(''),
             "payment_mode": new FormControl(''),
@@ -127,6 +138,36 @@ export class MainComponent implements OnChanges, OnDestroy {
     this.getConstants();
   }
 
+  setIndividial() {
+    const Obj = {
+      userId: localStorage.getItem('userId')
+    }
+    this.api.getIndividuals(Obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.primary = data.result;
+      } else {
+        this.errorModal = true;
+        this.modalMessage = data.error;
+        return this.modalRef = this.modalService.show(this.templateRef);
+      }
+    });
+  }
+
+  setGroup() {
+    const Obj = {
+      userId: localStorage.getItem('userId')
+    }
+    this.api.getGroups(Obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.primary = data.result.groupDetails;
+      } else {
+        this.errorModal = true;
+        this.modalMessage = data.error;
+        return this.modalRef = this.modalService.show(this.templateRef);
+      }
+    });
+  }
+
   ngOnDestroy() {
     localStorage.removeItem("PoliciesDetails");
   }
@@ -134,10 +175,11 @@ export class MainComponent implements OnChanges, OnDestroy {
   buildmainForm(): void {
 
 
-    let getPolicyDetail = localStorage.getItem('PoliciesDetails')?JSON.parse(localStorage.getItem('PoliciesDetails'))["policyDetails"]:false;
+    let getPolicyDetail = localStorage.getItem('PoliciesDetails') ? JSON.parse(localStorage.getItem('PoliciesDetails'))["policyDetails"] : false;
 
     if (getPolicyDetail) {
       const Policy = getPolicyDetail[0];
+      this.primary_id = Policy.primary_id;
       this.policy_number = Policy.policy_number;
       this.status = Policy.status;
       this.election = Policy.election;
@@ -169,7 +211,7 @@ export class MainComponent implements OnChanges, OnDestroy {
   };
 
   onSubmit() {
-    console.log(this.mainForm);
+    console.log(this.savePolicies.addToPolicy(this.mainForm.value));
 
     if (this.mainForm.valid) {
       this.mainForm.value.userId = localStorage.getItem('userId');

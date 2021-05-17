@@ -35,6 +35,18 @@
 
         <mat-table #table [dataSource]="dataSource">
 
+          <ng-container matColumnDef="carrier_id">
+            <mat-header-cell *matHeaderCellDef> Carrier</mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
+              {{getCarrier(element.carrier_id)}}</mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="carrier_id">
+            <mat-header-cell *matHeaderCellDef> Carrier</mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
+              {{getCarrier(element.carrier_id)}}</mat-cell>
+          </ng-container> -->
+
           <ng-container matColumnDef="policy_number">
             <mat-header-cell *matHeaderCellDef> Policy Number </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">

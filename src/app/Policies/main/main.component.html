@@ -32,8 +32,22 @@
         <p style="color: white"> Loading... </p>
       </ngx-spinner>
       <form class="form-sample" [formGroup]="mainForm" style="font-size: 13px">
-        <div class="row mt-4">
-          <div [ngClass]="policytype == 'I'||policytype=='|' ? 'col-md-4' : 'col-md-6'">
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Primary Id</mat-label>
+              <mat-select formControlName="primary_id" (selectionChange)="onSubmit()" [(ngModel)]="primary_id" required>
+                <mat-option *ngFor="let item of primary |keyvalue" [value]=item.value.client_id?item.value.client_id:item.value.group_id>{{item.value.first_name?item.value.first_name:item.value.group_name}} {{item.value.last_name?item.value.last_name:''}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="mainForm.get('primary_id').invalid && (mainForm.get('primary_id').touched)">
+                <span *ngIf="mainForm.get('primary_id').errors.required">
+                  Policy Id is Required.
+                </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
             <mat-form-field appearance="outline">
               <mat-label>Policy Number</mat-label>
               <input matInput placeholder="Policy Number" (keyup)="onSubmit()" formControlName="policy_number"
@@ -45,7 +59,9 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div [ngClass]="policytype == 'I'||policytype=='|' ? 'col-md-4' : 'col-md-6'">
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-6">
             <mat-form-field appearance="outline">
               <mat-label>Status</mat-label>
               <mat-select formControlName="status" (selectionChange)="onSubmit()" [(ngModel)]="status" required>
@@ -59,7 +75,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-4" *ngIf = "policytype == 'I'||policytype=='|'">
+          <div class="col-md-6" *ngIf = "policytype == 'I'||policytype=='|'">
             <mat-form-field appearance="outline">
               <mat-label>Election</mat-label>
               <mat-select formControlName="election" (selectionChange)="onSubmit()" [(ngModel)]="election">

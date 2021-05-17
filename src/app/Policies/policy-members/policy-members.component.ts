@@ -100,8 +100,7 @@ export class PolicyMembersComponent implements OnChanges {
 
   setForm(element): FormGroup {
     return this.fb.group({
-      member_id: [element.client_id, Validators.required],
-      // relations: [[]],
+      member_id: [element.member_id, Validators.required],
       isEditable: [false]
     });
   }
@@ -126,7 +125,6 @@ export class PolicyMembersComponent implements OnChanges {
   initiateForm(): FormGroup {
     return this.fb.group({
       member_id: [''],
-      // relations: [''],
       isEditable: [true]
     });
   }
@@ -142,6 +140,7 @@ export class PolicyMembersComponent implements OnChanges {
   addRow() {
     const control = this.memberForm.get('policyMembersDetails') as FormArray;
     control.push(this.initiateForm());
+    this.relations = this.savePolicy.getPolicy()['policyMembers'];
     this.submitForm();
   }
 
@@ -152,35 +151,25 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   setValue(group: FormGroup, client_id) {
-    this.spinner.show();
-    const Obj = {
-      userId: localStorage.getItem('userId'),
-      clientId: client_id
-    }
-    this.api.getClientRelationships(Obj).subscribe((data: any) => {
-      this.spinner.hide();
-      if (data.responseCode === 200) {
-        this.relations = data.result;
-      }
-    });
-
-    group.get('member_id').setValue(client_id);
+    // group.get('member_id').setValue(client_id);
     this.submitForm();
   }
 
   setRelValue(group: FormGroup, relations) {
-    // group.get('relations').setValue(relations.value);
     this.submitForm();
   }
 
   editRow(group: FormGroup) {
+    if (this.relations != this.savePolicy.getPolicy()['policyMembers']) {
+      this.memberForm.reset();
+    }
     group.get('isEditable').setValue(true);
   }
 
   doneRow(group: FormGroup) {
     group.get('isEditable').setValue(false);
     this.submitForm();
-    this.filterIndividualsArray(group.get('client_id').value);
+    this.filterIndividualsArray(group.get('member_id').value);
   }
 
   get getFormControls() {

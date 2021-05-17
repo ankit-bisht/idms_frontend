@@ -42,7 +42,7 @@
         <p style="color: white"> Loading... </p>
       </ngx-spinner>
 
-      <mat-tab-group mat-align-tabs="start">
+      <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabClick($event)">
         <mat-tab label="Main">
           <form class="form-sample" [formGroup]="policyForm" style="font-size: 13px">
             <div class="row mt-3" style="max-width: 102%;">

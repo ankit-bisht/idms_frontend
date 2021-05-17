@@ -14,11 +14,12 @@ import { User } from "../../services/user";
 export class PoliciesComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['policy_number', 'status', 'effective_date', 'end_date'];
+  displayedColumns = ['carrier_id','policy_number', 'status', 'effective_date', 'end_date'];
   dataSource: any;
   data: any = [];
   length: any = 0;
-  constants:any = [];
+  constants: any = [];
+  carrier:any=[];
 
   constructor(private spinner: NgxSpinnerService, private api: ApiService, public Router: Router) {
   }
@@ -34,12 +35,25 @@ export class PoliciesComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+
+  getCarrier(id){
+    return this.carrier.filter(function (entry) { return entry.carrier_id === id })[0].carrier_name;
+  }
+
   getDetail() {
     this.constants = JSON.parse(localStorage.getItem("policy_constants")).status;
-    const Obj = {
+    const obj = {
       userId: localStorage.getItem('userId')
     }
-    this.api.getAllPoliciesDetails(Obj).subscribe((data: any) => {
+    this.api.getCarriers(obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        this.carrier = data.result;
+      }
+    });
+
+
+    this.api.getAllPoliciesDetails(obj).subscribe((data: any) => {
       this.spinner.show();
       if (data.responseCode === 200) {
         setTimeout(() => {

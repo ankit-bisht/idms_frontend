@@ -215,13 +215,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     this.policyType = type.filter(x => x.product_id === this.policyForm.value.product_id)[0].product_class;
     localStorage.setItem('policyType', this.policyType);
     console.log(this.savePolicies.addToPolicy(this.policyForm.value));
+    this.policyForm.disable();
   }
 
   onSubmit() {
     if (this.policyForm.valid) {
       this.policyForm.value.userId = localStorage.getItem('userId');
-      this.policyForm.value.DOB = new Date(this.policyForm.value.DOB).toISOString().split('T')[0];
-      this.policyForm.value.DOB = this.format(this.policyForm.value.DOB);
       console.log(this.savePolicies.addToPolicy(this.policyForm.value));
     }
   }
@@ -283,6 +282,36 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
           return this.modalRef = this.modalService.show(this.templateRef);
         }
       });
+    }
+  }
+
+  tabClick(event){
+    const policyData = this.savePolicies.getPolicy();
+    if(policyData['type'] == 'I' && policyData['primary_id']){
+      const Obj = {
+        userId: localStorage.getItem('userId'),
+        clientId: policyData['primary_id']
+      }
+      this.api.getClientRelationships(Obj).subscribe((data: any) => {
+        this.spinner.hide();
+        if (data.responseCode === 200) {
+          console.log(this.savePolicies.addToPolicy({"policyMembers":data.result}));
+        }
+      });
+    }else{
+      const Obj = {
+        userId: localStorage.getItem('userId'),
+        group_id: policyData['primary_id']
+      }
+      this.api.getGroupAllDetails(Obj).subscribe((data: any) => {
+        this.spinner.hide();
+        if (data.responseCode === 200) {
+          console.log(this.savePolicies.addToPolicy({"policyMembers":data.result.groupMembersDetails}));
+        }
+      });
+    }
+    if(policyData['type'] == 'G' && policyData['primary_id']){
+
     }
   }
 
