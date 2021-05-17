@@ -41,11 +41,11 @@
               {{getCarrier(element.carrier_id)}}</mat-cell>
           </ng-container>
 
-          <!-- <ng-container matColumnDef="carrier_id">
-            <mat-header-cell *matHeaderCellDef> Carrier</mat-header-cell>
+          <ng-container matColumnDef="primary_id">
+            <mat-header-cell *matHeaderCellDef> Primary Id</mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
-              {{getCarrier(element.carrier_id)}}</mat-cell>
-          </ng-container> -->
+              {{element.primary_id}}</mat-cell>
+          </ng-container>
 
           <ng-container matColumnDef="policy_number">
             <mat-header-cell *matHeaderCellDef> Policy Number </mat-header-cell>

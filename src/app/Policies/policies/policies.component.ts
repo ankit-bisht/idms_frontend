@@ -14,7 +14,7 @@ import { User } from "../../services/user";
 export class PoliciesComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['carrier_id','policy_number', 'status', 'effective_date', 'end_date'];
+  displayedColumns = ['carrier_id','primary_id','policy_number', 'status', 'effective_date', 'end_date'];
   dataSource: any;
   data: any = [];
   length: any = 0;
@@ -37,6 +37,8 @@ export class PoliciesComponent implements OnInit {
 
 
   getCarrier(id){
+    console.log(id);
+
     return this.carrier.filter(function (entry) { return entry.carrier_id === id })[0].carrier_name;
   }
 

@@ -77,7 +77,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
           return this.modalRef = this.modalService.show(this.templateRef);
         } else {
           this.updateEditStatus(2);
-          this.policyForm.enable();
+          // this.policyForm.enable();
           this.disable = false;
         }
       }
