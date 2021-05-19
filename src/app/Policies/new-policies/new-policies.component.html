@@ -59,7 +59,7 @@
               <div class="col-md-6">
                 <mat-form-field appearance="outline">
                   <mat-label>Product</mat-label>
-                  <mat-select formControlName="product_id" (selectionChange)="submitSelection(productList)" [(ngModel)]="product">
+                  <mat-select formControlName="product_id" (selectionChange)="[submitSelection(productList),onSubmit()]" [(ngModel)]="product">
                     <mat-option *ngFor="let item of productList" [value]=item.product_id>{{item.product_description}}
                     </mat-option>
                   </mat-select>
@@ -79,7 +79,7 @@
       </mat-tab-group>
       <br />
       <div *ngIf="product">
-        <button class="btn btn-primary float-right" [disabled]="!policyForm.valid" (click)="validate()"
+        <button class="btn btn-primary float-right" (click)="validate()"
           *ngIf="!disable">SUBMIT</button>
       </div>
     </div>

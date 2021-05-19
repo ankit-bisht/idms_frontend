@@ -54,9 +54,10 @@ export class MainComponent implements OnChanges, OnDestroy {
   ngOnChanges(disable: SimpleChanges): void {
 
     if (disable['disable'] && disable['disable'].previousValue != disable['disable'].currentValue) {
-
       if (disable.disable.currentValue) {
-        if (this.policytype == 'I' || this.policytype == "|") {
+        let val = JSON.parse(localStorage.getItem("PoliciesDetails"))['policyDetails'][0]['product_class'];
+        this.buildmainForm();
+        if (val == 'I' || val == '|') {
           this.mainForm = new FormGroup({
             "primary_id": new FormControl('', [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
@@ -86,7 +87,6 @@ export class MainComponent implements OnChanges, OnDestroy {
             "notes": new FormControl(''),
           });
         }
-        this.buildmainForm();
 
         this.mainForm.disable();
       } else {

@@ -215,7 +215,9 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     this.policyType = type.filter(x => x.product_id === this.policyForm.value.product_id)[0].product_class;
     localStorage.setItem('policyType', this.policyType);
     console.log(this.savePolicies.addToPolicy(this.policyForm.value));
-    this.policyForm.disable();
+    this.policyForm.get('carrier_id').disable();
+    this.policyForm.get('product_id').disable();
+    // this.policyForm.disable();
   }
 
   onSubmit() {

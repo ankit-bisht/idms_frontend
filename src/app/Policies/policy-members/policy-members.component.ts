@@ -59,8 +59,9 @@ export class PolicyMembersComponent implements OnChanges {
     this.memberForm = this.fb.group({
       policyMembersDetails: this.fb.array([])
     });
-    if (localStorage.getItem('PolicyDetails')) {
-      if (JSON.parse(localStorage.getItem('PolicyDetails')).policyMembersDetails.length >= 1) {
+    this.relations = this.savePolicy.getPolicy()['policyMembers'];
+    if (localStorage.getItem('PoliciesDetails')) {
+      if (JSON.parse(localStorage.getItem('PoliciesDetails')).policyMembersDetails.length >= 1) {
         this.setDetails();
       }
     }
@@ -88,7 +89,7 @@ export class PolicyMembersComponent implements OnChanges {
 
   setDetails() {
     const control = this.memberForm.get('policyMembersDetails') as FormArray;
-    const Details = JSON.parse(localStorage.getItem('PolicyDetails')).policyMembersDetails;
+    const Details = JSON.parse(localStorage.getItem('PoliciesDetails')).policyMembersDetails;
     Details.map(element => {
       control.push(this.setForm(element));
     });
@@ -99,6 +100,8 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   setForm(element): FormGroup {
+    console.log(element);
+
     return this.fb.group({
       member_id: [element.member_id, Validators.required],
       isEditable: [false]
@@ -108,12 +111,12 @@ export class PolicyMembersComponent implements OnChanges {
 
   getConstants() {
     this.clients = JSON.parse(localStorage.getItem('clients'));
-    if (localStorage.getItem('PolicyDetails')) {
-      this.clientDetails = JSON.parse(localStorage.getItem('PolicyDetails')).policyMembersDetails[0];
+    if (localStorage.getItem('PoliciesDetails')) {
+      this.clientDetails = JSON.parse(localStorage.getItem('PoliciesDetails')).policyMembersDetails[0];
       if (this.clientDetails) {
-        const Details = JSON.parse(localStorage.getItem('PolicyDetails')).policyMembersDetails;
-        this.filterIndividualsArray(Details.map(d => d.client_id));
-        this.filterIndividualsArray(this.clientDetails.client_id);
+        const Details = JSON.parse(localStorage.getItem('PoliciesDetails')).policyMembersDetails;
+        this.filterIndividualsArray(Details.map(d => d.member_id));
+        this.filterIndividualsArray(this.clientDetails.member_id);
       }
       this.filterIndividualsArray(0);
     } else {
@@ -151,7 +154,7 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   setValue(group: FormGroup, client_id) {
-    // group.get('member_id').setValue(client_id);
+    group.get('member_id').setValue(client_id.value);
     this.submitForm();
   }
 
