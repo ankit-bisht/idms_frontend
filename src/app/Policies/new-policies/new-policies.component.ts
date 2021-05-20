@@ -32,6 +32,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
   errorModal: boolean = false;
   invalid: boolean = false;
   policyType: any;
+  selectedMembers: any;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -236,6 +237,14 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     this.spinner.hide();
     var obj: any = this.savePolicies.getPolicy();
     obj.userId = localStorage.getItem('userId');
+
+    if (obj.type == "I" || obj.type == "|") {
+      let member = obj.policyMembersDetails;
+      obj.policyMembersDetails = member[0].member_id
+    } else {
+      delete obj.policyMembersDetails;
+    }
+
     if (localStorage.getItem('PoliciesDetails')) {
 
       obj.policy_id = JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0].policy_id;
@@ -287,9 +296,17 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     }
   }
 
-  tabClick(event){
+  tabClick(event) {
+
     const policyData = this.savePolicies.getPolicy();
-    if(policyData['type'] == 'I' && policyData['primary_id']){
+
+    if (event.index == 2) {
+      if (policyData['policyMembersDetails']) {
+        this.selectedMembers = policyData['policyMembersDetails'][0]['member_id'];
+      }
+    }
+
+    if (policyData['type'] == 'I' && policyData['primary_id']) {
       const Obj = {
         userId: localStorage.getItem('userId'),
         clientId: policyData['primary_id']
@@ -297,10 +314,10 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       this.api.getClientRelationships(Obj).subscribe((data: any) => {
         this.spinner.hide();
         if (data.responseCode === 200) {
-          console.log(this.savePolicies.addToPolicy({"policyMembers":data.result}));
+          console.log(this.savePolicies.addToPolicy({ "policyMembers": data.result }));
         }
       });
-    }else{
+    } else {
       const Obj = {
         userId: localStorage.getItem('userId'),
         group_id: policyData['primary_id']
@@ -308,11 +325,11 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       this.api.getGroupAllDetails(Obj).subscribe((data: any) => {
         this.spinner.hide();
         if (data.responseCode === 200) {
-          console.log(this.savePolicies.addToPolicy({"policyMembers":data.result.groupMembersDetails}));
+          console.log(this.savePolicies.addToPolicy({ "policyMembers": data.result.groupMembersDetails }));
         }
       });
     }
-    if(policyData['type'] == 'G' && policyData['primary_id']){
+    if (policyData['type'] == 'G' && policyData['primary_id']) {
 
     }
   }

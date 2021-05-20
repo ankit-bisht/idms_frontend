@@ -13,7 +13,7 @@
   }
 
   .table {
-    width: 80%;
+    width: 100%;
   }
 
   ::ng-deep.mat-tab-link,
@@ -43,7 +43,8 @@
   }
 </style>
 <div class="action-container" style="padding: 3%;">
-  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+  <button [disabled]="!disableButton" mat-raised-button class="btn btn-primary float-right" type="submit"
+    (click)="addRow()" *ngIf="!disable">Add
     Row</button>
   &nbsp;
 </div>
@@ -64,15 +65,25 @@
         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
           <td>
             <div class="text-center">
-              <!-- {{getIndividual(group.get('member_id').value)}} -->
+              {{getIndividual(group.get('member_id').value)}}
               &nbsp;
-              <mat-form-field appearance="outline">
+
+              <ng-select appendTo="body" multiple="true" placeholder="Select Members" (change)="setValue(group,$event)"
+                bindLabel="first_name" formControlName="member_id">
+                <ng-option *ngFor="let item of relations" [value]=item.client_id>
+                  {{item.first_name}} {{item.last_name?item.last_name:''}}
+                  {{item.relationship?'(':''}}{{item.relationship?item.relationship:''}}{{item.relationship?')':''}}
+                </ng-option>
+              </ng-select>
+
+
+              <!-- <mat-form-field appearance="outline">
                 <mat-label>Individuals</mat-label>
                 <mat-select formControlName="member_id" (selectionChange)="setValue(group,$event)">
                   <mat-option *ngFor="let item of relations" [value]="item.client_id">{{item.first_name}} {{item.last_name?item.last_name:''}}
                     {{item.relationship?item.relationship:''}}</mat-option>
                 </mat-select>
-              </mat-form-field>
+              </mat-form-field> -->
               <!-- <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Individual</button> -->
             </div>
           </td>
@@ -144,20 +155,24 @@
 
         </tr>
         <tr *ngIf="!group.get('isEditable').value">
-          <td>
+
+          <!-- <td>
             <div class="text-center">
               <a href="javascript:void(0);"
                 (click)="goToIndividual(group)">{{getIndividual(group.get('member_id').value)}}</a>
             </div>
-          </td>
-          <!-- <td>
+          </td> -->
+          <!-- {{getIndividual(group.get('member_id').value)}} -->
+          <td>
             <div class="text-center">
               <mat-list role="list">
-                <mat-list-item role="listitem" *ngFor="let item of relations">{{item.first_name}}
-                  ({{item.relationship}})</mat-list-item>
+                <mat-list-item role="listitem" *ngFor="let item of arrayRelations">
+                  {{item.first_name}} {{item.last_name?item.last_name:''}}
+                  {{item.relationship?'(':''}}{{item.relationship?item.relationship:''}}{{item.relationship?')':''}}
+                </mat-list-item>
               </mat-list>
             </div>
-          </td> -->
+          </td>
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
           </td>

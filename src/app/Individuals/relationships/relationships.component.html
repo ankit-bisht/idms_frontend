@@ -50,11 +50,11 @@ tbody.text-center {
             <button type="button" class="btn btn-primary btn-sm" (click)="openModal()">Select Individual</button>
           </td>
           <td>
-            <mat-form-field appearance="outline" style="font-size: 10px">
+            <mat-form-field appearance="outline" style="font-size: 10px;width: 350px;">
               <mat-label>Relationships</mat-label>
-              <mat-select formControlName="relationshipId" (selectionChange)="submitForm()">
-                <mat-option *ngFor="let item of relationshipType" [value]=item.id>
-                  {{item.relationship}}
+              <mat-select formControlName="relationshipId" (selectionChange)="submitForm()" style="width: 340px;">
+                <mat-option *ngFor="let item of relationshipType" [value]=item.id >
+                  {{item.relationship | titlecase}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

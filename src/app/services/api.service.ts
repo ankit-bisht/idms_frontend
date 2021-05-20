@@ -439,6 +439,17 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.getGroupsDetails, Obj, this.options);
   }
 
+  getClientTierRelationships(Obj){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getClientTierRelationships, Obj, this.options);
+  }
+
   /**
 * @method createIndividuals()
 * @desc create client

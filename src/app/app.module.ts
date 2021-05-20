@@ -29,7 +29,7 @@ import { NewIndividualComponent } from './Individuals/new-individual/new-individ
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Constants } from './configuration/constants';
 import { JwPaginationModule } from 'jw-angular-pagination';
-import { MatListModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatListModule, MatTabsModule } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ContactsComponent } from './Individuals/contacts/contacts.component';
 import { NgxBootstrapModalComponent } from './ngx-bootstrap-modal/ngx-bootstrap-modal.component';
@@ -66,7 +66,9 @@ import { NewCarrierAgentsComponent } from './Carriers/new-carrier-agents/new-car
 import { NewPoliciesComponent } from './Policies/new-policies/new-policies.component';
 import { MainComponent } from './Policies/main/main.component';
 import { PolicyMembersComponent } from './Policies/policy-members/policy-members.component';
-
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { PolicyDependentsComponent } from './Policies/policy-dependents/policy-dependents.component';
 
 export const DateFormat = {
   parse: {
@@ -120,6 +122,7 @@ export const DateFormat = {
     NewPoliciesComponent,
     MainComponent,
     PolicyMembersComponent,
+    PolicyDependentsComponent,
   ],
   imports: [
     ModalModule.forRoot(),
@@ -145,7 +148,10 @@ export const DateFormat = {
     MatListModule,
     MatIconModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule,
+    AutocompleteLibModule,
+    NgSelectModule
   ],
   exports: [
     PhoneMaskDirective, SSNMaskDirective, MatMomentDateModule

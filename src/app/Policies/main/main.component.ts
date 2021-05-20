@@ -7,13 +7,15 @@ import { IndividualDetailServiceService } from '../../individual-detail-service.
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { param } from 'jquery';
 import * as moment from 'moment';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnChanges, OnDestroy {
+export class MainComponent implements OnChanges,OnInit, OnDestroy {
 
   @ViewChild('mediumModalContent', { static: true }) modal: TemplateRef<any>;
 
@@ -39,15 +41,48 @@ export class MainComponent implements OnChanges, OnDestroy {
   userEdit: Boolean = false;
   deleteClient: boolean = false;
   errorModal: boolean = false;
-  primary_id: any;
+  primary_id= new FormControl();
   invalid: boolean = false;
-  primary: any = [];
   policytype: any;
+  options:any =  [];
+  public primary=[];
+  myControl = new FormControl();
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
+  keyword = 'first_name';
 
 
   constructor(private activatedRoute: ActivatedRoute, private modalService: BsModalService, private savePolicies: IndividualDetailServiceService, private fb: FormBuilder, private api: ApiService, public Router: Router, public States: Constants) {
   }
+
+  ngOnInit() {
+    // this.primary = this.primary_id.valueChanges
+    //   .pipe(
+    //     startWith(''),
+    //     map(value => this._filter(value))
+    //   );
+  }
+
+  selectEvent(item) {
+    console.log(item);
+
+    // do something with selected item
+  }
+
+  onChangeSearch(search: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+
+  onFocused(e) {
+    // do something
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
   @Input() disable;
   @Input() type;
 
@@ -145,6 +180,7 @@ export class MainComponent implements OnChanges, OnDestroy {
     this.api.getIndividuals(Obj).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.primary = data.result;
+        this.options = data.result;
       } else {
         this.errorModal = true;
         this.modalMessage = data.error;
@@ -160,6 +196,7 @@ export class MainComponent implements OnChanges, OnDestroy {
     this.api.getGroups(Obj).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.primary = data.result.groupDetails;
+        this.options = data.result.groupDetails;
       } else {
         this.errorModal = true;
         this.modalMessage = data.error;

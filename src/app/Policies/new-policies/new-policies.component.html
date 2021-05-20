@@ -5,6 +5,10 @@
     min-width: 97px !important;
   }
 
+  .header-less-tabs.mat-tab-group .mat-tab-header {
+    display: none;
+  }
+
   mat-form-field {
     width: 100%;
   }
@@ -29,8 +33,8 @@
   <div class="card">
     <div class="card-title" style="padding: 10px 0px 0px 10px;">
       <span *ngIf="disable">
-        <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit">
-          <i class="mdi mdi-pencil"></i>Edit</button>
+        <!-- <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit">
+          <i class="mdi mdi-pencil"></i>Edit</button> -->
       </span>
       <button class="btn btn-primary btn-sm" (click)="openDelete()" *ngIf="userEdit"><i
           class="mdi mdi-delete"></i>Delete</button>
@@ -49,8 +53,7 @@
               <div class="col-md-6">
                 <mat-form-field appearance="outline">
                   <mat-label>Carrier </mat-label>
-                  <mat-select formControlName="carrier_id" (selectionChange)="submitCarrier()"
-                    [(ngModel)]="carrier">
+                  <mat-select formControlName="carrier_id" (selectionChange)="submitCarrier()" [(ngModel)]="carrier">
                     <mat-option *ngFor="let item of clientType" [value]=item.carrier_id>{{item.carrier_name}}
                     </mat-option>
                   </mat-select>
@@ -59,7 +62,8 @@
               <div class="col-md-6">
                 <mat-form-field appearance="outline">
                   <mat-label>Product</mat-label>
-                  <mat-select formControlName="product_id" (selectionChange)="[submitSelection(productList),onSubmit()]" [(ngModel)]="product">
+                  <mat-select formControlName="product_id" (selectionChange)="[submitSelection(productList),onSubmit()]"
+                    [(ngModel)]="product">
                     <mat-option *ngFor="let item of productList" [value]=item.product_id>{{item.product_description}}
                     </mat-option>
                   </mat-select>
@@ -71,16 +75,21 @@
             <app-main [disable]="disable" [type]="policyType"></app-main>
           </div>
         </mat-tab>
-        <mat-tab label="Members">
+        <mat-tab label="Members" *ngIf="policyType=='I'||policyType=='|'?true:false">
           <app-policy-members [disable]="disable"></app-policy-members>
+        </mat-tab>
+        <mat-tab label="Employees" *ngIf="policyType=='G'?true:false">
+          <app-policy-members [disable]="disable"></app-policy-members>
+        </mat-tab>
+        <mat-tab label="Dependents" *ngIf="policyType=='G'?true:false">
+          <app-policy-dependents [disable]="disable" [members]="selectedMembers"></app-policy-dependents>
         </mat-tab>
         <mat-tab label="Commission">
         </mat-tab>
       </mat-tab-group>
       <br />
       <div *ngIf="product">
-        <button class="btn btn-primary float-right" (click)="validate()"
-          *ngIf="!disable">SUBMIT</button>
+        <button class="btn btn-primary float-right" (click)="validate()" *ngIf="!disable">SUBMIT</button>
       </div>
     </div>
   </div>

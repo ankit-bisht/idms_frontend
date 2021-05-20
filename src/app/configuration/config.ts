@@ -43,6 +43,7 @@ export class Configuration {
     getAllPoliciesDetails : this.baseUrl+"getAllPoliciesDetails",
     getAllProductIds: this.baseUrl + "getAllProductIds",
     deletePolicy: this.baseUrl + "deletePolicy",
-    getClientRelationships: this.baseUrl + "getClientRelationships"
+    getClientRelationships: this.baseUrl + "getClientRelationships",
+    getClientTierRelationships : this.baseUrl + "getClientTierRelationships"
   }
 }

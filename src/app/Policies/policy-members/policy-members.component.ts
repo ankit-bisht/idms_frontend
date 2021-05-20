@@ -33,9 +33,11 @@ export class PolicyMembersComponent implements OnChanges {
   clientDetails: any;
   modalMessage: any;
   modalRef: BsModalRef;
-  touchedRows: any;
+  touchedRows: any = [];
+  disableButton = true;
   document_status: any;
   relations = [];
+  arrayRelations = [];
   display = "none";
   @ViewChild(MatPaginator, { static: false }) set paginator(value: MatPaginator) {
     if (this.dataSource) {
@@ -88,11 +90,17 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   setDetails() {
+    let members = [];
     const control = this.memberForm.get('policyMembersDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('PoliciesDetails')).policyMembersDetails;
-    Details.map(element => {
-      control.push(this.setForm(element));
-    });
+    this.arrayRelations = Details;
+    for (const iterator of Details) {
+      members.push(iterator.member_id);
+    }
+
+    // Details.map(members => {
+    control.push(this.setForm(members));
+    // });
     this.memberForm.value.policyMembersDetails.map((element, key) => {
       delete element.isEditable;
     });
@@ -100,10 +108,8 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   setForm(element): FormGroup {
-    console.log(element);
-
     return this.fb.group({
-      member_id: [element.member_id, Validators.required],
+      member_id: [element, Validators.required],
       isEditable: [false]
     });
   }
@@ -144,35 +150,38 @@ export class PolicyMembersComponent implements OnChanges {
     const control = this.memberForm.get('policyMembersDetails') as FormArray;
     control.push(this.initiateForm());
     this.relations = this.savePolicy.getPolicy()['policyMembers'];
+    this.disableButton = false;
     this.submitForm();
   }
 
   deleteRow(index: number) {
     const control = this.memberForm.get('policyMembersDetails') as FormArray;
     control.removeAt(index);
+    this.disableButton = true;
     this.submitForm();
   }
 
   setValue(group: FormGroup, client_id) {
-    group.get('member_id').setValue(client_id.value);
-    this.submitForm();
-  }
-
-  setRelValue(group: FormGroup, relations) {
+    group.get('member_id').setValue(client_id);
     this.submitForm();
   }
 
   editRow(group: FormGroup) {
-    if (this.relations != this.savePolicy.getPolicy()['policyMembers']) {
-      this.memberForm.reset();
-    }
     group.get('isEditable').setValue(true);
   }
 
   doneRow(group: FormGroup) {
     group.get('isEditable').setValue(false);
+    this.arrayRelations = [];
+    for (const iterator of group.get('member_id').value) {
+      let client = this.clients.find(r => r.client_id == iterator);
+
+      this.arrayRelations.push(client);
+    }
+    this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+
     this.submitForm();
-    this.filterIndividualsArray(group.get('member_id').value);
+    // this.filterIndividualsArray(group.get('member_id').value);
   }
 
   get getFormControls() {
@@ -217,8 +226,12 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   getIndividual(val) {
-    let client = this.clients.find(r => r.client_id == val);
-    return !!client ? `${client.first_name} ${client.last_name}` : '';
+    for (const iterator of val) {
+      let client = this.clients.find(r => r.client_id == iterator);
+      this.arrayRelations.push(client);
+    }
+    this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+    // return !!client ? `${client.first_name} ${client.last_name}` : '';
   }
 
   filterIndividualsArray(id) {
