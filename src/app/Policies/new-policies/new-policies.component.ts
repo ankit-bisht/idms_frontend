@@ -306,7 +306,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (policyData['type'] == 'I' && policyData['primary_id']) {
+    if (policyData['type'] == 'I' || policyData['type'] == '|' && policyData['primary_id']) {
       const Obj = {
         userId: localStorage.getItem('userId'),
         clientId: policyData['primary_id']
