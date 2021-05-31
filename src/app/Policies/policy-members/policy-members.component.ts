@@ -94,13 +94,12 @@ export class PolicyMembersComponent implements OnChanges {
     const control = this.memberForm.get('policyMembersDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('PoliciesDetails')).policyMembersDetails;
     this.arrayRelations = Details;
-    for (const iterator of Details) {
-      members.push(iterator.member_id);
+    for (const [key, value] of Object.entries(Details)) {
+      members.push(value['member_id']);
+      this.arrayRelations[key]['relationship'] = JSON.parse(localStorage.getItem('constants'))['relationShips'][value['relationship_id']]
     }
 
-    // Details.map(members => {
     control.push(this.setForm(members));
-    // });
     this.memberForm.value.policyMembersDetails.map((element, key) => {
       delete element.isEditable;
     });
@@ -174,8 +173,7 @@ export class PolicyMembersComponent implements OnChanges {
     group.get('isEditable').setValue(false);
     this.arrayRelations = [];
     for (const iterator of group.get('member_id').value) {
-      let client = this.clients.find(r => r.client_id == iterator);
-
+      let client = this.savePolicy.getPolicy()['policyMembers'].find(r => r.client_id == iterator);
       this.arrayRelations.push(client);
     }
     this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
@@ -226,11 +224,15 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   getIndividual(val) {
+    console.log(val);
+
     for (const iterator of val) {
-      let client = this.clients.find(r => r.client_id == iterator);
+      let client = this.savePolicy.getPolicy()['policyMembers'].find(r => r.client_id == iterator);
       this.arrayRelations.push(client);
     }
     this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+    console.log(this.arrayRelations);
+
     // return !!client ? `${client.first_name} ${client.last_name}` : '';
   }
 

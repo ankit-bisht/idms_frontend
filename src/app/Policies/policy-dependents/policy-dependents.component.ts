@@ -82,7 +82,7 @@ export class PolicyDependentsComponent implements OnChanges {
     }
 
     if (localStorage.getItem('PoliciesDetails')) {
-      if (JSON.parse(localStorage.getItem('PoliciesDetails')).policydependentDetails.length >= 1) {
+      if (JSON.parse(localStorage.getItem('PoliciesDetails')).policyDependentDetails.length >= 1) {
         this.setDetails();
       }
     }
@@ -107,29 +107,39 @@ export class PolicyDependentsComponent implements OnChanges {
     let policyMembers = this.savePolicy.getPolicy()['policyMembersDetails'][0];
     const control = this.memberForm.get('policyDependentDetails') as FormArray;
     for (const element of policyMembers.member_id) {
+      console.log(element);
+
       control.push(this.setMembersForm(element));
     }
-    // control.push(this.setMembersForm(iterator));
-
-    // Details.map(members => {
-    // control.push(this.setForm(members));
-    // });
   }
 
   setDetails() {
-    let members = [];
     const control = this.memberForm.get('policyDependentDetails') as FormArray;
-    const Details = JSON.parse(localStorage.getItem('PoliciesDetails')).policydependentDetails;
+    const Details = JSON.parse(localStorage.getItem('PoliciesDetails')).policyDependentDetails;
+
     // this.arrayRelations = Details;
+    Details.map((members, key) => {
+      let array = [];
+      // members.dependent = members.dependent.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+      control.push(this.setForm(members));
+      for (const iterator of members.dependent) {
+        let client = this.clients.find(r => r.client_id == iterator);
+        array.push(client);
+        array = array.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+        this.arrayRelations[key] = array;
+      }
 
-    // const map = new Map(Details.map(({ member_id, dependent_id, tier }) => [member_id, { member_id, dependent_id: [], tier }]));
-    // for (let { member_id, dependent_id, tier } of Details) map.get(member_id).dependent_id.push(...[dependent_id].flat());
+      const Obj = {
+        clientId: members.member_id,
+        tier: members.tier
+      }
+      this.api.getClientTierRelationships(Obj).subscribe((data: any) => {
+        if (data.responseCode === 200) {
+          this.dependants[key] = data.result;
+        }
+      });
+    });
 
-    // const localStorageValue = [...map.values()];
-
-    // localStorageValue.map(members => {
-    //   control.push(this.setForm(members));
-    // });
     this.memberForm.value.policyDependentDetails.map((element, key) => {
       delete element.isEditable;
     });
@@ -137,12 +147,10 @@ export class PolicyDependentsComponent implements OnChanges {
   }
 
   setForm(element): FormGroup {
-    console.log(element);
-
     return this.fb.group({
       member_id: [element.member_id, Validators.required],
       tier: [element.tier, Validators.required],
-      dependent: [element.dependent_id, Validators.required],
+      dependent: [element.dependent, Validators.required],
       isEditable: [false]
     });
   }
@@ -151,7 +159,7 @@ export class PolicyDependentsComponent implements OnChanges {
     return this.fb.group({
       member_id: [element, Validators.required],
       tier: ['', Validators.required],
-      dependent: [''],
+      dependent: [[]],
       isEditable: [false]
     });
   }
@@ -159,17 +167,6 @@ export class PolicyDependentsComponent implements OnChanges {
   getConstants() {
     this.clients = JSON.parse(localStorage.getItem('clients'));
     this.election = JSON.parse(localStorage.getItem('policy_constants'))['election'];
-    if (localStorage.getItem('PoliciesDetails')) {
-      // this.clientDetails = JSON.parse(localStorage.getItem('PoliciesDetails')).policydependentDetails;
-      // if (this.clientDetails) {
-      //   const Details = JSON.parse(localStorage.getItem('PoliciesDetails')).policydependentDetails;
-      //   this.filterIndividualsArray(Details.map(d => d.member_id));
-      //   this.filterIndividualsArray(this.clientDetails.member_id);
-      // }
-      // this.filterIndividualsArray(0);
-    } else {
-      this.filterIndividualsArray(0);
-    }
   }
 
 
@@ -210,7 +207,7 @@ export class PolicyDependentsComponent implements OnChanges {
     this.submitForm();
   }
 
-  setDependants(group: FormGroup, tier) {
+  setDependants(group: FormGroup, tier, i) {
     group.get('tier').setValue(tier);
     const Obj = {
       clientId: group.get('member_id').value,
@@ -218,14 +215,21 @@ export class PolicyDependentsComponent implements OnChanges {
     }
     this.api.getClientTierRelationships(Obj).subscribe((data: any) => {
       if (data.responseCode === 200) {
-        this.dependants = data.result;
+        this.dependants[i] = data.result;
       }
     });
   }
 
-  setDependantsValue(group: FormGroup, client_id) {
+  setDependantsValue(group: FormGroup, client_id, i) {
     group.get('dependent').setValue(client_id);
     this.submitForm();
+    let array = [];
+    for (const iterator of group.get('dependent').value) {
+      let client = this.clients.find(r => r.client_id == iterator);
+      array.push(client);
+    }
+    this.arrayRelations[i] = array;
+    // this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
   }
 
   editRow(group: FormGroup) {
@@ -234,14 +238,8 @@ export class PolicyDependentsComponent implements OnChanges {
 
   doneRow(group: FormGroup) {
     group.get('isEditable').setValue(false);
-    this.arrayRelations = [];
+    // this.arrayRelations = [];
     this.submitForm();
-    this.arrayRelations = [];
-    for (const iterator of group.get('dependent').value) {
-      let client = this.clients.find(r => r.client_id == iterator);
-      this.arrayRelations.push(client);
-    }
-    this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
   }
 
   get getFormControls() {
@@ -286,20 +284,16 @@ export class PolicyDependentsComponent implements OnChanges {
   }
 
   getIndividual(val) {
-    // for (const iterator of val) {
     let client = this.clients.find(r => r.client_id == val);
-    //   this.arrayRelations.push(client);
-    // }
-    // this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
     return !!client ? `${client.first_name} ${client.last_name}` : '';
   }
 
   getDependents(val) {
-    for (const iterator of val) {
-      let client = this.clients.find(r => r.client_id == iterator);
-      this.arrayRelations.push(client);
-    }
-    this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+    // for (const iterator of val) {
+    //   let client = this.clients.find(r => r.client_id == iterator);
+    //   this.arrayRelations.push(client);
+    // }
+    // this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
   }
 
   getTire(val) {

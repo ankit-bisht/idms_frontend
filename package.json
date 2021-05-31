@@ -24,7 +24,7 @@
     "@angular/router": "~8.2.11",
     "@mdi/font": "^3.8.95",
     "@ng-bootstrap/ng-bootstrap": "^5.0.0",
-    "@ng-select/ng-select": "^3.0.0",
+    "@ng-select/ng-select": "2.1.0",
     "@types/crypto-js": "^3.1.47",
     "@types/jquery": "^3.5.1",
     "angular-ng-autocomplete": "^2.0.5",

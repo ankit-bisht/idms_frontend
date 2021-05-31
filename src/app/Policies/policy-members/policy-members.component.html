@@ -68,7 +68,7 @@
               {{getIndividual(group.get('member_id').value)}}
               &nbsp;
 
-              <ng-select appendTo="body" multiple="true" placeholder="Select Members" (change)="setValue(group,$event)"
+              <ng-select appendTo="body"  [closeOnSelect]="false" multiple="true" placeholder="Select Members" (change)="setValue(group,$event)"
                 bindLabel="first_name" formControlName="member_id">
                 <ng-option *ngFor="let item of relations" [value]=item.client_id>
                   {{item.first_name}} {{item.last_name?item.last_name:''}}

@@ -239,9 +239,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     obj.userId = localStorage.getItem('userId');
 
     if (obj.type == "I" || obj.type == "|") {
-      let member = obj.policyMembersDetails;
-      obj.policyMembersDetails = member[0].member_id
+      if(obj.policyMembersDetails){
+        let member = obj.policyMembersDetails;
+        obj.policyMembersDetails = member[0]?member[0].member_id:[];
+      }
     } else {
+      delete obj.election;
       delete obj.policyMembersDetails;
     }
 

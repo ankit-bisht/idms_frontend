@@ -21,7 +21,7 @@ export class PoliciesComponent implements OnInit {
   constants: any = [];
   carrier:any=[];
 
-  constructor(private spinner: NgxSpinnerService, private api: ApiService, public Router: Router) {
+  constructor(private spinner: NgxSpinnerService,private api: ApiService, public Router: Router) {
   }
 
   ngOnInit() {

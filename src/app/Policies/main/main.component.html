@@ -12,6 +12,13 @@
   ::ng-deep.ng-select.ng-select-single .ng-select-container {
     height: 50px;
   }
+  /* ::ng-deep.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{
+    top: 14px;
+  }
+
+  ::ng-deep.ng-input{
+    height: 42px;
+  } */
 
   tbody.text-center {
     text-align: left !important;
@@ -38,73 +45,14 @@
       <form class="form-sample" [formGroup]="mainForm" style="font-size: 13px">
         <div class="row mt-3">
           <div class="col-md-6">
-            <!-- <mat-form-field class="example-full-width" appearance="outline">
-              <mat-label>Number</mat-label>
-              <input type="text"
-                     placeholder="Select Primary Id"
-                     aria-label="Number"
-                     matInput
-                     [formControl]="myControl"
-                     formControlName="primary_id"
-                     [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let item of primary$ |keyvalue" [value]=item.value.client_id?item.value.client_id:item.value.group_id>{{item.value.first_name?item.value.first_name:item.value.group_name}} {{item.value.last_name?item.value.last_name:''}}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field> -->
-            <!-- <mat-form-field class="example-full-width" appearance="outline"> -->
-            <ng-select [(ngModel)]="primary_id" placeholder="Select Primary Id" (change)="onSubmit()"
-              bindLabel="first_name" formControlName="primary_id">
+            <ng-select #MyNgSelect [(ngModel)]="primary_id" (change)="setPrimaryVal($event)"
+              bindLabel="first_name"  bindLabel="name" placeholder="Primary" [clearable]="false"
+              appendTo="body" [searchable]="true" formControlName="primary_id">
               <ng-option *ngFor="let item of primary" [value]=item.client_id?item.client_id:item.group_id>
-                {{item.first_name?item.first_name:item.group_name}} {{item.last_name?item.last_name:''}}</ng-option>
+                {{item.first_name?item.first_name:item.group_name}} {{item.last_name?item.last_name:''}}
+              </ng-option>
             </ng-select>
 
-            <!--Using items input-->
-            <!-- <ng-select [items]="primary"
-                        bindLabel="first_name"
-                        bindValue="client_id"
-                        [(ngModel)]="primary_id"
-                        formControlName="primary_id"
-                        >
-             </ng-select> -->
-            <!-- <div class="ng-autocomplete">
-              <ng-autocomplete
-                [data]="primary"
-                [searchKeyword]="keyword"
-                placeholder="Primary Id"
-                (selected)='onSubmit($event)'
-                (inputChanged)='onChangeSearch($event)'
-                (inputFocused)='onFocused($event)'
-                historyIdentifier="primary"
-                [itemTemplate]="itemTemplate"
-                [notFoundTemplate]="notFoundTemplate">
-              </ng-autocomplete>
-
-              <ng-template #itemTemplate let-item>
-                <a href="javascript:void(0)">
-                  <span [innerHTML]="item.first_name"></span>
-                  <span [innerHTML]="item.last_name"></span>
-              </a>
-              </ng-template>
-
-              <ng-template #notFoundTemplate let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
-            </div> -->
-            <!-- </mat-form-field> -->
-            <!-- <mat-form-field appearance="outline">
-              <mat-label>Primary Id</mat-label>
-              <mat-select formControlName="primary_id" (selectionChange)="onSubmit()" [(ngModel)]="primary_id" required>
-                <mat-option *ngFor="let item of primary |keyvalue" [value]=item.value.client_id?item.value.client_id:item.value.group_id>{{item.value.first_name?item.value.first_name:item.value.group_name}} {{item.value.last_name?item.value.last_name:''}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="mainForm.get('primary_id').invalid && (mainForm.get('primary_id').touched)">
-                <span *ngIf="mainForm.get('primary_id').errors.required">
-                  Policy Id is Required.
-                </span>
-              </mat-error>
-            </mat-form-field> -->
-            <!-- </mat-form-field> -->
           </div>
           <div class="col-md-6">
             <mat-form-field appearance="outline">
@@ -137,8 +85,8 @@
           <div class="col-md-6" *ngIf="policytype == 'I'||policytype=='|'">
             <mat-form-field appearance="outline">
               <mat-label>Election</mat-label>
-              <mat-select formControlName="election" (selectionChange)="onSubmit()" [(ngModel)]="election">
-                <mat-option *ngFor="let item of constants.election | keyvalue" value={{item.key}}>{{item.value}}
+              <mat-select formControlName="election" (selectionChange)="onSubmit()" [(ngModel)]="elections">
+                <mat-option *ngFor="let item of constants.election | keyvalue" [value]="item.key">{{item.value}}
                 </mat-option>
               </mat-select>
             </mat-form-field>

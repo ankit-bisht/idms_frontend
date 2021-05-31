@@ -7,15 +7,15 @@ import { IndividualDetailServiceService } from '../../individual-detail-service.
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { param } from 'jquery';
 import * as moment from 'moment';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnChanges,OnInit, OnDestroy {
+export class MainComponent implements OnChanges, OnInit, OnDestroy {
 
   @ViewChild('mediumModalContent', { static: true }) modal: TemplateRef<any>;
 
@@ -26,7 +26,7 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
   premium: any;
   payment_mode: any;
   policy_number: any;
-  election: any;
+  election: string;
   effective_date: any;
   application_date: any;
   paying_member: any;
@@ -35,17 +35,18 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
   pay_frequency: any;
   modalRef: BsModalRef;
   notes: any;
+  elections: string;
   constants: any;
   clientType: any;
   // disable: boolean = false;
   userEdit: Boolean = false;
   deleteClient: boolean = false;
   errorModal: boolean = false;
-  primary_id= new FormControl();
+  primary_id = 'Primary *';
   invalid: boolean = false;
   policytype: any;
-  options:any =  [];
-  public primary=[];
+  options: any = [];
+  public primary = [];
   myControl = new FormControl();
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
   keyword = 'first_name';
@@ -60,21 +61,7 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
     //     startWith(''),
     //     map(value => this._filter(value))
     //   );
-  }
-
-  selectEvent(item) {
-    console.log(item);
-
-    // do something with selected item
-  }
-
-  onChangeSearch(search: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-  }
-
-  onFocused(e) {
-    // do something
+    this.buildmainForm();
   }
 
   private _filter(value: string): string[] {
@@ -94,7 +81,7 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
         this.buildmainForm();
         if (val == 'I' || val == '|') {
           this.mainForm = new FormGroup({
-            "primary_id": new FormControl('', [Validators.required]),
+            "primary_id": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl(''),
             "election": new FormControl(''),
@@ -106,13 +93,15 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
             "end_date": new FormControl('', [Validators.required]),
             "notes": new FormControl(''),
           });
+          this.elections = JSON.parse(localStorage.getItem('PoliciesDetails'))["policyDetails"][0].election;
           this.setIndividial();
         } else {
           this.setGroup();
           this.mainForm = new FormGroup({
-            "primary_id": new FormControl('', [Validators.required]),
+            "primary_id": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl(''),
+            "election": new FormControl(''),
             "premium": new FormControl(''),
             "application_date": new FormControl(''),
             "effective_date": new FormControl('', [Validators.required]),
@@ -137,7 +126,7 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
       if (!localStorage.getItem("PoliciesDetails")) {
         if (this.policytype == 'I' || this.policytype == "|") {
           this.mainForm = new FormGroup({
-            "primary_id": new FormControl('', [Validators.required]),
+            "primary_id": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl('', [Validators.required]),
             "election": new FormControl(''),
@@ -154,9 +143,10 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
         } else {
           this.setGroup();
           this.mainForm = new FormGroup({
-            "primary_id": new FormControl('', [Validators.required]),
+            "primary_id": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl('', [Validators.required]),
+            "election": new FormControl(''),
             "premium": new FormControl(''),
             "application_date": new FormControl('', [Validators.required]),
             "effective_date": new FormControl('', [Validators.required]),
@@ -189,6 +179,11 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
     });
   }
 
+  setPrimaryVal(value) {
+    this.mainForm.get('primary_id').setValue(value);
+    this.onSubmit();
+  }
+
   setGroup() {
     const Obj = {
       userId: localStorage.getItem('userId')
@@ -210,16 +205,13 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
   }
 
   buildmainForm(): void {
-
-
     let getPolicyDetail = localStorage.getItem('PoliciesDetails') ? JSON.parse(localStorage.getItem('PoliciesDetails'))["policyDetails"] : false;
-
     if (getPolicyDetail) {
       const Policy = getPolicyDetail[0];
       this.primary_id = Policy.primary_id;
       this.policy_number = Policy.policy_number;
       this.status = Policy.status;
-      this.election = Policy.election;
+      this.elections = Policy.election?Policy.election.toString():'';
       this.premium = Policy.premium;
       this.pay_frequency = Policy.pay_frequency;
       this.payment_mode = Policy.payment_mode;
@@ -228,7 +220,6 @@ export class MainComponent implements OnChanges,OnInit, OnDestroy {
       this.end_date = new Date(Policy.end_date);
       this.notes = Policy.notes;
     }
-    // console.log(this.savePolicies.addToPolicy(this.mainForm.value));
   }
 
 

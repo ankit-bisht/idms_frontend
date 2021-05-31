@@ -33,7 +33,7 @@
   <div class="card">
     <div class="card-title" style="padding: 10px 0px 0px 10px;">
       <span *ngIf="disable">
-        <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit && policyType=='I'||policyType=='|'">
+        <button class="btn btn-primary btn-sm" (click)="enable()" *ngIf="userEdit">
           <i class="mdi mdi-pencil"></i>Edit</button>
       </span>
       <button class="btn btn-primary btn-sm" (click)="openDelete()" *ngIf="userEdit"><i

@@ -93,7 +93,7 @@
               <!-- {{getIndividual(group.get('member_id').value)}} -->
               &nbsp;
 
-              <ng-select appendTo="body" placeholder="Select Tier" (change)="setDependants(group,$event)"
+              <ng-select appendTo="body" placeholder="Select Tier" (change)="setDependants(group,$event,i)"
                 formControlName="tier">
                 <ng-option *ngFor="let item of election |keyvalue" [value]=item.key>
                   {{item.value}}
@@ -107,9 +107,9 @@
               {{getDependents(group.get('dependent').value)}}
               &nbsp;
 
-              <ng-select appendTo="body" multiple="true" placeholder="Select Dependants"
-                (change)="setDependantsValue(group,$event)" bindLabel="first_name" formControlName="dependent">
-                <ng-option *ngFor="let item of dependants" [value]=item.client_id>
+              <ng-select appendTo="body" [closeOnSelect]="false"  multiple="true" placeholder="Select Dependants"
+                (change)="setDependantsValue(group,$event,i)" bindLabel="first_name" formControlName="dependent">
+                <ng-option *ngFor="let item of dependants[i]" [value]=item.client_id>
                   {{item.first_name}} {{item.last_name?item.last_name:''}}
                 </ng-option>
               </ng-select>
@@ -194,10 +194,10 @@
             {{getTire(group.get('tier').value)}}
           </td>
           <td>
-            {{getDependents(group.get('dependent').value)}}
+            <!-- {{getDependents(group.get('dependent').value)}} -->
             <div class="text-center">
               <mat-list role="list">
-                <mat-list-item role="listitem" *ngFor="let item of arrayRelations">
+                <mat-list-item role="listitem" *ngFor="let item of arrayRelations[i]">
                   {{item.first_name}} {{item.last_name?item.last_name:''}}
                 </mat-list-item>
               </mat-list>
