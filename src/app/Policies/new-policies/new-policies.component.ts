@@ -234,6 +234,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    console.log(this.savePolicies.addToPolicy(this.policyForm.value));
     this.spinner.hide();
     var obj: any = this.savePolicies.getPolicy();
     obj.userId = localStorage.getItem('userId');
@@ -244,9 +245,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
         obj.policyMembersDetails = member[0]?member[0].member_id:[];
       }
     } else {
+      let member = obj.policyMembersDetails;
+      obj.policyMembersDetails = member[0]?member[0].member_id:[];
+      // delete obj.policyMembersDetails;
       delete obj.election;
-      delete obj.policyMembersDetails;
     }
+    delete obj.policyMembers;
 
     if (localStorage.getItem('PoliciesDetails')) {
 
@@ -300,7 +304,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
   }
 
   tabClick(event) {
-
+    console.log(this.savePolicies.addToPolicy(this.policyForm.value));
     const policyData = this.savePolicies.getPolicy();
 
     if (event.index == 2) {
