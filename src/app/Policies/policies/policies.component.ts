@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from "../../services/user";
+import { IndividualDetailServiceService } from 'src/app/individual-detail-service.service';
 
 @Component({
   selector: 'app-policies',
@@ -21,7 +22,7 @@ export class PoliciesComponent implements OnInit {
   constants: any = [];
   carrier:any=[];
 
-  constructor(private spinner: NgxSpinnerService,private api: ApiService, public Router: Router) {
+  constructor(private savePolicies: IndividualDetailServiceService,private spinner: NgxSpinnerService,private api: ApiService, public Router: Router) {
   }
 
   ngOnInit() {
@@ -83,6 +84,29 @@ export class PoliciesComponent implements OnInit {
       if (data.responseCode === 200) {
         this.spinner.hide();
         localStorage.setItem('PoliciesDetails', JSON.stringify(data.result));
+
+        if (data.result['policyDetails'][0]['product_class'] == 'I' || data.result['policyDetails'][0]['product_class'] == '|' && data.result['policyDetails'][0]['primary_id']) {
+          const Obj = {
+            userId: localStorage.getItem('userId'),
+            clientId: data.result['policyDetails'][0]['primary_id']
+          }
+          this.api.getClientRelationships(Obj).subscribe((data: any) => {
+            if (data.responseCode === 200) {
+              console.log(this.savePolicies.addToPolicy({ "policyMembers": data.result }));
+            }
+          });
+        } else {
+          const Obj = {
+            userId: localStorage.getItem('userId'),
+            group_id: data.result['policyDetails'][0]['primary_id']
+          }
+          this.api.getGroupAllDetails(Obj).subscribe((data: any) => {
+            if (data.responseCode === 200) {
+              console.log(this.savePolicies.addToPolicy({ "policyMembers": data.result.groupMembersDetails }));
+            }
+          });
+        }
+
         if (data.result.policyDetails[0].edit == 2) {
           var edit = 1
         } else {

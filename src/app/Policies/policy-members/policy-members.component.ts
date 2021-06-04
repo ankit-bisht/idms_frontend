@@ -86,6 +86,7 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   ngAfterOnInit() {
+    this.relations = this.savePolicy.getPolicy()['policyMembers'];
     this.control = this.memberForm.get('policyMembersDetails') as FormArray;
   }
 
@@ -224,16 +225,13 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   getIndividual(val) {
-    console.log(val);
-
     for (const iterator of val) {
       let client = this.savePolicy.getPolicy()['policyMembers'].find(r => r.client_id == iterator);
       this.arrayRelations.push(client);
     }
-    this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
     console.log(this.arrayRelations);
 
-    // return !!client ? `${client.first_name} ${client.last_name}` : '';
+    // this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
   }
 
   filterIndividualsArray(id) {
