@@ -29,7 +29,7 @@
         </ngx-spinner>
 
         <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search..." autocomplete="off">
         </mat-form-field>
 
         <mat-table #table [dataSource]="dataSource">
@@ -37,7 +37,7 @@
           <ng-container matColumnDef="carrier_id">
             <mat-header-cell *matHeaderCellDef> Carrier Name</mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
-              {{getCarrier(element.carrier_id)}}</mat-cell>
+              {{element.carrier_id}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="first_name">

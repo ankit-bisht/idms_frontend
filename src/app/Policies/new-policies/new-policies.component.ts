@@ -228,14 +228,18 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     }
   }
 
-  validate(finalIndividual) {
-    var finalIndividual: any = this.savePolicies.getPolicy();
-    this.submit();
-  }
+  validate() {
+    var data: any = this.savePolicies.getPolicy();
+    console.log(data);
 
-  submit() {
-    console.log(this.savePolicies.addToPolicy(this.policyForm.value));
-    this.spinner.hide();
+    if (!('policy_number' in data) || !('status' in data)
+      || data.application_date == undefined || data.effective_date == undefined
+      || data.end_date == undefined || !('primary_id' in data)) {
+      this.errorModal = true;
+      this.modalMessage = 'Please fill all the mandatory details!';
+      return this.modalRef = this.modalService.show(this.templateRef);
+    }
+
     var obj: any = this.savePolicies.getPolicy();
     obj.userId = localStorage.getItem('userId');
 
@@ -311,6 +315,11 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  submit() {
+    console.log(this.savePolicies.addToPolicy(this.policyForm.value));
+    this.validate();
   }
 
   tabClick(event) {

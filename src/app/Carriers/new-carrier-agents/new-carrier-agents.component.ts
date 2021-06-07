@@ -68,9 +68,8 @@ export class NewCarrierAgentsComponent implements OnChanges {
       // this.addRow();
     }
     this.dataSource = new MatTableDataSource(this.filteredClients);
-    // this.dataSource.paginator = this.paginator;
     this.length = this.filteredClients.length;
-
+    console.log(this.filteredClients);
   }
 
   applyFilter(filterValue: string) {
@@ -198,7 +197,7 @@ export class NewCarrierAgentsComponent implements OnChanges {
     this.filteredClients = this.clients.filter(c => this.filterArr.indexOf(c.product_id) == -1);
     this.filterArr = [...new Set(this.filterArr)];
     this.dataSource = new MatTableDataSource(this.filteredClients);
-    // this.dataSource.paginator = this.paginator;
+    console.log(this.filteredClients);
     this.length = this.filteredClients.length;
   }
 }

@@ -70,22 +70,6 @@
             <div class="text-center">
               {{getIndividual(group.get('member_id').value)}}
               &nbsp;
-              <!-- <div class="text-center">
-                <mat-list role="list">
-                  <mat-list-item role="listitem" *ngFor="let item of arrayRelations">
-                    {{item.first_name}} {{item.last_name?item.last_name:''}}
-                    {{item.relationship?'(':''}}{{item.relationship?item.relationship:''}}{{item.relationship?')':''}}
-                  </mat-list-item>
-                </mat-list>
-              </div> -->
-              <!-- <ng-select appendTo="body" [] multiple="true" placeholder="Select Members" (change)="setValue(group,$event)"
-                bindLabel="first_name" formControlName="member_id">
-                <ng-option *ngFor="let item of relations" [value]=item.client_id>
-                  {{item.first_name}} {{item.last_name?item.last_name:''}}
-                  {{item.relationship?'(':''}}{{item.relationship?item.relationship:''}}{{item.relationship?')':''}}
-                </ng-option>
-              </ng-select> -->
-
             </div>
           </td>
           <td style="min-width: 150px;">
@@ -111,6 +95,7 @@
                 (change)="setDependantsValue(group,$event,i)" bindLabel="first_name" formControlName="dependent">
                 <ng-option *ngFor="let item of dependants[i]" [value]=item.client_id>
                   {{item.first_name}} {{item.last_name?item.last_name:''}}
+                  {{item.relationship?'(':''}}{{item.relationship?item.relationship:''}}{{item.relationship?')':''}}
                 </ng-option>
               </ng-select>
 
@@ -164,19 +149,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <td>
-             <mat-form-field appearance="outline">
-              <mat-label>Relations</mat-label>
-              <mat-select formControlName="relations" multiple (selectionChange)="setRelValue(group,$event)">
-                <mat-option *ngFor="let item of relations" [value]="item.client_id">{{item.first_name}} ({{item.relationship}})</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-list role="list">
-              <mat-list-item role="listitem" *ngFor="let item of relations">{{item.first_name}} ({{item.relationship}})
-              </mat-list-item>
-            </mat-list>
-          </td> -->
           <td>
             <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
             <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
@@ -194,11 +166,11 @@
             {{getTire(group.get('tier').value)}}
           </td>
           <td>
-            <!-- {{getDependents(group.get('dependent').value)}} -->
             <div class="text-center">
               <mat-list role="list">
                 <mat-list-item role="listitem" *ngFor="let item of arrayRelations[i]">
                   {{item.first_name}} {{item.last_name?item.last_name:''}}
+                  {{item.relationship?'(':''}}{{item.relationship?item.relationship:''}}{{item.relationship?')':''}}
                 </mat-list-item>
               </mat-list>
             </div>

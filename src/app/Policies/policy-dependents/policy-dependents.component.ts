@@ -137,14 +137,6 @@ export class PolicyDependentsComponent implements OnChanges {
 
     Details.map((members, key) => {
       let array = [];
-      // members.dependent = members.dependent.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
-      control.push(this.setForm(members));
-      for (const iterator of members.dependent) {
-        let client = this.clients.find(r => r.client_id == iterator);
-        array.push(client);
-        array = array.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
-        this.arrayRelations[key] = array;
-      }
 
       const Obj = {
         clientId: members.member_id,
@@ -153,8 +145,21 @@ export class PolicyDependentsComponent implements OnChanges {
       this.api.getClientTierRelationships(Obj).subscribe((data: any) => {
         if (data.responseCode === 200) {
           this.dependants[key] = data.result;
+
+          control.push(this.setForm(members));
+          for (const iterator of members.dependent) {
+            let client = data.result.find(r => r.client_id == iterator);
+            array.push(client);
+            array = array.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+            this.arrayRelations[key] = array;
+          }
+
         }
       });
+
+      // members.dependent = members.dependent.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
+
+
     });
     this.setMembers('edit');
 
@@ -243,10 +248,13 @@ export class PolicyDependentsComponent implements OnChanges {
     this.submitForm();
     let array = [];
     for (const iterator of group.get('dependent').value) {
-      let client = this.clients.find(r => r.client_id == iterator);
+      let client = this.dependants[i].find(r => r.client_id == iterator);
       array.push(client);
     }
     this.arrayRelations[i] = array;
+
+    console.log(this.dependants);
+
     // this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
   }
 

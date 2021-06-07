@@ -229,7 +229,7 @@ export class PolicyMembersComponent implements OnChanges {
       let client = this.savePolicy.getPolicy()['policyMembers'].find(r => r.client_id == iterator);
       this.arrayRelations.push(client);
     }
-    console.log(this.arrayRelations);
+    // console.log(this.arrayRelations);
 
     // this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
   }

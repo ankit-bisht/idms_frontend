@@ -31,9 +31,7 @@ export class PoliciesComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 
@@ -62,6 +60,10 @@ export class PoliciesComponent implements OnInit {
         }, 1000);
         let users: User[] = [data.result];
         this.data = users[0];
+        this.data.map((ele,key)=>{
+          this.data[key].carrier_id = this.getCarrier(ele.carrier_id);
+        })
+
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.paginator = this.paginator;
         this.length = data.result.length;
