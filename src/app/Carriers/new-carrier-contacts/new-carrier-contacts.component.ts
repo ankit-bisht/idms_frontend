@@ -25,7 +25,7 @@ export class NewCarrierContactsComponent implements OnChanges {
   modalMessage: any;
   modalRef: BsModalRef;
   touchedRows: any;
-  address: any;
+  address = [];
   filteredClients: any;
   filterArr = [];
   display = "none";
@@ -65,9 +65,9 @@ export class NewCarrierContactsComponent implements OnChanges {
 
     if (localStorage.getItem('CarrierDetails')) {
       const Details = this.saveGroup.getCarrier()['carrierAddressDetails'];
-      if(Details){
+      if (Details) {
         this.filterIndividualsArray(Details.map(d => d.address_id));
-      }else{
+      } else {
         this.filterIndividualsArray(0);
       }
     } else {
@@ -76,7 +76,7 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   ngAfterOnInit() {
-    this.control = this.contactForm.get('carrierContactDetails') as FormArray;
+    // this.control = this.contactForm.get('carrierContactDetails') as FormArray;
   }
 
   initiateForm(): FormGroup {
@@ -109,7 +109,7 @@ export class NewCarrierContactsComponent implements OnChanges {
   setDetails() {
     const control = this.contactForm.get('carrierContactDetails') as FormArray;
     const Details = JSON.parse(localStorage.getItem('CarrierDetails')).carrierContactDetails;
-    this.address = this.saveGroup.getCarrier()['carrierAddressDetails'];
+    this.address = this.saveGroup.getCarrier()['carrierAddressDetails'] ? this.saveGroup.getCarrier()['carrierAddressDetails'] : [];
 
     Details.map(element => {
       control.push(this.setForm(element));
@@ -138,7 +138,6 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   disableField(index) {
-
     const Form = this.contactForm.controls.carrierContactDetails['controls'][index].controls;
     if (Form.contact_type.value == '1' || Form.contact_type.value == '2') {
       Form.phone.disable();
@@ -150,8 +149,10 @@ export class NewCarrierContactsComponent implements OnChanges {
   }
 
   getIndividual(val) {
-    let address = this.address.find(r => r.address_id == val);
-    return !!address ? `${address.city} ${address.state}` : '';
+    if (this.address) {
+      let address = this.address.find(r => r.address_id == val);
+      return !!address ? `${address.city} ${address.state}` : '';
+    }
   }
 
   deleteRow(index: number) {
@@ -162,10 +163,13 @@ export class NewCarrierContactsComponent implements OnChanges {
 
   editRow(group: FormGroup) {
     group.get('isEditable').setValue(true);
+    this.address = this.saveGroup.getCarrier()['carrierAddressDetails'];
+    this.filterIndividualsArray(0);
   }
 
   setValue(group: FormGroup, address_id) {
     group.get('address_id').setValue(address_id);
+    console.log(this.saveGroup.addToCarrier(this.contactForm.value));
   }
 
   doneRow(group: FormGroup) {
@@ -193,8 +197,6 @@ export class NewCarrierContactsComponent implements OnChanges {
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
     var contactsDetails = this.contactForm.value.carrierContactDetails;
     contactsDetails.map((element, key) => {
-      console.log(element);
-
       delete element.isEditable;
       const id = key + 1;
       element.address_id = element.address_id ? element.address_id.toString() : '';

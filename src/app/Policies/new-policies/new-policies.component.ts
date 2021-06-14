@@ -41,8 +41,6 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.updateEditStatus(1);
-    localStorage.removeItem("PoliciesDetails");
-    localStorage.removeItem("policyType");
   }
 
   ngOnInit() {
@@ -94,6 +92,10 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       }
       this.api.updatePolicyEditStatus(obj).subscribe((data: any) => {
         if (data.responseCode === 200) {
+          if (status == 1) {
+            localStorage.removeItem("PoliciesDetails");
+            localStorage.removeItem("policyType");
+          }
           this.spinner.hide();
         } else {
           this.spinner.hide();
@@ -165,6 +167,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       if (data.responseCode === 200) {
         this.spinner.hide();
         this.clientType = data.result;
+      }
+    });
+    this.api.getAgents(obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        localStorage.setItem('Agents',JSON.stringify(data.result));
       }
     });
   }

@@ -35,6 +35,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
   pay_frequency: any;
   modalRef: BsModalRef;
   notes: any;
+  agent_of_record:any;
   elections: string;
   constants: any;
   clientType: any;
@@ -46,6 +47,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
   invalid: boolean = false;
   policytype: any;
   options: any = [];
+  agents:any=[];
   public primary = [];
   myControl = new FormControl();
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
@@ -82,6 +84,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
         if (val == 'I' || val == '|') {
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
+            "agent_of_record": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl(''),
             "election": new FormControl(''),
@@ -99,6 +102,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
           this.setGroup();
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
+            "agent_of_record": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl(''),
             "election": new FormControl(''),
@@ -127,6 +131,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
         if (this.policytype == 'I' || this.policytype == "|") {
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
+            "agent_of_record": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl('', [Validators.required]),
             "election": new FormControl(''),
@@ -144,6 +149,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
           this.setGroup();
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
+            "agent_of_record": new FormControl(null, [Validators.required]),
             "policy_number": new FormControl('', [Validators.required]),
             "status": new FormControl('', [Validators.required]),
             "election": new FormControl(''),
@@ -184,6 +190,11 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
     this.onSubmit();
   }
 
+  setAgentVal(value){
+    this.mainForm.get('agent_of_record').setValue(value);
+    this.onSubmit();
+  }
+
   setGroup() {
     const Obj = {
       userId: localStorage.getItem('userId')
@@ -201,7 +212,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    localStorage.removeItem("PoliciesDetails");
+    // localStorage.removeItem("PoliciesDetails");
   }
 
   buildmainForm(): void {
@@ -218,6 +229,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
       this.application_date = new Date(Policy.application_date);
       this.effective_date = new Date(Policy.effective_date);
       this.end_date = new Date(Policy.end_date);
+      this.agent_of_record = Policy.agent_of_record;
       this.notes = Policy.notes;
     }
   }
@@ -228,6 +240,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
    */
   getConstants() {
     this.constants = JSON.parse(localStorage.getItem("policy_constants"));
+    this.agents = JSON.parse(localStorage.getItem("Agents"));
   }
 
   format = (input) => {

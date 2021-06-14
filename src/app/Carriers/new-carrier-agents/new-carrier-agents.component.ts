@@ -197,7 +197,7 @@ export class NewCarrierAgentsComponent implements OnChanges {
     this.filteredClients = this.clients.filter(c => this.filterArr.indexOf(c.product_id) == -1);
     this.filterArr = [...new Set(this.filterArr)];
     this.dataSource = new MatTableDataSource(this.filteredClients);
-    console.log(this.filteredClients);
+    // console.log(this.filteredClients);
     this.length = this.filteredClients.length;
   }
 }

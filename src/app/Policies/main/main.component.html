@@ -56,7 +56,7 @@
         <div class="row mt-3">
           <div class="col-md-6">
             <ng-select #MyNgSelect [(ngModel)]="primary_id" (change)="setPrimaryVal($event)"
-              bindLabel="first_name"  bindLabel="name" placeholder="Primary" [clearable]="false"
+              bindLabel="first_name"  placeholder="Primary" [clearable]="false"
               appendTo="body" [searchable]="true" formControlName="primary_id">
               <ng-option *ngFor="let item of primary" [value]=item.client_id?item.client_id:item.group_id>
                 {{item.first_name?item.first_name:item.group_name}} {{item.last_name?item.last_name:''}}
@@ -78,7 +78,7 @@
           </div>
         </div>
         <div class="row mt-3">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <mat-form-field appearance="outline">
               <mat-label>Status</mat-label>
               <mat-select formControlName="status" (selectionChange)="onSubmit()" [(ngModel)]="status" required>
@@ -92,7 +92,18 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-6" *ngIf="policytype == 'I'||policytype=='|'">
+          <div class="col-md-4">
+
+            <ng-select #MyNgSelect [(ngModel)]="agent_of_record" (change)="setAgentVal($event)"
+              bindLabel="first_name"  placeholder="Agent" [clearable]="false"
+              appendTo="body" [searchable]="true" formControlName="agent_of_record">
+              <ng-option *ngFor="let item of agents" [value]=item.agent_id>
+                {{item.first_name?item.first_name:''}} {{item.last_name?item.last_name:''}}
+              </ng-option>
+            </ng-select>
+
+          </div>
+          <div class="col-md-4" *ngIf="policytype == 'I'||policytype=='|'">
             <mat-form-field appearance="outline">
               <mat-label>Election</mat-label>
               <mat-select formControlName="election" (selectionChange)="onSubmit()" [(ngModel)]="elections">

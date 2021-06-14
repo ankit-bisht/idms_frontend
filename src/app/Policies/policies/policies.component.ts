@@ -69,6 +69,13 @@ export class PoliciesComponent implements OnInit {
         this.length = data.result.length;
       }
     });
+
+    this.api.getAgents(obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        localStorage.setItem('Agents',JSON.stringify(data.result));
+      }
+    });
   }
 
   newPolicies() {
