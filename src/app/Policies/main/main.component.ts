@@ -35,7 +35,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
   pay_frequency: any;
   modalRef: BsModalRef;
   notes: any;
-  agent_of_record:any;
+  agent_of_record: any;
   elections: string;
   constants: any;
   clientType: any;
@@ -47,7 +47,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
   invalid: boolean = false;
   policytype: any;
   options: any = [];
-  agents:any=[];
+  agents: any = [];
   public primary = [];
   myControl = new FormControl();
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
@@ -190,7 +190,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
     this.onSubmit();
   }
 
-  setAgentVal(value){
+  setAgentVal(value) {
     this.mainForm.get('agent_of_record').setValue(value);
     this.onSubmit();
   }
@@ -222,7 +222,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
       this.primary_id = Policy.primary_id;
       this.policy_number = Policy.policy_number;
       this.status = Policy.status;
-      this.elections = Policy.election?Policy.election.toString():'';
+      this.elections = Policy.election ? Policy.election.toString() : '';
       this.premium = Policy.premium;
       this.pay_frequency = Policy.pay_frequency;
       this.payment_mode = Policy.payment_mode;
@@ -261,5 +261,8 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
       this.mainForm.value.end_date = moment(this.mainForm.value.end_date).format('MM/DD/YYYY');
       console.log(this.savePolicies.addToPolicy(this.mainForm.value));
     }
+    this.mainForm.value.application_date = moment(this.mainForm.value.application_date).format('MM/DD/YYYY');
+    this.mainForm.value.effective_date = moment(this.mainForm.value.effective_date).format('MM/DD/YYYY');
+    this.mainForm.value.end_date = moment(this.mainForm.value.end_date).format('MM/DD/YYYY');
   }
 }
