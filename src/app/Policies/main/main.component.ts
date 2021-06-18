@@ -252,7 +252,6 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
   };
 
   onSubmit() {
-    console.log(this.savePolicies.addToPolicy(this.mainForm.value));
 
     if (this.mainForm.valid) {
       this.mainForm.value.userId = localStorage.getItem('userId');
@@ -264,5 +263,6 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
     this.mainForm.value.application_date = moment(this.mainForm.value.application_date).format('MM/DD/YYYY');
     this.mainForm.value.effective_date = moment(this.mainForm.value.effective_date).format('MM/DD/YYYY');
     this.mainForm.value.end_date = moment(this.mainForm.value.end_date).format('MM/DD/YYYY');
+    console.log(this.savePolicies.addToPolicy(this.mainForm.value));
   }
 }

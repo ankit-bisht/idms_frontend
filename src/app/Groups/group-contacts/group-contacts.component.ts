@@ -25,7 +25,7 @@ export class GroupContactsComponent implements OnChanges {
   modalMessage: any;
   modalRef: BsModalRef;
   touchedRows: any;
-  address: any;
+  address: any=[];
   filteredClients: any;
   filterArr = [];
   display = "none";
@@ -98,7 +98,7 @@ export class GroupContactsComponent implements OnChanges {
   addRow() {
     const control = this.contactForm.get('groupContactDetails') as FormArray;
     control.push(this.initiateForm());
-    this.address = this.saveGroup.getGroup()['groupAddressDetails'];
+    this.address = this.saveGroup.getGroup()['groupAddressDetails']?this.saveGroup.getGroup()['groupAddressDetails']:[];
     console.log(this.address);
 
     this.filterIndividualsArray(0);
@@ -149,7 +149,7 @@ export class GroupContactsComponent implements OnChanges {
   }
 
   getIndividual(val) {
-    let address = this.address.find(r => r.address_id == val);
+    let address = this.address.length > 0?this.address.find(r => r.address_id == val):'';
     return !!address ? `${address.city} ${address.state}` : '';
   }
 
