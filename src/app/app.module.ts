@@ -23,7 +23,7 @@ import { PoliciesComponent } from './Policies/policies/policies.component';
 import { AgentsComponent } from './Agents/agents/agents.component';
 import { CarriersComponent } from './Carriers/carriers/carriers.component';
 import { ReportsComponent } from './reports/reports.component';
-import { CommisionComponent } from './commision/commision.component';
+import { CommisionComponent } from './Policies/commision/commision.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -69,6 +69,7 @@ import { PolicyMembersComponent } from './Policies/policy-members/policy-members
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PolicyDependentsComponent } from './Policies/policy-dependents/policy-dependents.component';
+import { NewCarrierCommissionComponent } from './Carriers/new-carrier-commission/new-carrier-commission.component';
 
 export const DateFormat = {
   parse: {
@@ -123,6 +124,7 @@ export const DateFormat = {
     MainComponent,
     PolicyMembersComponent,
     PolicyDependentsComponent,
+    NewCarrierCommissionComponent,
   ],
   imports: [
     ModalModule.forRoot(),

@@ -24,6 +24,7 @@ export class NewCarriersComponent implements OnInit {
   modalMessage: any;
   carrierName: any;
   website: any;
+  commission:any;
   deleteClient: any;
   userEdit: Boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
@@ -44,7 +45,7 @@ export class NewCarriersComponent implements OnInit {
     this.buildGroupForm();
   }
 
-  setProduct(){
+  setProduct() {
     this.spinner.show();
     const Obj = {
       userId: localStorage.getItem('userId'),
@@ -61,7 +62,8 @@ export class NewCarriersComponent implements OnInit {
 
     this.groupForm = new FormGroup({
       "carrierName": new FormControl('', [Validators.required]),
-      "website": new FormControl('',),
+      "website": new FormControl(''),
+      "commission": new FormControl('')
     });
 
     let getClientDetail = JSON.parse(localStorage.getItem('CarrierDetails'));
@@ -72,6 +74,7 @@ export class NewCarriersComponent implements OnInit {
       this.disable = true;
       this.carrierName = Client.carrier_name;
       this.website = Client.website;
+      this.commission = Client.commission;
     }
   }
 

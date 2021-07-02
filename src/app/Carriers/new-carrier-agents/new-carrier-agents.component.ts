@@ -69,7 +69,6 @@ export class NewCarrierAgentsComponent implements OnChanges {
     }
     this.dataSource = new MatTableDataSource(this.filteredClients);
     this.length = this.filteredClients.length;
-    console.log(this.filteredClients);
   }
 
   applyFilter(filterValue: string) {

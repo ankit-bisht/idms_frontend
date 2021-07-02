@@ -4,8 +4,9 @@
   ::ng-deep.mat-tab-label-active {
     min-width: 97px !important;
   }
-  mat-form-field-label-wrapper{
-    font-weight:500 ;
+
+  mat-form-field-label-wrapper {
+    font-weight: 500;
   }
 
   mat-form-field {
@@ -22,7 +23,8 @@
 
   tbody.text-center {
     text-align: left !important;
-}
+  }
+
   ::ng-deep .tabs .mat-tab-list .mat-tab-labels {
     font-weight: 100;
   }
@@ -55,7 +57,8 @@
                         <mat-label>carrier Name</mat-label>
                         <input matInput placeholder="carrier Name" (keyup)="onSubmit()" formControlName="carrierName"
                           maxlength="30" [(ngModel)]="carrierName" required>
-                        <mat-error *ngIf="groupForm.get('carrierName').invalid && (groupForm.get('carrierName').touched)">
+                        <mat-error
+                          *ngIf="groupForm.get('carrierName').invalid && (groupForm.get('carrierName').touched)">
                           <span *ngIf="groupForm.get('carrierName').errors.required">
                             carrier Name is Required.
                           </span>
@@ -65,8 +68,15 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="outline">
                         <mat-label>Website</mat-label>
-                        <input matInput placeholder="website" (keyup)="onSubmit()" formControlName="website" [(ngModel)]="website"
-                          maxlength="100">
+                        <input matInput placeholder="website" (keyup)="onSubmit()" formControlName="website"
+                          [(ngModel)]="website" maxlength="100">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Commission</mat-label>
+                        <input matInput placeholder="website" (keyup)="onSubmit()" formControlName="commission"
+                          [(ngModel)]="commission" maxlength="100">
                       </mat-form-field>
                     </div>
                   </div>
@@ -81,6 +91,9 @@
         </mat-tab>
         <mat-tab label="Products">
           <app-new-carrier-agents [disable]="disable"></app-new-carrier-agents>
+        </mat-tab>
+        <mat-tab label="Commission">
+          <app-new-carrier-commission [disable]="disable"></app-new-carrier-commission>
         </mat-tab>
       </mat-tab-group>
       <br />

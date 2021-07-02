@@ -8,9 +8,10 @@
   mat-form-field {
     width: 100%;
   }
+
   tbody.text-center {
     text-align: left !important;
-}
+  }
 
   .grid-margin {
     margin-bottom: 0rem;
@@ -102,31 +103,6 @@
                         <input matInput placeholder="SSN" (keyup)="onSubmit()" formControlName="ssn" [(ngModel)]="ssn"
                           appSSNMask>
                       </mat-form-field>
-                      <!-- <div class="form-group row" style="font-size: 12px">
-                        <label class="col-sm-3 col-form-label">
-                          <h6>Gender *</h6>
-                        </label>
-                        <div class="col-sm-4">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input type="radio" (keyup)="onSubmit()" class="form-check-input" id="membershipRadios1"
-                                formControlName="sex" value="M" [(ngModel)]="sex">
-                              Male
-                              <i class="input-helper"></i>
-                            </label>
-                          </div>
-                        </div>
-                        <div class="col-sm-5">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input type="radio" (keyup)="onSubmit()" class="form-check-input" id="membershipRadios2"
-                                formControlName="sex" value="F" [(ngModel)]="sex">
-                              Female
-                              <i class="input-helper"></i>
-                            </label>
-                          </div>
-                        </div>
-                      </div> -->
                     </div>
                     <div class="col-md-4">
                       <mat-form-field appearance="outline">

@@ -47,6 +47,18 @@ export class ApiService {
 
   }
 
+  getCommissionValue(obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getCommissionValue, obj, this.options);
+  }
+
+
   /**
  * @method deleteClient()
  * @desc update Status

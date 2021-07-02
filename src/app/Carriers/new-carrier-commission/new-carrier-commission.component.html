@@ -1,0 +1,132 @@
+<style>
+  ::ng-deep .mat-form-field-wrapper {
+    margin-top: -1.25em;
+  }
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  tbody.text-center {
+    text-align: left !important;
+  }
+</style>
+
+<div class="action-container" style="padding: 3%;">
+  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+    Row</button>
+</div>
+
+<form [formGroup]="commissionForm">
+  <table class="table table-bordered table-sm">
+    <thead class="text-nowrap text-center">
+      <th>
+        <h6>file</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Date</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Month</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Year</h6> <span dragableColumn> </span>
+      </th>
+      <th></th>
+    </thead>
+    <tbody class="text-center">
+      <ng-container formArrayName="carrierCommissionDetails"
+        *ngFor="let group of getFormControls.controls ; let i=index">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>File Upload</mat-label>
+              <ngx-mat-file-input #removableInput formControlName="file" (change)="uploadFile($event.target.files,i)">
+              </ngx-mat-file-input>
+              <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Date</mat-label>
+              <input matInput matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Month</mat-label>
+              <mat-select formControlName="month">
+                <mat-option [value]="1">January</mat-option>
+                <mat-option [value]="2">Feburary</mat-option>
+                <mat-option [value]="3">March</mat-option>
+                <mat-option [value]="4">April</mat-option>
+                <mat-option [value]="5">May</mat-option>
+                <mat-option [value]="6">June</mat-option>
+                <mat-option [value]="7">July</mat-option>
+                <mat-option [value]="8">Augest</mat-option>
+                <mat-option [value]="9">September</mat-option>
+                <mat-option [value]="10">October</mat-option>
+                <mat-option [value]="11">November</mat-option>
+                <mat-option [value]="12">December</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Year</mat-label>
+              <mat-select formControlName="year">
+                <mat-option *ngFor="let year of years" [value]="year">
+                  {{year}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+            <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+          </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value">
+          <td>
+            {{group.get('file').value?group.get('file').value:''}}
+          </td>
+          <td>
+            {{group.get('date').value? getDate(group.get('date').value) :''}}
+          </td>
+          <td>
+            {{group.get('month').value?months[group.get('month').value]:''}}
+          </td>
+          <td>
+            {{group.get('year').value?group.get('year').value:''}}
+          </td>
+          <td>
+            <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</form>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

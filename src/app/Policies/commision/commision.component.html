@@ -1,0 +1,97 @@
+<style>
+  ::ng-deep .mat-form-field-wrapper {
+    margin-top: -1.25em;
+  }
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  tbody.text-center {
+    text-align: left !important;
+  }
+</style>
+
+<div class="action-container" style="padding: 3%;">
+  <button mat-raised-button [disabled]="!disableButton" class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
+    Row</button>
+</div>
+
+<form [formGroup]="commissionForm">
+  <table class="table table-bordered table-sm">
+    <thead class="text-nowrap text-center">
+      <th>
+        <h6> Commission value</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6> Total Individuals</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6> Total Commission</h6> <span dragableColumn> </span>
+      </th>
+      <th></th>
+    </thead>
+    <tbody class="text-center">
+      <ng-container formArrayName="policyCommissionDetails"
+        *ngFor="let group of getFormControls.controls ; let i=index">
+        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Commission value</mat-label>
+              <input matInput placeholder="Commission value" (keyup)="onSubmit()" formControlName="commission_value">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Total Individuals</mat-label>
+              <input matInput placeholder="Total Individuals" (keyup)="onSubmit()" formControlName="indivduals">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Total Commission</mat-label>
+              <input matInput placeholder="Total Commission" (keyup)="onSubmit()" formControlName="total_commission">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+            <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+          </td>
+        </tr>
+        <tr *ngIf="!group.get('isEditable').value">
+          <td>
+            {{group.get('commission_value').value?group.get('commission_value').value:''}}
+          </td>
+          <td>
+            {{group.get('indivduals').value?group.get('indivduals').value:''}}
+          </td>
+          <td>
+            {{group.get('total_commission').value?group.get('total_commission').value:''}}
+          </td>
+          <td>
+            <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</form>
+
+<ng-template #template let-modal class="modal fade" id="exampleModal-2" aria-labelledby="exampleModalLabel-2">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel-2">Message</h5>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p> {{modalMessage}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modalRef.hide()">Ok</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+    </div>
+  </div>
+</ng-template>

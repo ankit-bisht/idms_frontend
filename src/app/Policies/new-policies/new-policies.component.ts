@@ -197,6 +197,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
         }
       }
     });
+    this.api.getCommissionValue(obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        localStorage.setItem('commissionValue', JSON.stringify(data.result[0]['commission']));
+
+      }
+    })
   }
 
   /**
