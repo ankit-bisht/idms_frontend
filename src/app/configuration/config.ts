@@ -45,6 +45,7 @@ export class Configuration {
     deletePolicy: this.baseUrl + "deletePolicy",
     getClientRelationships: this.baseUrl + "getClientRelationships",
     getClientTierRelationships : this.baseUrl + "getClientTierRelationships",
-    getCommissionValue: this.baseUrl + "getCommissionValue"
+    getCommissionValue: this.baseUrl + "getCommissionValue",
+    uploadCommissionFile:this.baseUrl+"uploadCommissionFile"
   }
 }

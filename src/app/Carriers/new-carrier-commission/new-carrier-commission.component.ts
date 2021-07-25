@@ -10,6 +10,7 @@ import { IndividualDetailServiceService } from '../../individual-detail-service.
 import { ApiService } from '../../services/api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-new-carrier-commission',
@@ -31,7 +32,7 @@ export class NewCarrierCommissionComponent implements OnInit {
   years: number[] = [];
   currentYear: number = new Date().getFullYear();
 
-  months = ["months","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  months = ["months", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
   @ViewChild(MatPaginator, { static: false }) set paginator(value: MatPaginator) {
@@ -43,7 +44,7 @@ export class NewCarrierCommissionComponent implements OnInit {
   dataSource: any;
   length: any = 0;
 
-  constructor(private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveGroup: IndividualDetailServiceService) { }
+  constructor(private fb: FormBuilder, private spinner: NgxSpinnerService, private modalService: BsModalService, private api: ApiService, private saveGroup: IndividualDetailServiceService) { }
 
   @Input() disable: boolean;
 
@@ -53,11 +54,11 @@ export class NewCarrierCommissionComponent implements OnInit {
     this.commissionForm = this.fb.group({
       carrierCommissionDetails: this.fb.array([])
     });
-    if (localStorage.getItem('CarrierDetails')) {
-      if (JSON.parse(localStorage.getItem('CarrierDetails')).carrierCommissionDetails.length >= 1) {
-        this.setDetails();
-      }
-    }
+    // if (localStorage.getItem('CarrierDetails')) {
+    //   if (JSON.parse(localStorage.getItem('CarrierDetails')).carrierCommissionDetails.length >= 1) {
+    //     this.setDetails();
+    //   }
+    // }
 
     if (disable.disable.currentValue) {
       this.commissionForm.disable();
@@ -74,7 +75,7 @@ export class NewCarrierCommissionComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.fb.group({
       'file': new FormControl('', [Validators.required]),
-      "date": new FormControl('', [Validators.required]),
+      "date": new FormControl({ disabled: true, value: new Date() }, [Validators.required]),
       "month": new FormControl('', [Validators.required]),
       "year": new FormControl('', [Validators.required]),
       isEditable: [true]
@@ -152,32 +153,49 @@ export class NewCarrierCommissionComponent implements OnInit {
     group.get('isEditable').setValue(false);
   }
 
+  saveFile(file, index) {
+    const File = file[0];
+    this.commissionForm.controls.carrierCommissionDetails['controls'][index].controls.file.value = File.name;
+  }
+
   uploadFile(file, index) {
+    let form = this.commissionForm.controls.carrierCommissionDetails['controls'][index].controls;
+    if (!form.month.value) {
+      this.modalMessage = 'Please fill month';
+      return this.modalRef = this.modalService.show(this.templateRef);
+    }
+    if (!form.year.value) {
+      this.modalMessage = "please fill year";
+      return this.modalRef = this.modalService.show(this.templateRef);
+    }
+
     const File = file[0];
     const formData = new FormData();
     formData.append('file', File, File.name);
-    this.commissionForm.controls.carrierCommissionDetails['controls'][index].controls.file.value = File.name;
+    formData.append('userId', localStorage.getItem('userId'));
+    formData.append('year', form.year.value);
+    formData.append('month', form.month.value);
+    if (localStorage.getItem('CarrierDetails'))
+      formData.append('carrier_id', JSON.parse(localStorage.getItem('CarrierDetails')).carrierBaseDetails[0].carrier_id);
 
-    // formData.append('userId', localStorage.getItem('userId'));
-    // this.spinner.show();
+    this.spinner.show();
 
-    // this.api.uploadAttachment(formData).subscribe((data: any) => {
-    //   if (data.responseCode === 200) {
-    //     this.spinner.hide();
-    //     const form = this.attachmentForm.get('clientAttachmentDetails') as FormArray;
-    //     form.controls[index].patchValue({
-    //       attachment_type: File.type,
-    //     });
+    this.api.uploadCommissionFile(formData).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        // const form = this.commissionForm.get('carrierCommissionDetails') as FormArray;
+        // form.controls[index].patchValue({
+        //   attachment_type: File.type,
+        // });
 
-    //     this.modalMessage = data.message;
-    //     return this.modalRef = this.modalService.show(this.templateRef);
-    //   } else {
-    //     this.spinner.hide();
-    //     this.modalMessage = data.error;
-    //     return this.modalRef = this.modalService.show(this.templateRef);
-    //   }
-    // });
-
+        this.modalMessage = data.message;
+        return this.modalRef = this.modalService.show(this.templateRef);
+      } else {
+        this.spinner.hide();
+        this.modalMessage = data.error;
+        return this.modalRef = this.modalService.show(this.templateRef);
+      }
+    });
     this.submitForm();
   }
 
@@ -207,6 +225,7 @@ export class NewCarrierCommissionComponent implements OnInit {
     var contactsDetails = this.commissionForm.value.carrierCommissionDetails;
     contactsDetails.map((element, key) => {
       delete element.isEditable;
+      element.date = new Date().toLocaleDateString();
       const id = key + 1;
     });
     console.log(this.saveGroup.addToCarrier(this.commissionForm.value));

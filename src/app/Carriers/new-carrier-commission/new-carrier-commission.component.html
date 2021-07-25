@@ -13,16 +13,12 @@
 </style>
 
 <div class="action-container" style="padding: 3%;">
-  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
-    Row</button>
+  <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()">Upload File</button>
 </div>
-
+<br/>
 <form [formGroup]="commissionForm">
   <table class="table table-bordered table-sm">
     <thead class="text-nowrap text-center">
-      <th>
-        <h6>file</h6> <span dragableColumn> </span>
-      </th>
       <th>
         <h6>Date</h6> <span dragableColumn> </span>
       </th>
@@ -32,6 +28,9 @@
       <th>
         <h6>Year</h6> <span dragableColumn> </span>
       </th>
+      <th>
+        <h6>file</h6> <span dragableColumn> </span>
+      </th>
       <th></th>
     </thead>
     <tbody class="text-center">
@@ -40,18 +39,8 @@
         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>File Upload</mat-label>
-              <ngx-mat-file-input #removableInput formControlName="file" (change)="uploadFile($event.target.files,i)">
-              </ngx-mat-file-input>
-              <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
-                <mat-icon>clear</mat-icon>
-              </button>
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>Date</mat-label>
-              <input matInput matInput [matDatepicker]="picker" formControlName="date">
+              <input matInput matInput (keyup)="submitForm()" [matDatepicker]="picker" formControlName="date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -59,7 +48,7 @@
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>Month</mat-label>
-              <mat-select formControlName="month">
+              <mat-select formControlName="month" (selectionChange)="submitForm()">
                 <mat-option [value]="1">January</mat-option>
                 <mat-option [value]="2">Feburary</mat-option>
                 <mat-option [value]="3">March</mat-option>
@@ -78,11 +67,21 @@
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>Year</mat-label>
-              <mat-select formControlName="year">
+              <mat-select formControlName="year" (selectionChange)="submitForm()">
                 <mat-option *ngFor="let year of years" [value]="year">
                   {{year}}
                 </mat-option>
               </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>File Upload</mat-label>
+              <ngx-mat-file-input #removableInput formControlName="file" (change)="uploadFile($event.target.files,i)">
+              </ngx-mat-file-input>
+              <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+                <mat-icon>clear</mat-icon>
+              </button>
             </mat-form-field>
           </td>
           <td>
@@ -92,9 +91,6 @@
         </tr>
         <tr *ngIf="!group.get('isEditable').value">
           <td>
-            {{group.get('file').value?group.get('file').value:''}}
-          </td>
-          <td>
             {{group.get('date').value? getDate(group.get('date').value) :''}}
           </td>
           <td>
@@ -102,6 +98,9 @@
           </td>
           <td>
             {{group.get('year').value?group.get('year').value:''}}
+          </td>
+          <td>
+            {{group.get('file').value? (!group.get('file').value._fileNames?group.get('file').value:group.get('file').value._fileNames):''}}
           </td>
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

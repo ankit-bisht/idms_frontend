@@ -27,6 +27,7 @@ export class NewCarriersComponent implements OnInit {
   commission:any;
   deleteClient: any;
   userEdit: Boolean = false;
+  showCommission:Boolean=false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
   constructor(private activatedRoute: ActivatedRoute, private modalService: BsModalService, private saveCarrier: IndividualDetailServiceService, private spinner: NgxSpinnerService, private fb: FormBuilder, private api: ApiService, public Router: Router) {
@@ -69,6 +70,7 @@ export class NewCarriersComponent implements OnInit {
     let getClientDetail = JSON.parse(localStorage.getItem('CarrierDetails'));
 
     if (getClientDetail) {
+      this.showCommission = true;
       const Client = getClientDetail.carrierBaseDetails[0];
       this.groupForm.disable();
       this.disable = true;

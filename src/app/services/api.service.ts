@@ -58,6 +58,15 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.getCommissionValue, obj, this.options);
   }
 
+  uploadCommissionFile(obj){
+    const headers = new HttpHeaders({
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.uploadCommissionFile, obj, this.options);
+  }
 
   /**
  * @method deleteClient()
