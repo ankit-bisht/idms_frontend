@@ -52,13 +52,13 @@ export class NewCarrierCommissionComponent implements OnInit {
     this.getConstants();
     this.touchedRows = [];
     this.commissionForm = this.fb.group({
-      carrierCommissionDetails: this.fb.array([])
+      commissionFilesDetails: this.fb.array([])
     });
-    // if (localStorage.getItem('CarrierDetails')) {
-    //   if (JSON.parse(localStorage.getItem('CarrierDetails')).carrierCommissionDetails.length >= 1) {
-    //     this.setDetails();
-    //   }
-    // }
+    if (localStorage.getItem('CarrierDetails')) {
+      if (JSON.parse(localStorage.getItem('CarrierDetails')).commissionFilesDetails.length >= 1) {
+        this.setDetails();
+      }
+    }
 
     if (disable.disable.currentValue) {
       this.commissionForm.disable();
@@ -90,18 +90,18 @@ export class NewCarrierCommissionComponent implements OnInit {
   }
 
   addRow() {
-    const control = this.commissionForm.get('carrierCommissionDetails') as FormArray;
+    const control = this.commissionForm.get('commissionFilesDetails') as FormArray;
     control.push(this.initiateForm());
   }
 
   setDetails() {
-    const control = this.commissionForm.get('carrierCommissionDetails') as FormArray;
-    const Details = JSON.parse(localStorage.getItem('CarrierDetails')).carrierCommissionDetails;
+    const control = this.commissionForm.get('commissionFilesDetails') as FormArray;
+    const Details = JSON.parse(localStorage.getItem('CarrierDetails')).commissionFilesDetails;
 
     Details.map(element => {
       control.push(this.setForm(element));
     });
-    this.commissionForm.value.carrierCommissionDetails.map((element, key) => {
+    this.commissionForm.value.commissionFilesDetails.map((element, key) => {
       const id = key + 1;
       element.contact_id = id.toString();
       delete element.isEditable;
@@ -110,8 +110,10 @@ export class NewCarrierCommissionComponent implements OnInit {
   }
 
   setForm(element): FormGroup {
+    console.log(element);
+
     return this.fb.group({
-      file: [element.file],
+      file: [element.file_name],
       date: [element.date],
       month: [element.month],
       year: [element.year],
@@ -120,7 +122,7 @@ export class NewCarrierCommissionComponent implements OnInit {
   }
 
   disableField(index) {
-    const Form = this.commissionForm.controls.carrierCommissionDetails['controls'][index].controls;
+    const Form = this.commissionForm.controls.commissionFilesDetails['controls'][index].controls;
     if (Form.contact_type.value == '1' || Form.contact_type.value == '2') {
       Form.phone.disable();
       Form.email.enable();
@@ -135,7 +137,7 @@ export class NewCarrierCommissionComponent implements OnInit {
   }
 
   deleteRow(index: number) {
-    const control = this.commissionForm.get('carrierCommissionDetails') as FormArray;
+    const control = this.commissionForm.get('commissionFilesDetails') as FormArray;
     control.removeAt(index);
     this.submitForm();
   }
@@ -155,11 +157,11 @@ export class NewCarrierCommissionComponent implements OnInit {
 
   saveFile(file, index) {
     const File = file[0];
-    this.commissionForm.controls.carrierCommissionDetails['controls'][index].controls.file.value = File.name;
+    this.commissionForm.controls.commissionFilesDetails['controls'][index].controls.file.value = File.name;
   }
 
   uploadFile(file, index) {
-    let form = this.commissionForm.controls.carrierCommissionDetails['controls'][index].controls;
+    let form = this.commissionForm.controls.commissionFilesDetails['controls'][index].controls;
     if (!form.month.value) {
       this.modalMessage = 'Please fill month';
       return this.modalRef = this.modalService.show(this.templateRef);
@@ -183,7 +185,7 @@ export class NewCarrierCommissionComponent implements OnInit {
     this.api.uploadCommissionFile(formData).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.spinner.hide();
-        // const form = this.commissionForm.get('carrierCommissionDetails') as FormArray;
+        // const form = this.commissionForm.get('commissionFilesDetails') as FormArray;
         // form.controls[index].patchValue({
         //   attachment_type: File.type,
         // });
@@ -205,7 +207,7 @@ export class NewCarrierCommissionComponent implements OnInit {
   }
 
   get getFormControls() {
-    const control = this.commissionForm.get('carrierCommissionDetails') as FormArray;
+    const control = this.commissionForm.get('commissionFilesDetails') as FormArray;
     return control;
   }
 
@@ -220,9 +222,9 @@ export class NewCarrierCommissionComponent implements OnInit {
   }
 
   submitForm() {
-    const control = this.commissionForm.get('carrierCommissionDetails') as FormArray;
+    const control = this.commissionForm.get('commissionFilesDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    var contactsDetails = this.commissionForm.value.carrierCommissionDetails;
+    var contactsDetails = this.commissionForm.value.commissionFilesDetails;
     contactsDetails.map((element, key) => {
       delete element.isEditable;
       element.date = new Date().toLocaleDateString();
