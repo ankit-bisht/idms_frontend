@@ -52,7 +52,7 @@
               <div class="card-body">
                 <form class="form-sample" [formGroup]="groupForm" style="font-size: 13px">
                   <div class="row mt-4">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <mat-form-field appearance="outline">
                         <mat-label>carrier Name</mat-label>
                         <input matInput placeholder="carrier Name" (keyup)="onSubmit()" formControlName="carrierName"
@@ -65,20 +65,20 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <mat-form-field appearance="outline">
                         <mat-label>Website</mat-label>
                         <input matInput placeholder="website" (keyup)="onSubmit()" formControlName="website"
                           [(ngModel)]="website" maxlength="100">
                       </mat-form-field>
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                       <mat-form-field appearance="outline">
                         <mat-label>Commission</mat-label>
                         <input matInput placeholder="website" (keyup)="onSubmit()" formControlName="commission"
                           [(ngModel)]="commission" maxlength="100">
                       </mat-form-field>
-                    </div>
+                    </div> -->
                   </div>
                 </form>
                 <app-new-carrier-address [disable]="disable"></app-new-carrier-address>

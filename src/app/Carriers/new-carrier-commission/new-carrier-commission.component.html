@@ -14,6 +14,12 @@
 
 <div class="action-container" style="padding: 3%;">
   <button mat-raised-button class="btn btn-primary float-right" type="submit" (click)="addRow()">Upload File</button>
+  <mat-form-field appearance="outline" style="font-size: 10px;float:left">
+    <mat-label>Per Head Commission</mat-label>
+    <form class="form-sample" [formGroup]="groupForm" style="font-size: 13px">
+    <input matInput type="text" (keyup)="submitForm()" formControlName="commission"  [(ngModel)]="commission"  autocomplete="off" />
+    </form>
+  </mat-form-field>
 </div>
 <br/>
 <form [formGroup]="commissionForm">
@@ -77,7 +83,7 @@
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>File Upload</mat-label>
-              <ngx-mat-file-input #removableInput formControlName="file" (change)="uploadFile($event.target.files,i)">
+              <ngx-mat-file-input #removableInput formControlName="file" (change)="uploadFile($event.target.files,i,group)">
               </ngx-mat-file-input>
               <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
                 <mat-icon>clear</mat-icon>

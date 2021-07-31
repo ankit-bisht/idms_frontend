@@ -10,24 +10,35 @@
   tbody.text-center {
     text-align: left !important;
   }
+  .disable {
+    pointer-events: none;
+  }
 </style>
 
 <div class="action-container" style="padding: 3%;">
+  <div style="float:left;color: black;">
+    <span style="font-weight: 500;">Member Count :</span> {{ member_count}} &nbsp;&nbsp;
+    <span style="font-weight: 500;">Commission Value :</span> {{ commissionValue}}
+  </div>
   <button mat-raised-button [disabled]="!disableButton" class="btn btn-primary float-right" type="submit" (click)="addRow()" *ngIf="!disable">Add
     Row</button>
+
 </div>
 
 <form [formGroup]="commissionForm">
   <table class="table table-bordered table-sm">
     <thead class="text-nowrap text-center">
       <th>
-        <h6> Commission value</h6> <span dragableColumn> </span>
+        <h6>Month</h6> <span dragableColumn> </span>
       </th>
       <th>
-        <h6> Total Individuals</h6> <span dragableColumn> </span>
+        <h6>Year</h6> <span dragableColumn> </span>
       </th>
       <th>
-        <h6> Total Commission</h6> <span dragableColumn> </span>
+        <h6> Paid Commission</h6> <span dragableColumn> </span>
+      </th>
+      <th>
+        <h6> Expected Commission</h6> <span dragableColumn> </span>
       </th>
       <th></th>
     </thead>
@@ -37,36 +48,62 @@
         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>Commission value</mat-label>
-              <input matInput placeholder="Commission value" (keyup)="onSubmit()" formControlName="commission_value">
+              <mat-label>Month</mat-label>
+              <mat-select formControlName="month" (selectionChange)="submitForm()">
+                <mat-option [value]="1">January</mat-option>
+                <mat-option [value]="2">Feburary</mat-option>
+                <mat-option [value]="3">March</mat-option>
+                <mat-option [value]="4">April</mat-option>
+                <mat-option [value]="5">May</mat-option>
+                <mat-option [value]="6">June</mat-option>
+                <mat-option [value]="7">July</mat-option>
+                <mat-option [value]="8">Augest</mat-option>
+                <mat-option [value]="9">September</mat-option>
+                <mat-option [value]="10">October</mat-option>
+                <mat-option [value]="11">November</mat-option>
+                <mat-option [value]="12">December</mat-option>
+              </mat-select>
             </mat-form-field>
           </td>
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>Total Individuals</mat-label>
-              <input matInput placeholder="Total Individuals" (keyup)="onSubmit()" formControlName="indivduals">
+              <mat-label>Year</mat-label>
+              <mat-select formControlName="year" (selectionChange)="submitForm()">
+                <mat-option *ngFor="let year of years" [value]="year">
+                  {{year}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </td>
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>Total Commission</mat-label>
-              <input matInput placeholder="Total Commission" (keyup)="onSubmit()" formControlName="total_commission">
+              <mat-label>Paid Commission</mat-label>
+              <input matInput placeholder="Paid Commission" (keyup)="submitForm()" formControlName="commission_paid">
             </mat-form-field>
           </td>
           <td>
-            <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+            <mat-form-field appearance="outline" class="disable" style="font-size: 10px">
+              <mat-label>Expected Commission</mat-label>
+              <input matInput placeholder="Expected Commission"  (keyup)="submitForm()" formControlName="commission_expected">
+            </mat-form-field>
+          </td>
+          <td>
+            <!-- <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon> -->
             <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
           </td>
         </tr>
         <tr *ngIf="!group.get('isEditable').value">
           <td>
-            {{group.get('commission_value').value?group.get('commission_value').value:''}}
+            {{group.get('month').value?months[group.get('month').value]:''}}
           </td>
           <td>
-            {{group.get('indivduals').value?group.get('indivduals').value:''}}
+            {{group.get('year').value?group.get('year').value:''}}
           </td>
           <td>
-            {{group.get('total_commission').value?group.get('total_commission').value:''}}
+            {{group.get('commission_paid').value?group.get('commission_paid').value:''}}
+          </td>
+          <td>
+            {{group.get('commission_expected').value?group.get('commission_expected').value:''}}
           </td>
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

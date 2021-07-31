@@ -38,6 +38,7 @@ export class PolicyMembersComponent implements OnChanges {
   document_status: any;
   relations = [];
   arrayRelations = [];
+  currentMembers = [];
   display = "none";
   @ViewChild(MatPaginator, { static: false }) set paginator(value: MatPaginator) {
     if (this.dataSource) {
@@ -109,7 +110,7 @@ export class PolicyMembersComponent implements OnChanges {
 
   setForm(element): FormGroup {
     return this.fb.group({
-      member_id: [element, Validators.required],
+      member_id: new FormControl(element, Validators.required),
       isEditable: [false]
     });
   }
@@ -133,7 +134,7 @@ export class PolicyMembersComponent implements OnChanges {
 
   initiateForm(): FormGroup {
     return this.fb.group({
-      member_id: [''],
+      member_id: new FormControl(''),
       isEditable: [true]
     });
   }
@@ -162,8 +163,31 @@ export class PolicyMembersComponent implements OnChanges {
   }
 
   setValue(group: FormGroup, client_id) {
+
+    // set member count
+
+    // let individuals = this.savePolicy.getPolicy();
+    // let members = [];
+    // if (individuals['policyMembersDetails']) {
+    //   individuals['policyMembersDetails'][0]['member_id'].push(individuals['primary_id']);
+    //   members = individuals['policyMembersDetails'][0]['member_id'].filter(function (item, i, ar) { return ar.indexOf(item) === i; });
+    // } else {
+    //   members.push(individuals['primary_id']);
+    // }
+
+    // if(individuals['policyDependentDetails']){
+    //   individuals['policyDependentDetails'].forEach(element => {
+    //       members.concat(element['dependent']);
+    //   });
+    // }
+    // console.log(members.length);
+
+    console.log(this.savePolicy.addToPolicy({ member_count: client_id.length + 1 }));
+
+    this.currentMembers = client_id;
     group.get('member_id').setValue(client_id);
-    this.submitForm();
+    this.memberForm.value.policyMembersDetails[0].member_id = client_id;
+    console.log(this.savePolicy.addToPolicy(this.memberForm.value));
   }
 
   editRow(group: FormGroup) {
@@ -173,14 +197,14 @@ export class PolicyMembersComponent implements OnChanges {
   doneRow(group: FormGroup) {
     group.get('isEditable').setValue(false);
     this.arrayRelations = [];
+
     for (const iterator of group.get('member_id').value) {
       let client = this.savePolicy.getPolicy()['policyMembers'].find(r => r.client_id == iterator);
       this.arrayRelations.push(client);
     }
     this.arrayRelations = this.arrayRelations.filter((v, i, a) => a.findIndex(t => (t.client_id === v.client_id || t.DOB === v.DOB)) === i)
 
-    this.submitForm();
-    // this.filterIndividualsArray(group.get('member_id').value);
+    // this.submitForm();
   }
 
   get getFormControls() {
@@ -215,13 +239,15 @@ export class PolicyMembersComponent implements OnChanges {
 
   submitForm() {
     this.closeAllModals();
-    const control = this.memberForm.get('policyMembersDetails') as FormArray;
-    this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    var documentDetails = this.memberForm.value.policyMembersDetails;
-    documentDetails.map((element, key) => {
-      delete element.isEditable;
-    });
-    console.log(this.savePolicy.addToPolicy(this.memberForm.value));
+    // const control = this.memberForm.get('policyMembersDetails') as FormArray;
+    // this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
+    // var documentDetails = this.memberForm.value.policyMembersDetails;
+    // documentDetails.map((element, key) => {
+    //   element.member_id = this.currentMembers;
+    //   delete element.isEditable;
+    // });
+    // this.memberForm.value.policyMembersDetails = documentDetails;
+    // console.log(this.savePolicy.addToPolicy(this.memberForm.value));
   }
 
   getIndividual(val) {

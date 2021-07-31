@@ -64,7 +64,7 @@ export class NewCarriersComponent implements OnInit {
     this.groupForm = new FormGroup({
       "carrierName": new FormControl('', [Validators.required]),
       "website": new FormControl(''),
-      "commission": new FormControl('')
+      // "commission": new FormControl('')
     });
 
     let getClientDetail = JSON.parse(localStorage.getItem('CarrierDetails'));

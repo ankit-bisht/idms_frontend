@@ -38,6 +38,13 @@ export class CommisionComponent implements OnInit {
   displayedColumns = ['address_type', 'number', 'street', 'city', 'state', 'zip'];
   dataSource: any;
   length: any = 0;
+  member_count = 0;
+  years: number[] = [];
+  currentYear: number = new Date().getFullYear();
+  commissionValue = '';
+  currentCommission = '';
+  currentPolicy = ''
+  months = ["months", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   constructor(private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveGroup: IndividualDetailServiceService) { }
 
@@ -49,8 +56,8 @@ export class CommisionComponent implements OnInit {
     this.commissionForm = this.fb.group({
       policyCommissionDetails: this.fb.array([])
     });
-    if (localStorage.getItem('CarrierDetails')) {
-      if (JSON.parse(localStorage.getItem('CarrierDetails')).policyCommissionDetails.length >= 1) {
+    if (localStorage.getItem('PoliciesDetails')) {
+      if (JSON.parse(localStorage.getItem('policyCommissionDetails')).length >= 1) {
         this.setDetails();
       }
     }
@@ -65,52 +72,77 @@ export class CommisionComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const object = {
+      policy_number: JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0]['policy_number'],
+      userId: localStorage.getItem('userId'),
+    }
+    this.api.getCommissions(object).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        localStorage.setItem('policyCommissionDetails', JSON.stringify(data.result));
+        this.setDetails();
+      }
+    });
     // this.control = this.commissionForm.get('policyCommissionDetails') as FormArray;
   }
 
   initiateForm(): FormGroup {
     let value = JSON.parse(localStorage.getItem('commissionValue'));
     let individuals = this.saveGroup.getPolicy();
-    let members = [];
-    if (individuals['policyMembersDetails']) {
-      individuals['policyMembersDetails'][0]['member_id'].push(individuals['primary_id']);
-      members = individuals['policyMembersDetails'][0]['member_id'].filter(function (item, i, ar) { return ar.indexOf(item) === i; });
-    } else {
-      members.push(individuals['primary_id']);
-    }
+    // let members = [];
+    // if (individuals['policyMembersDetails']) {
+    //   individuals['policyMembersDetails'][0]['member_id'].push(individuals['primary_id']);
+    //   members = individuals['policyMembersDetails'][0]['member_id'].filter(function (item, i, ar) { return ar.indexOf(item) === i; });
+    // } else {
+    //   members.push(individuals['primary_id']);
+    // }
 
-    if(individuals['policyDependentDetails']){
-      individuals['policyDependentDetails'].forEach(element => {
-          members.concat(element['dependent']);
-      });
-    }
-    console.log(members);
+    // if (individuals['policyDependentDetails']) {
+    //   individuals['policyDependentDetails'].forEach(element => {
+    //     members.concat(element['dependent']);
+    //   });
+    // }
 
-
-    let total_commission = members.length * value;
+    // let total_commission = members.length * value;
 
     //form
     return this.fb.group({
-      'commission_value': new FormControl({ value: value, disabled: true }, Validators.required),
-      "indivduals": new FormControl({ value: members.length, disabled: true }, [Validators.required]),
-      "total_commission": new FormControl({ value: total_commission, disabled: false }, [Validators.required]),
+      'policy_id': [parseInt(individuals['policy_number'])],
+      'month': new FormControl({ value: '', disabled: false }, Validators.required),
+      "year": new FormControl({ value: '', disabled: false }, [Validators.required]),
+      "commission_expected": [value*individuals['member_count']],
+      "commission_paid": new FormControl({ value: '', disabled: false }, [Validators.required]),
+      "edit": [true],
       isEditable: [true]
     });
   }
 
   getConstants() {
+    this.member_count = this.saveGroup.getPolicy()['member_count'];
+    for (let i = (this.currentYear - 15); i < (this.currentYear + 15); i++) {
+      this.years.push(i);
+    }
+    const Obj = {
+      userId: localStorage.getItem('userId'),
+      carrier_id: this.saveGroup.getPolicy()['carrier_id']
+    }
+    this.api.getCarrierAllDetails(Obj).subscribe((getdata: any) => {
+      if (getdata.responseCode === 200) {
+        this.commissionValue = getdata.result.carrierBaseDetails[0] ? getdata.result.carrierBaseDetails[0].commission : '';
+      }
+    });
     this.contactype = JSON.parse(localStorage.getItem('constants')).contactType;
   }
 
   addRow() {
     const control = this.commissionForm.get('policyCommissionDetails') as FormArray;
     control.push(this.initiateForm());
-    this.disableButton = false;
+    // this.disableButton = false;
   }
 
   setDetails() {
     const control = this.commissionForm.get('policyCommissionDetails') as FormArray;
-    const Details = JSON.parse(localStorage.getItem('CarrierDetails')).policyCommissionDetails;
+    const Details = JSON.parse(localStorage.getItem('policyCommissionDetails'));
 
     Details.map(element => {
       control.push(this.setForm(element));
@@ -124,10 +156,16 @@ export class CommisionComponent implements OnInit {
   }
 
   setForm(element): FormGroup {
+    this.currentCommission = element.commission_expected;
+    this.currentPolicy = element.policy_id;
     return this.fb.group({
-      'commission_value': [element.value],
-      "indivduals": [element.individuals],
-      "total_commission": [element.total],
+      'policy_id': [element.policy_id],
+      'id': [element.id],
+      'month': [element.month],
+      "year": [element.year],
+      "commission_expected": [element.commission_expected],
+      "commission_paid": [element.commission_paid],
+      "edit": [false],
       isEditable: [false]
     });
   }
@@ -176,6 +214,7 @@ export class CommisionComponent implements OnInit {
       delete element.isEditable;
       const id = key + 1;
     });
+    // this.commissionForm.value.policyCommissionDetails = contactsDetails;
     console.log(this.saveGroup.addToPolicy(this.commissionForm.value));
   }
 }

@@ -33,6 +33,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
   invalid: boolean = false;
   policyType: any;
   selectedMembers: any;
+  showCommission: Boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
 
@@ -41,6 +42,8 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.updateEditStatus(1);
+    localStorage.removeItem("PoliciesDetails");
+    localStorage.removeItem("policyCommissionDetails");
   }
 
   ngOnInit() {
@@ -93,7 +96,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
       this.api.updatePolicyEditStatus(obj).subscribe((data: any) => {
         if (data.responseCode === 200) {
           if (status == 1) {
-            localStorage.removeItem("PoliciesDetails");
+            // localStorage.removeItem("PoliciesDetails");
             localStorage.removeItem("policyType");
           }
           this.spinner.hide();
@@ -124,6 +127,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
 
 
     if (getClientDetail) {
+      this.showCommission = true;
       const Client = getClientDetail[0];
       this.getAllProductIds(Client.carrier_id);
       this.policyForm.disable();
@@ -172,7 +176,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     this.api.getAgents(obj).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.spinner.hide();
-        localStorage.setItem('Agents',JSON.stringify(data.result));
+        localStorage.setItem('Agents', JSON.stringify(data.result));
       }
     });
   }
@@ -283,6 +287,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('PoliciesDetails')) {
 
       obj.policy_id = JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0].policy_id;
+      // obj.member_count = this.savePolicies.getPolicy['policyMembersDetails'][0].member_id.length+1;
+      if (this.savePolicies.getPolicy()['policyMembersDetails']) {
+        obj.member_count = this.savePolicies.getPolicy()['policyMembersDetails'] ? this.savePolicies.getPolicy()['policyMembersDetails'].length + 1 : this.savePolicies.getPolicy()['policyMembersDetails'][0].member_id.length + 1
+      } else {
+        obj.member_count = 1;
+      }
 
       this.api.updatePolicy(obj).subscribe((data: any) => {
         const Obj = {
@@ -299,6 +309,18 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
             this.spinner.hide();
             this.policyForm.disable();
             this.savePolicies.clearPolicy();
+
+            const object = {
+              policy_number: JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0]['policy_number'],
+              userId: localStorage.getItem('userId'),
+            }
+            this.api.getCommissions(object).subscribe((data: any) => {
+              this.spinner.hide();
+              if (data.responseCode === 200) {
+                localStorage.setItem('policyCommissionDetails', JSON.stringify(data.result));
+              }
+            });
+
             this.disable = true;
             this.errorModal = false;
             this.modalMessage = data.message;
@@ -311,6 +333,8 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
           }
         });
       });
+
+
     } else {
       this.spinner.show();
       this.api.createPolicy(obj).subscribe((data: any) => {
@@ -355,6 +379,18 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
         this.spinner.hide();
         if (data.responseCode === 200) {
           console.log(this.savePolicies.addToPolicy({ "policyMembers": data.result }));
+        }
+      });
+
+      const obj = {
+        policy_number: policyData['policy_number'],
+        userId: localStorage.getItem('userId'),
+      }
+      this.api.getCommissions(obj).subscribe((data: any) => {
+        this.spinner.hide();
+        if (data.responseCode === 200) {
+          localStorage.setItem('policyCommissionDetails', JSON.stringify(data.result));
+          // console.log(this.savePolicies.addToPolicy({ "policyMembers": data.result }));
         }
       });
     } else {

@@ -46,6 +46,7 @@ export class Configuration {
     getClientRelationships: this.baseUrl + "getClientRelationships",
     getClientTierRelationships : this.baseUrl + "getClientTierRelationships",
     getCommissionValue: this.baseUrl + "getCommissionValue",
-    uploadCommissionFile:this.baseUrl+"uploadCommissionFile"
+    uploadCommissionFile:this.baseUrl+"uploadCommissionFile",
+    getCommissions:this.baseUrl+"getCommissions"
   }
 }

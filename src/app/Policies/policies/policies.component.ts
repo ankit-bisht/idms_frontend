@@ -30,16 +30,7 @@ export class PoliciesComponent implements OnInit {
     localStorage.removeItem('AgentDetails')
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-
-  getCarrier(id){
-    return this.carrier.filter(function (entry) { return entry.carrier_id === id })[0].carrier_name;
-  }
-
-  getDetail() {
+   getcarrierData(){
     this.constants = JSON.parse(localStorage.getItem("policy_constants")).status;
     const obj = {
       userId: localStorage.getItem('userId')
@@ -50,8 +41,24 @@ export class PoliciesComponent implements OnInit {
         this.carrier = data.result;
       }
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
 
+  getCarrier(id){
+    return this.carrier.filter(function (entry) { return entry.carrier_id === id }).length>=1?this.carrier.filter(function (entry) { return entry.carrier_id === id })[0].carrier_name:'';
+  }
+
+  async getDetail() {
+
+    await this.getcarrierData();
+
+    const obj = {
+      userId: localStorage.getItem('userId')
+    }
     this.api.getAllPoliciesDetails(obj).subscribe((data: any) => {
       this.spinner.show();
       if (data.responseCode === 200) {

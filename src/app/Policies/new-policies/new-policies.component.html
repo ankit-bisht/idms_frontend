@@ -84,7 +84,7 @@
         <mat-tab label="Dependents" *ngIf="policyType=='G'?true:false">
           <app-policy-dependents [disable]="disable" [members]="selectedMembers"></app-policy-dependents>
         </mat-tab>
-        <mat-tab label="Commission">
+        <mat-tab label="Commission" *ngIf="showCommission">
           <app-commision [disable]="disable"></app-commision>
         </mat-tab>
       </mat-tab-group>

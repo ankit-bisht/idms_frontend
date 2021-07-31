@@ -30,6 +30,8 @@ export class NewCarrierCommissionComponent implements OnInit {
   filterArr = [];
   display = "none";
   years: number[] = [];
+  commission:'';
+  groupForm: FormGroup;
   currentYear: number = new Date().getFullYear();
 
   months = ["months", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -51,9 +53,22 @@ export class NewCarrierCommissionComponent implements OnInit {
   ngOnChanges(disable: SimpleChanges): void {
     this.getConstants();
     this.touchedRows = [];
+    this.groupForm = new FormGroup({
+      "commission": new FormControl(this.commission)
+    });
     this.commissionForm = this.fb.group({
       commissionFilesDetails: this.fb.array([])
     });
+
+    let getClientDetail = JSON.parse(localStorage.getItem('CarrierDetails'));
+
+    if (getClientDetail) {
+      const Client = getClientDetail.carrierBaseDetails[0];
+      console.log(Client);
+
+      this.commission = Client.commission;
+    }
+
     if (localStorage.getItem('CarrierDetails')) {
       if (JSON.parse(localStorage.getItem('CarrierDetails')).commissionFilesDetails.length >= 1) {
         this.setDetails();
@@ -62,8 +77,10 @@ export class NewCarrierCommissionComponent implements OnInit {
 
     if (disable.disable.currentValue) {
       this.commissionForm.disable();
+      this.groupForm.disable();
     } else {
       this.commissionForm.enable();
+      this.groupForm.enable();
     }
     // this.dataSource = new MatTableDataSource(this.filteredClients);
     // this.length = this.filteredClients.length;
@@ -110,7 +127,6 @@ export class NewCarrierCommissionComponent implements OnInit {
   }
 
   setForm(element): FormGroup {
-    console.log(element);
 
     return this.fb.group({
       file: [element.file_name],
@@ -160,7 +176,7 @@ export class NewCarrierCommissionComponent implements OnInit {
     this.commissionForm.controls.commissionFilesDetails['controls'][index].controls.file.value = File.name;
   }
 
-  uploadFile(file, index) {
+  uploadFile(file, index,group) {
     let form = this.commissionForm.controls.commissionFilesDetails['controls'][index].controls;
     if (!form.month.value) {
       this.modalMessage = 'Please fill month';
@@ -189,7 +205,6 @@ export class NewCarrierCommissionComponent implements OnInit {
         // form.controls[index].patchValue({
         //   attachment_type: File.type,
         // });
-
         this.modalMessage = data.message;
         return this.modalRef = this.modalService.show(this.templateRef);
       } else {
@@ -198,6 +213,7 @@ export class NewCarrierCommissionComponent implements OnInit {
         return this.modalRef = this.modalService.show(this.templateRef);
       }
     });
+    this.doneRow(group);
     this.submitForm();
   }
 
@@ -230,6 +246,7 @@ export class NewCarrierCommissionComponent implements OnInit {
       element.date = new Date().toLocaleDateString();
       const id = key + 1;
     });
-    console.log(this.saveGroup.addToCarrier(this.commissionForm.value));
+    this.saveGroup.addToCarrier(this.commissionForm.value);
+    console.log(this.saveGroup.addToCarrier(this.groupForm.value))
   }
 }
