@@ -80,16 +80,18 @@
         <i class="mdi mdi-table-large menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" [ngClass]="{ 'active': agents.isActive }">
-      <a class="nav-link" routerLink="/agents" routerLinkActive #agents="routerLinkActive">
-        <span class="menu-title">Agents</span>
-        <i class="mdi mdi-account-network menu-icon"></i>
-      </a>
-    </li>
+
     <li class="nav-item" [ngClass]="{ 'active': carriers.isActive }">
       <a class="nav-link" routerLink="/carriers" routerLinkActive #carriers="routerLinkActive">
         <span class="menu-title">Carriers</span>
         <i class="mdi mdi-account-multiple-outline menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item" [ngClass]="{ 'active': agents.isActive }">
+      <a class="nav-link" routerLink="/agents" routerLinkActive #agents="routerLinkActive">
+        <span class="menu-title">Agents</span>
+        <i class="mdi mdi-account-network menu-icon"></i>
       </a>
     </li>
 
