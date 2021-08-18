@@ -68,7 +68,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Policy Number</mat-label>
               <input matInput placeholder="Policy Number" (keyup)="onSubmit()" formControlName="policy_number"
-                [(ngModel)]="policy_number" required>
+                [(ngModel)]="policy_number">
               <mat-error *ngIf="mainForm.get('policy_number').invalid && (mainForm.get('policy_number').touched)">
                 <span *ngIf="mainForm.get('policy_number').errors.required">
                   Policy Number is Required.
@@ -95,7 +95,7 @@
           <div class="col-md-4">
 
             <ng-select #MyNgSelect [(ngModel)]="agent_of_record" (change)="setAgentVal($event)"
-              bindLabel="first_name"  placeholder="Agent" [clearable]="false"
+              bindLabel="first_name"  placeholder="Agent *" [clearable]="false"
               appendTo="body" [searchable]="true" formControlName="agent_of_record">
               <ng-option *ngFor="let item of agents" [value]=item.agent_id>
                 {{item.first_name?item.first_name:''}} {{item.last_name?item.last_name:''}}
@@ -147,7 +147,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Application Date</mat-label>
               <input matInput [matDatepicker]="picker" (dateChange)="onSubmit()" formControlName="application_date"
-                [(ngModel)]="application_date" required>
+                [(ngModel)]="application_date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

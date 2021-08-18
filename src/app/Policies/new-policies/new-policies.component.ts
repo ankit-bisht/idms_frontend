@@ -249,7 +249,11 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
   validate() {
     var data: any = this.savePolicies.getPolicy();
     console.log(data);
-
+    if (!data.agent_of_record) {
+      this.errorModal = true;
+      this.modalMessage = 'Please Select Agent ';
+      return this.modalRef = this.modalService.show(this.templateRef);
+    }
     if (!('policy_number' in data) || !('status' in data)
       || data.application_date == undefined || data.effective_date == undefined
       || data.end_date == undefined || !('primary_id' in data)) {

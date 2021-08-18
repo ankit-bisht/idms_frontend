@@ -85,7 +85,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
             "agent_of_record": new FormControl(null, [Validators.required]),
-            "policy_number": new FormControl('', [Validators.required]),
+            "policy_number": new FormControl(''),
             "status": new FormControl(''),
             "election": new FormControl(''),
             "premium": new FormControl(''),
@@ -103,7 +103,7 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
             "agent_of_record": new FormControl(null, [Validators.required]),
-            "policy_number": new FormControl('', [Validators.required]),
+            "policy_number": new FormControl(''),
             "status": new FormControl(''),
             "election": new FormControl(''),
             "premium": new FormControl(''),
@@ -132,11 +132,11 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
             "agent_of_record": new FormControl(null, [Validators.required]),
-            "policy_number": new FormControl('', [Validators.required]),
+            "policy_number": new FormControl(''),
             "status": new FormControl('', [Validators.required]),
             "election": new FormControl(''),
             "premium": new FormControl(''),
-            "application_date": new FormControl('', [Validators.required]),
+            "application_date": new FormControl(''),
             "effective_date": new FormControl('', [Validators.required]),
             "pay_frequency": new FormControl(''),
             "payment_mode": new FormControl(''),
@@ -150,11 +150,11 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
           this.mainForm = new FormGroup({
             "primary_id": new FormControl(null, [Validators.required]),
             "agent_of_record": new FormControl(null, [Validators.required]),
-            "policy_number": new FormControl('', [Validators.required]),
+            "policy_number": new FormControl(''),
             "status": new FormControl('', [Validators.required]),
             "election": new FormControl(''),
             "premium": new FormControl(''),
-            "application_date": new FormControl('', [Validators.required]),
+            "application_date": new FormControl(''),
             "effective_date": new FormControl('', [Validators.required]),
             "pay_frequency": new FormControl(''),
             "payment_mode": new FormControl(''),
@@ -252,15 +252,16 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
   };
 
   onSubmit() {
+    console.log(this.mainForm.value.application_date);
 
     if (this.mainForm.valid) {
       this.mainForm.value.userId = localStorage.getItem('userId');
-      this.mainForm.value.application_date = moment(this.mainForm.value.application_date).format('MM/DD/YYYY');
+      this.mainForm.value.application_date = this.mainForm.value.application_date ? moment(this.mainForm.value.application_date).format('MM/DD/YYYY') : '';
       this.mainForm.value.effective_date = moment(this.mainForm.value.effective_date).format('MM/DD/YYYY');
       this.mainForm.value.end_date = moment(this.mainForm.value.end_date).format('MM/DD/YYYY');
       console.log(this.savePolicies.addToPolicy(this.mainForm.value));
     }
-    this.mainForm.value.application_date = moment(this.mainForm.value.application_date).format('MM/DD/YYYY');
+    this.mainForm.value.application_date = this.mainForm.value.application_date ? moment(this.mainForm.value.application_date).format('MM/DD/YYYY') : '';
     this.mainForm.value.effective_date = moment(this.mainForm.value.effective_date).format('MM/DD/YYYY');
     this.mainForm.value.end_date = moment(this.mainForm.value.end_date).format('MM/DD/YYYY');
     console.log(this.savePolicies.addToPolicy(this.mainForm.value));

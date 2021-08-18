@@ -61,6 +61,11 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("policy_constants",JSON.stringify(data.result));
           }
         });
+        this.api.getCarriers(Obj).subscribe((data: any) => {
+          if (data.responseCode === 200) {
+            localStorage.setItem("carrier_data",JSON.stringify(data.result));
+          }
+        });
         this.api.getConstants(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             localStorage.setItem('constants', JSON.stringify(data.result));

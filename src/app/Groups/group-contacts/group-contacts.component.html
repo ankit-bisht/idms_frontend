@@ -6,9 +6,10 @@
   mat-icon {
     cursor: pointer;
   }
+
   tbody.text-center {
     text-align: left !important;
-}
+  }
 </style>
 
 <div class="action-container" style="padding: 3%;">
@@ -25,7 +26,7 @@
       <!-- <th>
         <h6>Contact Type</h6> <span dragableColumn> </span>
       </th> -->
-      <th>
+      <!-- <th>
         <h6>Name</h6> <span dragableColumn> </span>
       </th>
       <th>
@@ -33,6 +34,12 @@
       </th>
       <th>
         <h6>Department</h6> <span dragableColumn> </span>
+      </th> -->
+      <th>
+        <h6>Phone</h6><span dragableColumn> </span>
+      </th>
+      <th>
+        <h6>Email</h6>
       </th>
       <th>
         <h6>Fax</h6> <span dragableColumn> </span>
@@ -42,12 +49,6 @@
       </th>
       <th>
         <h6>Valid<span class="text-danger">*</span></h6> <span dragableColumn> </span>
-      </th>
-      <th>
-        <h6>Phone</h6><span dragableColumn> </span>
-      </th>
-      <th>
-        <h6>Email</h6>
       </th>
       <th></th>
     </thead>
@@ -69,7 +70,7 @@
               </mat-select>
             </mat-form-field>
           </td> -->
-          <td>
+          <!-- <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>Name</mat-label>
               <input matInput type="text" placeholder="Name" formControlName="name" (keyup)="submitForm()"
@@ -89,12 +90,26 @@
               <input matInput type="text" placeholder="Department" formControlName="department" (keyup)="submitForm()"
                 autocomplete="off" />
             </mat-form-field>
+          </td> -->
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Phone No</mat-label>
+              <input matInput type="text" placeholder="Phone no" formControlName="phone" maxlength="13" appPhoneMask
+                (keyup)="submitForm()" autocomplete="off" appPhoneMask />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" style="font-size: 10px">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" placeholder="Email" formControlName="email" (keyup)="submitForm()"
+                autocomplete="off" />
+            </mat-form-field>
           </td>
           <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>Fax</mat-label>
               <input matInput type="text" placeholder="FAX" formControlName="fax" (keyup)="submitForm()"
-                autocomplete="off" appPhoneMask/>
+                autocomplete="off" appPhoneMask />
             </mat-form-field>
           </td>
           <td>
@@ -113,20 +128,6 @@
                 <mat-option value="0">Not Valid
                 </mat-option>
               </mat-select>
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>Phone No</mat-label>
-              <input matInput type="text" placeholder="Phone no" formControlName="phone" maxlength="13" appPhoneMask
-                (keyup)="submitForm()" autocomplete="off" appPhoneMask />
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field appearance="outline" style="font-size: 10px">
-              <mat-label>Email</mat-label>
-              <input matInput type="email" placeholder="Email" formControlName="email" (keyup)="submitForm()"
-                autocomplete="off" />
             </mat-form-field>
           </td>
           <td>
@@ -151,7 +152,8 @@
                       <mat-header-cell *matHeaderCellDef> Address Type </mat-header-cell>
                       <mat-cell *matCellDef="let element"
                         (click)="[submitForm(),setValue(group,element.address_id),onCloseHandled()]">
-                        {{element.address_type == 1 ? 'Home':element.address_type == 2 ? 'Work':element.address_type == 3 ? 'Mailing':'Others'}}
+                        {{element.address_type == 1 ? 'Home':element.address_type == 2 ? 'Work':element.address_type ==
+                        3 ? 'Mailing':'Others'}}
                       </mat-cell>
                     </ng-container>
 
@@ -207,7 +209,7 @@
           <td>
             {{getIndividual(group.get('address_id').value)}}
           </td>
-          <td>
+          <!-- <td>
             {{group.get('name').value?group.get('name').value:''}}
           </td>
           <td>
@@ -215,6 +217,12 @@
           </td>
           <td>
             {{group.get('department').value?group.get('department').value:''}}
+          </td> -->
+          <td>
+            {{group.get('phone').value?group.get('phone').value:''}}
+          </td>
+          <td>
+            {{group.get('email').value?group.get('email').value:''}}
           </td>
           <td>
             {{group.get('fax').value?group.get('fax').value:''}}
@@ -224,12 +232,6 @@
           </td>
           <td>
             {{group.get('valid').value ?group.get('valid').value==1?'Valid':'Not Valid':'Valid'}}
-          </td>
-          <td>
-            {{group.get('phone').value?group.get('phone').value:''}}
-          </td>
-          <td>
-            {{group.get('email').value?group.get('email').value:''}}
           </td>
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>

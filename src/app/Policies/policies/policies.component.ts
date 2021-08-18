@@ -27,21 +27,22 @@ export class PoliciesComponent implements OnInit {
 
   ngOnInit() {
     this.getDetail();
+    this.carrier = JSON.parse(localStorage.getItem('carrier_data'));
     localStorage.removeItem('AgentDetails')
   }
 
-   getcarrierData(){
-    this.constants = JSON.parse(localStorage.getItem("policy_constants")).status;
-    const obj = {
-      userId: localStorage.getItem('userId')
-    }
-    this.api.getCarriers(obj).subscribe((data: any) => {
-      if (data.responseCode === 200) {
-        this.spinner.hide();
-        this.carrier = data.result;
-      }
-    });
-  }
+  //  getcarrierData(){
+  //   this.constants = JSON.parse(localStorage.getItem("policy_constants")).status;
+  //   const obj = {
+  //     userId: localStorage.getItem('userId')
+  //   }
+  //   this.api.getCarriers(obj).subscribe((data: any) => {
+  //     if (data.responseCode === 200) {
+  //       this.spinner.hide();
+  //       this.carrier = data.result;
+  //     }
+  //   });
+  // }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -54,7 +55,7 @@ export class PoliciesComponent implements OnInit {
 
   async getDetail() {
 
-    await this.getcarrierData();
+    // await this.getcarrierData();
 
     const obj = {
       userId: localStorage.getItem('userId')

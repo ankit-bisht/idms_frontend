@@ -185,7 +185,7 @@
                   <div class="row mt-3">
                     <div class="col-md-4">
                       <mat-form-field appearance="outline">
-                        <mat-label>Agenr License State</mat-label>
+                        <mat-label>Agent License State</mat-label>
                         <mat-select formControlName="agent_license_state" (selectionChange)="submitForm()"
                           [(ngModel)]="agentState">
                           <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
