@@ -95,6 +95,7 @@ export class EmploymentComponent implements OnChanges {
     });
   }
 
+
   getConstants() {
     this.incomeFrequency = JSON.parse(localStorage.getItem('constants')).incomeFrequency;
   }
