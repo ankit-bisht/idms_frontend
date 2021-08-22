@@ -1,4 +1,4 @@
-const PROD_SERVER = 'http://.244.131:81/api/v1/';
+const PROD_SERVER = 'http://67.200.244.131:81/api/v1/';
 const LOCAL_SERVER = 'http://localhost:4400/api/v1/';
 
 export class Configuration {
