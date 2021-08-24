@@ -1,7 +1,8 @@
-const PROD_SERVER = 'http://adms-globalfinancial.com:81/api/v1/';
+const PROD_SERVER = 'http://adms-globalfinancial.com/api/v1/';
 const LOCAL_SERVER = 'http://localhost:4400/api/v1/';
 
 export class Configuration {
+  
   public baseUrl = PROD_SERVER;
   public Hmac256Secret = 'abcdefg';
   public UrlObj = {
