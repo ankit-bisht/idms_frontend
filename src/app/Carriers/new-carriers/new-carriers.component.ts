@@ -43,6 +43,7 @@ export class NewCarriersComponent implements OnInit {
         this.userEdit = false
       }
     });
+
     this.buildGroupForm();
   }
 
