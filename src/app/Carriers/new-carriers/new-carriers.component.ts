@@ -81,12 +81,15 @@ export class NewCarriersComponent implements OnInit {
   }
 
   validate() {
+    console.log(this.saveCarrier.getCarrier());
+
     this.saveCarrier.addToCarrier(this.groupForm.value);
 
     if (this.groupForm.valid) {
 
       var obj: any = this.saveCarrier.getCarrier();
       obj.userId = localStorage.getItem('userId');
+      console.log(obj);
 
       if (localStorage.getItem('CarrierDetails')) {
 
@@ -120,7 +123,7 @@ export class NewCarriersComponent implements OnInit {
           });
         });
       } else {
-
+        obj.commission = 0;
         this.api.createCarrier(obj).subscribe((data: any) => {
           this.spinner.show();
           if (data.responseCode === 200) {

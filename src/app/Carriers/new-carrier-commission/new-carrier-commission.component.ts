@@ -64,7 +64,7 @@ export class NewCarrierCommissionComponent implements OnInit {
 
     if (getClientDetail) {
       const Client = getClientDetail.carrierBaseDetails[0];
-      console.log(Client);
+      this.saveGroup.addToCarrier(Client);
 
       this.commission = Client.commission;
     }
