@@ -15,7 +15,7 @@ export class CarriersComponent implements OnInit {
 
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['carrier_name', 'website'];
+  displayedColumns = ['carrier_name', 'website','phone'];
   dataSource: any;
   data: any = [];
   length: any = 0;

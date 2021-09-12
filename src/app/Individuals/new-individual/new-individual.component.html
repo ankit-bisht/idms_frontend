@@ -107,7 +107,7 @@
                     <div class="col-md-4">
                       <mat-form-field appearance="outline">
                         <mat-label>Client Type</mat-label>
-                        <mat-select formControlName="client_type" (selectionChange)="submitForm()"
+                        <mat-select formControlName="client_type" (selectionChange)="onSubmit()"
                           [(ngModel)]="clienttype">
                           <mat-option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}
                           </mat-option>
@@ -171,7 +171,7 @@
                     <div class="col-md-6">
                       <mat-form-field appearance="outline">
                         <mat-label>Driver License State</mat-label>
-                        <mat-select formControlName="driver_license_state" (selectionChange)="submitForm()"
+                        <mat-select formControlName="driver_license_state" (selectionChange)="onSubmit()"
                           [(ngModel)]="driverState">
                           <mat-option *ngFor="let item of states | keyvalue" value={{item.key}}>{{item.value}}
                           </mat-option>

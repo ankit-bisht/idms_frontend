@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -11,7 +11,7 @@ import { ApiService } from '../../services/api.service';
   templateUrl: './new-groups.component.html',
   styleUrls: ['./new-groups.component.scss']
 })
-export class NewGroupsComponent implements OnInit {
+export class NewGroupsComponent implements OnInit,OnDestroy {
 
   // @ViewChild('mediumModalContent', { static: true }) modal: TemplateRef<any>;
 
@@ -42,6 +42,10 @@ export class NewGroupsComponent implements OnInit {
       }
     });
     this.buildGroupForm();
+  }
+
+  ngOnDestroy() {
+    this.updateEditStatus(1);
   }
 
   buildGroupForm(): void {

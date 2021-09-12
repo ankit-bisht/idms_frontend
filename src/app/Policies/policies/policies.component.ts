@@ -15,14 +15,22 @@ import { IndividualDetailServiceService } from 'src/app/individual-detail-servic
 export class PoliciesComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['first_name','carrier_id','policy_number','product_description','effective_date', 'status', 'end_date'];
+  displayedColumns = ['first_name', 'carrier_id', 'policy_number', 'product_description', 'effective_date', 'status', 'end_date'];
   dataSource: any;
   data: any = [];
   length: any = 0;
   constants: any = [];
-  carrier:any=[];
+  carrier: any = [];
+  status = {
+    'A': 'Active',
+    'P': 'Pending',
+    'G': 'Grace Period',
+    'C': 'Cancelled',
+    'D': 'Declined',
+    'R': 'Replaced'
+  };
 
-  constructor(private savePolicies: IndividualDetailServiceService,private spinner: NgxSpinnerService,private api: ApiService, public Router: Router) {
+  constructor(private savePolicies: IndividualDetailServiceService, private spinner: NgxSpinnerService, private api: ApiService, public Router: Router) {
   }
 
   ngOnInit() {
@@ -49,8 +57,8 @@ export class PoliciesComponent implements OnInit {
   }
 
 
-  getCarrier(id){
-    return this.carrier.filter(function (entry) { return entry.carrier_id === id }).length>=1?this.carrier.filter(function (entry) { return entry.carrier_id === id })[0].carrier_name:'';
+  getCarrier(id) {
+    return this.carrier.filter(function (entry) { return entry.carrier_id === id }).length >= 1 ? this.carrier.filter(function (entry) { return entry.carrier_id === id })[0].carrier_name : '';
   }
 
   async getDetail() {
@@ -68,7 +76,7 @@ export class PoliciesComponent implements OnInit {
         }, 1000);
         let users: User[] = [data.result];
         this.data = users[0];
-        this.data.map((ele,key)=>{
+        this.data.map((ele, key) => {
           this.data[key].carrier_id = this.getCarrier(ele.carrier_id);
         })
 
@@ -81,7 +89,7 @@ export class PoliciesComponent implements OnInit {
     this.api.getAgents(obj).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.spinner.hide();
-        localStorage.setItem('Agents',JSON.stringify(data.result));
+        localStorage.setItem('Agents', JSON.stringify(data.result));
       }
     });
   }

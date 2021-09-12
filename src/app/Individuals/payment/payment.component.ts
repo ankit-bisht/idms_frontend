@@ -25,9 +25,9 @@ export class PaymentComponent implements OnChanges {
   modalRef: BsModalRef;
   touchedRows: any;
   year = new Date().getFullYear();
-  range = [];
+  range = [2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040];
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
-
+  months = ["months", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   constructor(private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveIndividuals: IndividualDetailServiceService) { }
 
@@ -45,9 +45,12 @@ export class PaymentComponent implements OnChanges {
         this.setDetails();
       }
     }
-    for (var i = 0; i < 25; i++) {
-      this.range.push(this.year + i,);
-    }
+    // let array = [];
+    // for (var i = 0; i < 25; i++) {
+    //   array.push(this.year + i,);
+    // }
+
+    // this.range = [...new Set(array)].sort()
 
     if (disable.disable.currentValue) {
       this.paymentForm.disable();

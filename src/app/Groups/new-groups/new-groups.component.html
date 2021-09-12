@@ -51,7 +51,7 @@
                       <mat-form-field appearance="outline">
                         <mat-label>Legal Name</mat-label>
                         <input matInput placeholder="Legal Name" (keyup)="onSubmit()" formControlName="group_name"
-                          maxlength="20" [(ngModel)]="group_name" required>
+                          maxlength="40" [(ngModel)]="group_name" required>
                         <mat-error *ngIf="groupForm.get('group_name').invalid && (groupForm.get('group_name').touched)">
                           <span *ngIf="groupForm.get('group_name').errors.required">
                             Legal Name is Required.

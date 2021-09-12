@@ -146,7 +146,7 @@
             {{group.get('cvv').value?group.get('cvv').value:''}}
           </td>
           <td>
-            {{group.get('expiry_month').value?group.get('expiry_month').value:''}}
+            {{group.get('expiry_month').value?months[group.get('expiry_month').value]:''}}
           </td>
           <td>
             {{group.get('expiry_year').value?group.get('expiry_year').value:''}}

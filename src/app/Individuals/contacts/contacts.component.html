@@ -40,7 +40,7 @@
                     <td>
                         <mat-form-field appearance="outline" style="font-size: 10px">
                             <mat-label>Contact Type</mat-label>
-                            <mat-select formControlName="contact_type" (selectionChange)="disableField(i)" required>
+                            <mat-select formControlName="contact_type" (selectionChange)="disableField(i);submitForm()" required>
                                 <mat-option *ngFor="let item of contactype | keyvalue" value={{item.key}}>
                                     {{item.value}}
                                 </mat-option>

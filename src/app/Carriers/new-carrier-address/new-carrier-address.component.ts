@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, Input, ViewChild, TemplateRef } from "@angular/core";
+import { Component, OnChanges, SimpleChanges, Input, ViewChild, TemplateRef, EventEmitter, Output } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -12,6 +12,7 @@ import { ApiService } from '../../services/api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Constants } from '../../configuration/constants';
 import * as moment from 'moment';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-new-carrier-address',
@@ -31,7 +32,8 @@ export class NewCarrierAddressComponent implements OnChanges {
   states: any;
   city: any;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
-
+  @Output()
+  dateChange: EventEmitter<MatDatepickerInputEvent<any>>;
 
   constructor(public States: Constants, private fb: FormBuilder, private modalService: BsModalService, private api: ApiService, private saveGroup: IndividualDetailServiceService) {
     this.states = States.stateValue;
@@ -64,6 +66,12 @@ export class NewCarrierAddressComponent implements OnChanges {
 
   ngAfterOnInit() {
     this.control = this.addressForm.get('carrierAddressDetails') as FormArray;
+  }
+
+  setDate(group: FormGroup, type: string, event: MatDatepickerInputEvent<Date>) {
+    group.get(type).setValue(event.value);
+    this.saveGroup.addToCarrier(this.addressForm.value);
+    this.submitForm();
   }
 
   initiateForm(): FormGroup {
@@ -138,6 +146,7 @@ export class NewCarrierAddressComponent implements OnChanges {
 
   doneRow(group: FormGroup) {
     group.get('isEditable').setValue(false);
+    this.submitForm();
   }
 
   get getFormControls() {
