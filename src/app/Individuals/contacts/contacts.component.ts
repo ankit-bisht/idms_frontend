@@ -128,6 +128,12 @@ export class ContactsComponent implements OnChanges {
     return control;
   }
 
+  setContact(group: FormGroup,value){
+    group.get('contact_type').setValue(value.value);
+    this.submitForm();
+    console.log(this.saveIndividuals.addToIndividual(this.contactForm.value));
+  }
+
   submitForm() {
     const control = this.contactForm.get('clientContactDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);

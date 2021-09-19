@@ -41,12 +41,12 @@
       <th>
         <h6>Zip<span class="text-danger">*</span></h6> <span dragableColumn> </span>
       </th>
-      <th>
+      <!-- <th>
         <h6>From Date</h6> <span dragableColumn> </span>
       </th>
       <th>
         <h6>To Date</h6> <span dragableColumn> </span>
-      </th>
+      </th> -->
       <th></th>
     </thead>
     <tbody class="text-center">
@@ -106,7 +106,7 @@
               <input matInput type="text" formControlName="zip" (keyup)="submitForm()" autocomplete="off" />
             </mat-form-field>
           </td>
-          <td>
+          <!-- <td>
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>From Date</mat-label>
               <input matInput matInput [matDatepicker]="picker" (dateChange)="setDate(group,'from_date',$event)" formControlName="from_date">
@@ -121,7 +121,7 @@
               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
               <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-          </td>
+          </td> -->
           <td>
             <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
             <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
@@ -149,12 +149,12 @@
           <td>
             {{group.get('zip').value?group.get('zip').value:''}}
           </td>
-          <td>
+          <!-- <td>
             {{group.get('from_date').value?getFormattedDate(group.get('from_date').value):''}}
           </td>
           <td>
             {{group.get('to_date').value?getFormattedDate(group.get('to_date').value):''}}
-          </td>
+          </td> -->
           <td>
             <mat-icon class="edit" (click)="editRow(group)" *ngIf="!disable">edit</mat-icon>
           </td>

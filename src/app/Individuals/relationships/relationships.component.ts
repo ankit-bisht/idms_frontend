@@ -152,6 +152,7 @@ export class RelationshipsComponent implements OnChanges {
   }
 
   setValue(group: FormGroup, client_id) {
+    this.submitForm();
     group.get('id2').setValue(client_id);
   }
 
@@ -162,11 +163,17 @@ export class RelationshipsComponent implements OnChanges {
   doneRow(group: FormGroup) {
     group.get('isEditable').setValue(false);
     this.filterIndividualsArray(group.get('id2').value);
+    this.submitForm();
   }
 
   get getFormControls() {
     const control = this.documentForm.get('clientRelationShipDetails') as FormArray;
     return control;
+  }
+
+  setRelatonship(value){
+      console.log(value);
+
   }
 
 
@@ -180,6 +187,7 @@ export class RelationshipsComponent implements OnChanges {
     this.closeAllModals();
     const control = this.documentForm.get('clientRelationShipDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
+
     if (!this.documentForm.valid) {
       // setTimeout(() => {
       //   this.modalMessage = "Please Fill All Details Correctly!!"
