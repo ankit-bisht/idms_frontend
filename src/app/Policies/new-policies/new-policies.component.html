@@ -113,7 +113,7 @@
       <button type="button" class="btn btn-success" *ngIf="!deleteClient && !errorModal"
         (click)="updateDetails()">Ok</button>
       <button type="button" class="btn btn-success" *ngIf="deleteClient" (click)="delete()">Yes</button>
-      <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+      <button type="button" class="btn btn-light" (click)="modalRef.hide();setDelete(false)">Cancel</button>
     </div>
   </div>
 </ng-template>

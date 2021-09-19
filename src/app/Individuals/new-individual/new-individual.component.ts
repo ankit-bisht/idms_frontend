@@ -173,24 +173,30 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
     return this.modalRef = this.modalService.show(this.templateRef);
   }
 
+  setDelete(value){
+    this.deleteClient = value;
+  }
+
   delete() {
-    this.modalService.hide(1);
-    const obj = {
-      clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
-      userId: localStorage.getItem('userId')
-    }
-    this.api.deleteClient(obj).subscribe((data: any) => {
-      this.spinner.show();
-      if (data.responseCode === 200) {
-        this.spinner.hide();
-        this.redirect();
-      } else {
-        this.spinner.hide();
-        this.errorModal = true;
-        this.modalMessage = data.error;
-        return this.modalRef = this.modalService.show(this.templateRef);
+    if(this.deleteClient){
+      this.modalService.hide(1);
+      const obj = {
+        clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
+        userId: localStorage.getItem('userId')
       }
-    });
+      this.api.deleteClient(obj).subscribe((data: any) => {
+        this.spinner.show();
+        if (data.responseCode === 200) {
+          this.spinner.hide();
+          this.redirect();
+        } else {
+          this.spinner.hide();
+          this.errorModal = true;
+          this.modalMessage = data.error;
+          return this.modalRef = this.modalService.show(this.templateRef);
+        }
+      });
+    }
   }
 
   /**

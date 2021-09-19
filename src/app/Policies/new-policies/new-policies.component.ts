@@ -143,8 +143,12 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
     this.modalMessage = 'Are you sure you want to delete this Policy?';
     return this.modalRef = this.modalService.show(this.templateRef);
   }
+  setDelete(value){
+    this.deleteClient = value;
+  }
 
   delete() {
+    if(this.deleteClient){
     this.modalService.hide(1);
     const obj = {
       policy_id: JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails[0].policy_id,
@@ -161,6 +165,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
         return this.modalRef = this.modalService.show(this.templateRef);
       }
     });
+  }
   }
 
   getPolicyConstants() {
