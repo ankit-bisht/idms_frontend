@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from "../../services/user";
+import { IndividualDetailServiceService } from '../../individual-detail-service.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class IndividualsComponent implements OnInit {
   data: any = [];
   length: any = 0;
 
-  constructor(private spinner: NgxSpinnerService, private api: ApiService, public Router: Router) {
+  constructor(private spinner: NgxSpinnerService,private saveIndividuals: IndividualDetailServiceService, private api: ApiService, public Router: Router) {
   }
 
   ngOnInit() {
@@ -68,6 +69,7 @@ export class IndividualsComponent implements OnInit {
       if (data.responseCode === 200) {
         this.spinner.hide();
         localStorage.setItem('ClientDetails', JSON.stringify(data.result));
+        console.log(this.saveIndividuals.addToIndividual(data.result));
         if (data.result.clientDetails[0].edit == 2) {
           var edit = 1
         } else {

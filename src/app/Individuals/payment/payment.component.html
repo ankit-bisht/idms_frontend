@@ -108,7 +108,7 @@
             <mat-form-field appearance="outline" style="font-size: 10px">
               <mat-label>Expiry Year</mat-label>
               <mat-select formControlName="expiry_year" (selectionChange)="submitForm()">
-                <mat-option *ngFor="let item of range | keyvalue" value={{item.value}}>{{item.value}}
+                <mat-option *ngFor="let item of range" value={{item}}>{{item}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
