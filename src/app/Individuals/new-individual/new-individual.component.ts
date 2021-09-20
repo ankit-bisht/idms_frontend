@@ -333,6 +333,15 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
     this.individualForm.value.DOB = this.format(this.individualForm.value.DOB);
     this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
     this.saveIndividuals.addToIndividual(this.individualForm.value);
+
+   this.saveIndividuals.getIndividual()['clientPaymentMethods'].map((element, key) => {
+      delete element.isEditable;
+      const id = key + 1;
+      element.payment_method_id = id.toString();
+    });
+
+      console.log(this.saveIndividuals.addToIndividual(this.saveIndividuals.getIndividual()));
+
     var obj: any = this.saveIndividuals.getIndividual();
     obj.userId = localStorage.getItem('userId');
     delete obj.height;
