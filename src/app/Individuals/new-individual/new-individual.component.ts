@@ -173,12 +173,12 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
     return this.modalRef = this.modalService.show(this.templateRef);
   }
 
-  setDelete(value){
+  setDelete(value) {
     this.deleteClient = value;
   }
 
   delete() {
-    if(this.deleteClient){
+    if (this.deleteClient) {
       this.modalService.hide(1);
       const obj = {
         clientId: JSON.parse(localStorage.getItem('ClientDetails')).clientDetails[0].client_id,
@@ -334,13 +334,15 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
     this.individualForm.value.weight = this.individualForm.value.weight ? this.individualForm.value.weight.toString() : '';
     this.saveIndividuals.addToIndividual(this.individualForm.value);
 
-   this.saveIndividuals.getIndividual()['clientPaymentMethods'].map((element, key) => {
-      delete element.isEditable;
-      const id = key + 1;
-      element.payment_method_id = id.toString();
-    });
+    this.saveIndividuals.getIndividual()['clientPaymentMethods'] &&
+      this.saveIndividuals.getIndividual()['clientPaymentMethods'].length > 0 &&
+      this.saveIndividuals.getIndividual()['clientPaymentMethods'].map((element, key) => {
+        delete element.isEditable;
+        const id = key + 1;
+        element.payment_method_id = id.toString();
+      });
 
-      console.log(this.saveIndividuals.addToIndividual(this.saveIndividuals.getIndividual()));
+    console.log(this.saveIndividuals.addToIndividual(this.saveIndividuals.getIndividual()));
 
     var obj: any = this.saveIndividuals.getIndividual();
     obj.userId = localStorage.getItem('userId');
