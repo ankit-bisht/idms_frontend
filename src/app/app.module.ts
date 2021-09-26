@@ -29,7 +29,7 @@ import { NewIndividualComponent } from './Individuals/new-individual/new-individ
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Constants } from './configuration/constants';
 import { JwPaginationModule } from 'jw-angular-pagination';
-import { MatAutocompleteModule, MatListModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatListModule, MatSortModule, MatTabsModule } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ContactsComponent } from './Individuals/contacts/contacts.component';
 import { NgxBootstrapModalComponent } from './ngx-bootstrap-modal/ngx-bootstrap-modal.component';
@@ -145,6 +145,7 @@ export const DateFormat = {
     BsDatepickerModule.forRoot(),
     MatInputModule,
     MatDatepickerModule,
+    MatSortModule,
     MatRadioModule,
     MatButtonModule,
     MatListModule,

@@ -33,29 +33,29 @@
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
         </mat-form-field>
 
-        <mat-table #table [dataSource]="dataSource">
+        <mat-table #table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="first_name">
-            <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleAgent(element.agent_id)">
               {{element.first_name}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="last_name">
-            <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleAgent(element.agent_id)">
               {{element.last_name}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="agent_license_number">
-            <mat-header-cell *matHeaderCellDef> Lisense Number </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Lisense Number </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleAgent(element.agent_id)">
               {{element.agent_license_number}}
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="national_producer_number">
-            <mat-header-cell *matHeaderCellDef> NPN </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> NPN </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleAgent(element.agent_id)">
               {{element.national_producer_number}}
             </mat-cell>

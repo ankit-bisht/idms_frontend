@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
@@ -17,6 +17,7 @@ export class IndividualsComponent implements OnInit {
 
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns = ['first_name', 'middle_name', 'last_name', 'DOB', 'phone', 'email',];
   dataSource: any;
   data: any = [];
@@ -50,6 +51,7 @@ export class IndividualsComponent implements OnInit {
         this.data = users[0];
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.length = data.result.length;
       }
     });

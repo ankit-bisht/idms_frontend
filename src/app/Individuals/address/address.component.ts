@@ -156,13 +156,13 @@ export class AddressComponent implements OnChanges {
     this.closeAllModals();
     const control = this.addressForm.get('clientAddressDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    if (!this.addressForm.valid) {
-      // setTimeout(() => {
-      //   this.modalMessage = "Please Fill All Details Correctly!!"
-      //   return this.modalRef = this.modalService.show(this.templateRef);
-      // }, 5000);
+    // if (!this.addressForm.valid) {
+    //   // setTimeout(() => {
+    //   //   this.modalMessage = "Please Fill All Details Correctly!!"
+    //   //   return this.modalRef = this.modalService.show(this.templateRef);
+    //   // }, 5000);
 
-    } else {
+    // } else {
       var addressDetails = this.addressForm.value.clientAddressDetails;
       addressDetails.map((element, key) => {
         delete element.isEditable;
@@ -180,7 +180,7 @@ export class AddressComponent implements OnChanges {
         }
       });
       console.log(this.saveIndividuals.addToIndividual(this.addressForm.value));
-    }
+    // }
   }
 
   getFormattedDate(date) {
