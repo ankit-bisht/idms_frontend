@@ -254,7 +254,7 @@ export class NewIndividualComponent implements OnInit, OnDestroy {
       if (!this.invalid) {
         if (finalIndividual.hasOwnProperty("clientEmploymentDetails")) {
           finalIndividual.clientEmploymentDetails.map(ele => {
-            if (!ele.employer_name || !ele.income_amount || !ele.income_frequency || !ele.start_date) {
+            if (!ele.employer_name || !ele.income_amount || !ele.start_date) {
               this.modalMessage = 'Please fill all the mandatory fields in Employment Form!!';
               this.errorModal = true;
               this.invalid = true;

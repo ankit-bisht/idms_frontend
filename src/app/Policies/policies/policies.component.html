@@ -32,40 +32,40 @@
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search..." autocomplete="off">
         </mat-form-field>
 
-        <mat-table #table [dataSource]="dataSource">
+        <mat-table #table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="carrier_id">
-            <mat-header-cell *matHeaderCellDef> Carrier Name</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Carrier Name</mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
               {{element.carrier_id}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="first_name">
-            <mat-header-cell *matHeaderCellDef> Primary</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Primary</mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
               {{element.first_name}} {{element.last_name}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="policy_number">
-            <mat-header-cell *matHeaderCellDef> Policy Number </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Policy Number </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
               {{element.policy_number}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="product_description">
-            <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
               {{element.product_description}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="status">
-            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
               {{status[element.status]}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="effective_date">
-            <mat-header-cell *matHeaderCellDef> Effective Date </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Effective Date </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
               {{element.effective_date}}
             </mat-cell>

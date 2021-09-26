@@ -87,7 +87,7 @@ export class EmploymentComponent implements OnChanges {
     return this.fb.group({
       employer_name: [element.employer_name, Validators.required],
       employer_phone: [element.employer_phone],
-      income_amount: [element.income_amount, Validators.required],
+      income_amount: [element.income_amount == 0 ?'0':element.income_amount ],
       income_frequency: [element.income_frequency, Validators.required],
       start_date: [element.start_date, Validators.required],
       end_date: [element.end_date],
@@ -141,13 +141,13 @@ export class EmploymentComponent implements OnChanges {
     this.closeAllModals();
     const control = this.employmentForm.get('clientEmploymentDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    if (!this.employmentForm.valid) {
-      // setTimeout(() => {
-      //   this.modalMessage = "Please Fill All Details Correctly!!"
-      //   return this.modalRef = this.modalService.show(this.templateRef);
-      // }, 5000);
+    // if (!this.employmentForm.valid) {
+    //   // setTimeout(() => {
+    //   //   this.modalMessage = "Please Fill All Details Correctly!!"
+    //   //   return this.modalRef = this.modalService.show(this.templateRef);
+    //   // }, 5000);
 
-    } else {
+    // } else {
       var employmentDetails = this.employmentForm.value.clientEmploymentDetails;
       employmentDetails.map((element, key) => {
         delete element.isEditable;
@@ -164,7 +164,7 @@ export class EmploymentComponent implements OnChanges {
         }
       });
       console.log(this.saveIndividuals.addToIndividual(this.employmentForm.value));
-    }
+    // }
   }
 
   getFormattedDate(date) {

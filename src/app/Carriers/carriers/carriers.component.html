@@ -31,16 +31,16 @@
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
         </mat-form-field>
 
-        <mat-table #table [dataSource]="dataSource">
+        <mat-table #table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="carrier_name">
-            <mat-header-cell *matHeaderCellDef> Carrier Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Carrier Name </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.carrier_id)">
               {{element.carrier_name}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="website">
-            <mat-header-cell *matHeaderCellDef> Website </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Website </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.carrier_id)">
               {{element.website}}</mat-cell>
           </ng-container>
@@ -52,7 +52,7 @@
           </ng-container> -->
 
           <ng-container matColumnDef="phone">
-            <mat-header-cell *matHeaderCellDef> Phone Number</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Phone Number</mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
               {{element.phone}} </mat-cell>
           </ng-container>

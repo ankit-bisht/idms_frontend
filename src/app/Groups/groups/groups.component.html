@@ -31,41 +31,41 @@
           <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
         </mat-form-field>
 
-        <mat-table #table [dataSource]="dataSource">
+        <mat-table #table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="group_name">
-            <mat-header-cell *matHeaderCellDef> Legal Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Legal Name </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
               {{element.group_name}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="DBA">
-            <mat-header-cell *matHeaderCellDef> DBA </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> DBA </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
               {{element.DBA}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="FEIN">
-            <mat-header-cell *matHeaderCellDef> FEIN </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> FEIN </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
               {{element.FEIN}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="SIC">
-            <mat-header-cell *matHeaderCellDef> SIC </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> SIC </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
               {{element.SIC}}
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="email">
-            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
               {{element.email}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="phone">
-            <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Phone </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSingleIndividual(element.group_id)">
               {{element.phone}} </mat-cell>
           </ng-container>
