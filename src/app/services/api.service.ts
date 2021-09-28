@@ -331,6 +331,28 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.createClient, Obj, this.options);
   }
 
+  getUserNotes(Obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getUserNotes, Obj, this.options);
+  }
+
+  userNotesUpdate(Obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.userNotesUpdate, Obj, this.options);
+  }
+
   updatePolicy(Obj) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

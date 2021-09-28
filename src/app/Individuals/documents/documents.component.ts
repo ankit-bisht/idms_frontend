@@ -55,7 +55,7 @@ export class DocumentsComponent implements OnChanges {
 
   ngAfterOnInit() {
     this.control = this.documentForm.get('clientDocumentDetails') as FormArray;
-    this.document_status = ['Submmitted', 'Open'];
+    this.document_status = ["Complete", "Insufficient", "Expired", "Processing", "OK"];
   }
 
   initiateForm(): FormGroup {

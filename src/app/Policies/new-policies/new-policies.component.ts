@@ -33,6 +33,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
   invalid: boolean = false;
   policyType: any;
   selectedMembers: any;
+  is_admin:any;
   showCommission: Boolean = false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
@@ -48,6 +49,7 @@ export class NewPoliciesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.savePolicies.clearPolicy();
+    this.is_admin = JSON.parse(localStorage.getItem('userDetails')).user_type;
     this.activatedRoute.params.subscribe(params => {
       if (params.edit == 1 || params.edit == null) {
         this.userEdit = true;

@@ -70,6 +70,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PolicyDependentsComponent } from './Policies/policy-dependents/policy-dependents.component';
 import { NewCarrierCommissionComponent } from './Carriers/new-carrier-commission/new-carrier-commission.component';
+// import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from "@angular/material";
 
 export const DateFormat = {
   parse: {
@@ -154,7 +156,9 @@ export const DateFormat = {
     MatDialogModule,
     MatAutocompleteModule,
     AutocompleteLibModule,
-    NgSelectModule
+    NgSelectModule,
+    MatSnackBarModule,
+    // MatSnackBar
   ],
   exports: [
     PhoneMaskDirective, SSNMaskDirective, MatMomentDateModule

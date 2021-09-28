@@ -52,9 +52,10 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data.result.authorizationToken);
         localStorage.setItem('userId', data.result.userDetails.user_id);
         localStorage.setItem('username', data.result.userDetails.username);
+        localStorage.setItem('userDetails', JSON.stringify(data.result.userDetails));
         localStorage.setItem('individualDetails', "");
         const Obj = {
-          userId: data.result.userDetails.user_id
+          userId: data.result.userDetails.user_id,
         }
         this.api.getPolicyConstants(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
@@ -77,6 +78,14 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('clients', JSON.stringify(data['result']))
           }
         });
+        this.api.getUserNotes(Obj).subscribe((data: any) => {
+          console.log(data);
+
+          if (data.responseCode === 200) {
+            localStorage.setItem('notes', JSON.stringify(data['notes']))
+          }
+        });
+
         this.api.documentDropDownValues(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             for (let index = 0; index < data.result.length; index++) {

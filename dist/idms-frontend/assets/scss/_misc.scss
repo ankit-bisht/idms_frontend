@@ -34,6 +34,7 @@ body {
   transition: width $action-transition-duration $action-transition-timing-function, margin $action-transition-duration $action-transition-timing-function;
   width: calc(100% - #{$sidebar-width-lg});
   min-height: calc(100vh - #{$navbar-height});
+  background: #B3C6E7;
   @include display-flex();
   @include flex-direction(column);
   @media (max-width: 991px) {
@@ -44,12 +45,13 @@ body {
     transition: none;
   }
 }
-.modal {   
+.modal {
   overflow-y:auto;
 }
 
 .content-wrapper {
-  background: $content-bg;
+  // background: $content-bg;
+  background: #B3C6E7;
   padding: 0.75rem 1.25rem;
   width: 100%;
   @include flex-grow(1);
