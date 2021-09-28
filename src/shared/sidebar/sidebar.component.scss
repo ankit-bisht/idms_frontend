@@ -3,7 +3,8 @@
 @import '../../styles.scss';
 .sidebar {
   min-height: calc(100vh - #{$navbar-height});
-  background: $sidebar-bg;
+  // background: $sidebar-bg;
+  background: #D8E2F3;
   font-family: $type1-regular;
   padding: 0;
   width: $sidebar-width-lg;

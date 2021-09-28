@@ -27,6 +27,7 @@ export class NewCarriersComponent implements OnInit {
   commission:any;
   deleteClient: any;
   userEdit: Boolean = false;
+  is_admin:any;
   showCommission:Boolean=false;
   @ViewChild('template', { static: true }) templateRef: TemplateRef<any>;
 
@@ -43,7 +44,7 @@ export class NewCarriersComponent implements OnInit {
         this.userEdit = false
       }
     });
-
+    this.is_admin = JSON.parse(localStorage.getItem('userDetails')).user_type;
     this.buildGroupForm();
   }
 

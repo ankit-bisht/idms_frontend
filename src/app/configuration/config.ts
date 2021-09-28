@@ -2,7 +2,7 @@ const PROD_SERVER = 'https://adms-globalfinancial.com/backend/api/v1/';
 const LOCAL_SERVER = 'http://localhost:4400/api/v1/';
 
 export class Configuration {
-  
+
   public baseUrl = PROD_SERVER;
   public Hmac256Secret = 'abcdefg';
   public UrlObj = {
@@ -48,6 +48,8 @@ export class Configuration {
     getClientTierRelationships : this.baseUrl + "getClientTierRelationships",
     getCommissionValue: this.baseUrl + "getCommissionValue",
     uploadCommissionFile:this.baseUrl+"uploadCommissionFile",
-    getCommissions:this.baseUrl+"getCommissions"
+    getCommissions:this.baseUrl+"getCommissions",
+    getUserNotes:this.baseUrl+"getUserNotes",
+    userNotesUpdate:this.baseUrl+"userNotesUpdate"
   }
 }
