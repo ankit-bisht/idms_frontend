@@ -4,6 +4,7 @@ import { ApiService } from '../services/api.service';
 import { Configuration } from '../configuration/config';
 import { CommonService } from '../services/common.service';
 import { Router } from '@angular/router';
+import { IndividualDetailServiceService } from '../individual-detail-service.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   hashedPassword: any;
 
 
-  constructor(private api: ApiService, public Router: Router, private secert: Configuration, private commonFunction: CommonService) { }
+  constructor(private api: ApiService,private saveIndividuals: IndividualDetailServiceService, public Router: Router, private secert: Configuration, private commonFunction: CommonService) { }
 
   ngOnInit() {
     this.buildLoginForm();
@@ -57,6 +58,7 @@ export class LoginComponent implements OnInit {
         const Obj = {
           userId: data.result.userDetails.user_id,
         }
+        console.log(this.saveIndividuals.addToIndividual({userId:data.result.userDetails.user_id}))
         this.api.getPolicyConstants(Obj).subscribe((data: any) => {
           if (data.responseCode === 200) {
             localStorage.setItem("policy_constants",JSON.stringify(data.result));
@@ -79,10 +81,8 @@ export class LoginComponent implements OnInit {
           }
         });
         this.api.getUserNotes(Obj).subscribe((data: any) => {
-          console.log(data);
-
           if (data.responseCode === 200) {
-            localStorage.setItem('notes', JSON.stringify(data['notes']))
+            localStorage.setItem('notes', data['result'][0]['notes'])
           }
         });
 
