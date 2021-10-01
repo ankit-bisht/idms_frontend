@@ -30,7 +30,6 @@ export class DashboardComponent implements OnInit {
     });
 
     let Notes = localStorage.getItem('notes');
-console.log(this.saveIndividuals.getIndividual()['userId'] );
 
     const Obj = {
       userId: this.saveIndividuals.getIndividual()['userId'] ? this.saveIndividuals.getIndividual()['userId']:localStorage.getItem('userId')
