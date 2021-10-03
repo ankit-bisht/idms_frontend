@@ -1,18 +1,19 @@
 <style>
   .text-area {
-    display: inline-block;
+    /* display: inline-block; */
     background-color: white;
-    margin: 0px;
+    /* margin: 0px; */
   }
 
   textarea {
-    background: url(http://i.imgur.com/2cOaJ.png);
+    /* background: url(http://i.imgur.com/2cOaJ.png);
     background-attachment: local;
     background-repeat: no-repeat;
     padding-left: 35px !important;
     padding-top: 10px !important;
     border-color: #ccc;
-    max-width: 50%;
+    max-width: 50%; */
+    resize:both
   }
 </style>
 
@@ -23,7 +24,7 @@
 <form class="form-sample" (ngSubmit)="onSubmit(dashboardForm)" [formGroup]="dashboardForm" style="font-size: 13px">
   <!-- <mat-form-field appearance="outline" class="example-full-width" style="width: 45%;">
         <mat-label>Notes</mat-label> -->
-  <textarea cols="50" class="text-area" matInput formControlName="notes" rows="33" placeholder="Notes"
+  <textarea  class="text-area" cols="120" rows="30" matInput formControlName="notes" placeholder="Notes"
     [(ngModel)]="notes"></textarea>
   <!-- </mat-form-field> -->
   <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 5px;">Save</button>
