@@ -17,13 +17,15 @@ input[type=number] {
 
 .input-group-append,
 .input-group-prepend {
-  color: $input-placeholder-color;
+  // color: $input-placeholder-color;
+  color: black;
   width: auto;
   border: none;
   .input-group-text {
     border-color: $border-color;
     padding: 0.575rem 0.75rem;
-    color: $input-placeholder-color;
+    // color: $input-placeholder-color;
+    color: black;
   }
   button {
     height: 33.5px;
@@ -50,7 +52,8 @@ select {
     padding: .4375rem .75rem;
     border: 0;
     outline: 1px solid $border-color;
-    color: $input-placeholder-color;
+    // color: $input-placeholder-color;
+    color: black;
     &:focus {
       outline: 1px solid $border-color;
     }
@@ -68,10 +71,11 @@ select {
 
 .form-group {
   label {
-    font-size: $default-font-size;
+    font-size: 13px;
     line-height: 1;
     vertical-align: top;
     margin-bottom: .5rem;
+    padding-top: 0 ;
   }
   &.has-danger {
     .form-control {

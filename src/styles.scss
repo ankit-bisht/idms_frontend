@@ -59,6 +59,13 @@
 
 @import "./assets/scss/components/landing-screens/auth";
 
+
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 /* === Layout === */
 @import "./assets/scss/layout";
 html, body { height: 100%; }

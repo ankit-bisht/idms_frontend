@@ -10,7 +10,7 @@ import { NewPoliciesComponent } from './Policies/new-policies/new-policies.compo
 import { AgentsComponent } from './Agents/agents/agents.component';
 import { NewAgentsComponent } from './Agents/new-agents/new-agents.component';
 import { CarriersComponent } from './Carriers/carriers/carriers.component';
-import { ReportsComponent } from './reports/reports.component';
+import { IndividualReportsComponent } from "./Reports/individual-reports/individual-reports.component";
 import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
 import { NewGroupsComponent} from './Groups/new-groups/new-groups.component';
 import { NewCarriersComponent } from './Carriers/new-carriers/new-carriers.component';
@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'agents/newAgents', component:NewAgentsComponent , canActivate: [LoginGuard] },
   { path: 'carriers/newCarriers', component:NewCarriersComponent , canActivate: [LoginGuard] },
   { path: 'carriers', component: CarriersComponent, canActivate: [LoginGuard] },
-  { path: 'reports', component: ReportsComponent, canActivate: [LoginGuard] },
+  { path: 'individualsReports', component: IndividualReportsComponent, canActivate: [LoginGuard] },
 ];
 
 @NgModule({

@@ -22,7 +22,6 @@ import { IndividualsComponent } from './Individuals/individuals/individuals.comp
 import { PoliciesComponent } from './Policies/policies/policies.component';
 import { AgentsComponent } from './Agents/agents/agents.component';
 import { CarriersComponent } from './Carriers/carriers/carriers.component';
-import { ReportsComponent } from './reports/reports.component';
 import { CommisionComponent } from './Policies/commision/commision.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
@@ -72,6 +71,9 @@ import { PolicyDependentsComponent } from './Policies/policy-dependents/policy-d
 import { NewCarrierCommissionComponent } from './Carriers/new-carrier-commission/new-carrier-commission.component';
 // import {MatSnackBar} from '@angular/material/snack-bar';
 import { MatSnackBarModule } from "@angular/material";
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { IndividualReportsComponent } from './Reports/individual-reports/individual-reports.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 export const DateFormat = {
   parse: {
@@ -100,7 +102,6 @@ export const DateFormat = {
     PoliciesComponent,
     AgentsComponent,
     CarriersComponent,
-    ReportsComponent,
     CommisionComponent,
     NewIndividualComponent,
     ContactsComponent,
@@ -127,6 +128,7 @@ export const DateFormat = {
     PolicyMembersComponent,
     PolicyDependentsComponent,
     NewCarrierCommissionComponent,
+    IndividualReportsComponent,
   ],
   imports: [
     ModalModule.forRoot(),
@@ -158,7 +160,8 @@ export const DateFormat = {
     AutocompleteLibModule,
     NgSelectModule,
     MatSnackBarModule,
-    // MatSnackBar
+    NgxDatatableModule,
+    MatExpansionModule
   ],
   exports: [
     PhoneMaskDirective, SSNMaskDirective, MatMomentDateModule

@@ -20,10 +20,12 @@
     font-family: $type1-regular;
     margin-top: 0.625rem;
     margin-bottom: 0.625rem;
-  
+
   }
   .card-description {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 800;
+    font-size: medium;
     font-family: $type1-regular;
     color: $card-description-color;
   }

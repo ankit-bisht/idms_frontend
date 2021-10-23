@@ -353,6 +353,17 @@ export class ApiService {
     return this.httpClient.post(this.urlObject.UrlObj.userNotesUpdate, Obj, this.options);
   }
 
+  searchClientDetaials(Obj) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.searchClientDetaials, Obj, this.options);
+  }
+
   updatePolicy(Obj) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

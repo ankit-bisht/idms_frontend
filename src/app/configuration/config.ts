@@ -50,6 +50,7 @@ export class Configuration {
     uploadCommissionFile:this.baseUrl+"uploadCommissionFile",
     getCommissions:this.baseUrl+"getCommissions",
     getUserNotes:this.baseUrl+"getUserNotes",
-    userNotesUpdate:this.baseUrl+"userNotesUpdate"
+    userNotesUpdate:this.baseUrl+"userNotesUpdate",
+    searchClientDetaials:this.baseUrl + "searchClientDetaials"
   }
 }
