@@ -170,6 +170,7 @@ export class NewCarrierContactsComponent implements OnChanges {
   setValue(group: FormGroup, address_id) {
     group.get('address_id').setValue(address_id);
     console.log(this.saveGroup.addToCarrier(this.contactForm.value));
+    this.submitForm();
   }
 
   doneRow(group: FormGroup) {
@@ -196,12 +197,14 @@ export class NewCarrierContactsComponent implements OnChanges {
     const control = this.contactForm.get('carrierContactDetails') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
     var contactsDetails = this.contactForm.value.carrierContactDetails;
+    console.log(contactsDetails);
+
     contactsDetails.map((element, key) => {
       delete element.isEditable;
       const id = key + 1;
       element.address_id = element.address_id ? element.address_id.toString() : '';
       element.phone = element.phone ? element.phone.toString() : '';
-      element.contact_id = id.toString();
+      element.contact_id = (++key).toString();
     });
     console.log(this.saveGroup.addToCarrier(this.contactForm.value));
   }
@@ -214,7 +217,8 @@ export class NewCarrierContactsComponent implements OnChanges {
       this.filterArr.push(id);
     }
 
-    this.filteredClients = this.address ? this.address.filter(c => this.filterArr.indexOf(c.address_id) == -1) : [];
+    // this.filteredClients = this.address ? this.address.filter(c => this.filterArr.indexOf(c.address_id) == -1) : [];
+    this.filteredClients = this.address ? this.address : [];
     this.filterArr = [...new Set(this.filterArr)];
   }
 }

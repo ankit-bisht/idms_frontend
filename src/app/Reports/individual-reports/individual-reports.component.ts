@@ -5,7 +5,7 @@ import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/services/api.service';
 import { ViewEncapsulation } from '@angular/core';
-
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -37,15 +37,6 @@ export class IndividualReportsComponent implements OnInit {
     { name: 'Zip', props: 'zip', minWidth: 0 },
     { name: 'City', props: 'city', minWidth: 0 },
     { name: 'Client Type', props: 'client_type', minWidth: 0 },
-    // { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-    // { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account', minWidth: 0 }) },
-    // { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
-    // { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
-
-    // { ...(!this.hideDocumentValue && { name: 'Type', props: 'document_type_id', minWidth: 0 }) },
-    // { ...(!this.hideDocumentValue && { name: 'Status', props: 'status', minWidth: 0 }) },
-    // { ...(!this.hideDocumentValue && { name: 'Submitted', props: 'date_submitted', minWidth: 0 }) },
-    // { ...(!this.hideDocumentValue && { name: 'Due Date', props: 'due_date', minWidth: 0 }) },
   ];
 
   allColumns = [
@@ -57,17 +48,7 @@ export class IndividualReportsComponent implements OnInit {
     { name: 'Email', props: 'email', minWidth: 230 },
     { name: 'Zip', props: 'zip', minWidth: 0 },
     { name: 'City', props: 'city', minWidth: 0 },
-    { name: 'Client Type', props: 'client_type', minWidth: 0 },
-    // { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-    // { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account', minWidth: 0 }) },
-    // { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
-    // { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
-
-    // { ...(!this.hideDocumentValue && { name: 'Type', props: 'document_type_id', minWidth: 0 }) },
-    // { ...(!this.hideDocumentValue && { name: 'Status', props: 'status', minWidth: 0 }) },
-    // { ...(!this.hideDocumentValue && { name: 'Submitted', props: 'date_submitted', minWidth: 0 }) },
-    // { ...(!this.hideDocumentValue && { name: 'Due Date', props: 'due_date', minWidth: 0 }) },
-  ];
+    { name: 'Client Type', props: 'client_type', minWidth: 0 },];
 
   ColumnMode = ColumnMode;
 
@@ -134,7 +115,7 @@ export class IndividualReportsComponent implements OnInit {
       { name: 'City', props: 'city', minWidth: 0 },
       { name: 'Client Type', props: 'client_type', minWidth: 0 },
       { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account', minWidth: 0 }) },
+      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account_number', minWidth: 0 }) },
       { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
       { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
 
@@ -152,17 +133,7 @@ export class IndividualReportsComponent implements OnInit {
       { name: 'Email', props: 'email', minWidth: 230 },
       { name: 'Zip', props: 'zip', minWidth: 0 },
       { name: 'City', props: 'city', minWidth: 0 },
-      { name: 'Client Type', props: 'client_type', minWidth: 0 },
-      // { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-      // { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account', minWidth: 0 }) },
-      // { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
-      // { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
-
-      // { ...(!this.hideDocumentValue && { name: 'Type', props: 'document_type_id', minWidth: 0 }) },
-      // { ...(!this.hideDocumentValue && { name: 'Status', props: 'status', minWidth: 0 }) },
-      // { ...(!this.hideDocumentValue && { name: 'Submitted', props: 'date_submitted', minWidth: 0 }) },
-      // { ...(!this.hideDocumentValue && { name: 'Due Date', props: 'due_date', minWidth: 0 }) },
-    ];
+      { name: 'Client Type', props: 'client_type', minWidth: 0 },];
 
     this.allColumns = this.allColumns.filter(value => JSON.stringify(value) !== '{}');
   }
@@ -184,7 +155,7 @@ export class IndividualReportsComponent implements OnInit {
       { name: 'City', props: 'city', minWidth: 0 },
       { name: 'Client Type', props: 'client_type', minWidth: 0 },
       { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account', minWidth: 0 }) },
+      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account_number', minWidth: 0 }) },
       { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
       { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
 
@@ -203,15 +174,6 @@ export class IndividualReportsComponent implements OnInit {
       { name: 'Zip', props: 'zip', minWidth: 0 },
       { name: 'City', props: 'city', minWidth: 0 },
       { name: 'Client Type', props: 'client_type', minWidth: 0 },
-      // { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-      // { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account', minWidth: 0 }) },
-      // { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
-      // { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
-
-      // { ...(!this.hideDocumentValue && { name: 'Type', props: 'document_type_id', minWidth: 0 }) },
-      // { ...(!this.hideDocumentValue && { name: 'Status', props: 'status', minWidth: 0 }) },
-      // { ...(!this.hideDocumentValue && { name: 'Submitted', props: 'date_submitted', minWidth: 0 }) },
-      // { ...(!this.hideDocumentValue && { name: 'Due Date', props: 'due_date', minWidth: 0 }) },
     ];
     this.allColumns = this.allColumns.filter(value => JSON.stringify(value) !== '{}');
   }
@@ -230,6 +192,19 @@ export class IndividualReportsComponent implements OnInit {
         }
       }
     }
+  }
+
+  resetReportForm() {
+    this.individualForm.reset();
+    this.hideDocumentValue = false;
+    this.hidePaymentValue = false;
+    this.individualForm.controls['expiry_month_from'].enable();
+    this.individualForm.controls['expiry_month_to'].enable();
+    this.individualForm.controls['expiry_year_from'].enable();
+    this.individualForm.controls['expiry_year_to'].enable();
+    this.individualForm.controls['status'].enable();
+    this.individualForm.controls['due_from'].enable();
+    this.individualForm.controls['due_to'].enable();
   }
 
   toggle(col) {
@@ -289,6 +264,25 @@ export class IndividualReportsComponent implements OnInit {
     this.rows = temp;
     // Whenever the filter changes, always go back to the first page
     this.myFilterTable.offset = 0;
+  }
+
+  ExportToExcle(){
+    const options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: true,
+      showTitle: true,
+      title: 'Individual Report',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: true,
+      // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+    };
+
+  const csvExporter = new ExportToCsv(options);
+
+  csvExporter.generateCsv(this.rows);
   }
 
 }

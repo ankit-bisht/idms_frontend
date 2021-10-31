@@ -1,11 +1,11 @@
 <style>
   ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
-  background-color: #2E5496 !important;
-}
+    background-color: #2E5496 !important;
+  }
 
-::ng-deep .mat-checkbox .mat-checkbox-frame {
-  border-color: #2E5496;
-}
+  ::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: #2E5496;
+  }
 </style>
 <mat-accordion class="example-headers-align" multi>
   <mat-expansion-panel [expanded]="openTab">
@@ -217,6 +217,8 @@
           </div>
         </div>
       </div>
+      <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetReportForm()"
+        style="background-color: grey;">Reset</button>
       <button type="submit" class="btn btn-primary float-right">Submit</button>
     </form>
   </mat-expansion-panel>
@@ -230,8 +232,9 @@
         <mat-icon>table</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
-
-    <table border="1" style="width: 100%;">
+    <button (click)="ExportToExcle()" class="btn btn-sm btn-primary float-right" style="margin-bottom: 5px;">Export table to excel</button>
+<br/>
+    <table border="1" style="width: 100%;" id="tbl_exporttable_to_xls">
       <tr>
         <th colspan="2" style="text-align:'center'">Name</th>
         <th colspan="2" text-align="center">Biometric</th>
@@ -255,10 +258,10 @@
       <input matInput (keyup)="updateFilter($event)" autocomplete="off">
     </mat-form-field>
 
-    <ngx-datatable class="material" [loadingIndicator]="isLoading" [rows]="rows" #datatable [headerHeight]="50"
+    <ngx-datatable id="reportable" class="material" [loadingIndicator]="isLoading" [rows]="rows" #datatable [headerHeight]="50"
       [footerHeight]="50" [scrollbarH]="true" [scrollbarV]="false" [limit]="10" rowHeight="auto">
 
-      <ngx-datatable-column  style="font-size: 14px;color: black;" *ngFor="let col of columns" [name]="col.name"
+      <ngx-datatable-column style="font-size: 14px;color: black;" *ngFor="let col of columns" [name]="col.name"
         [minWidth]="col.minWidth" [prop]="col.props">
 
       </ngx-datatable-column>

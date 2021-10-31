@@ -165,6 +165,7 @@ export class GroupContactsComponent implements OnChanges {
 
   setValue(group: FormGroup, address_id) {
     group.get('address_id').setValue(address_id);
+    this.submitForm();
   }
 
   doneRow(group: FormGroup) {
@@ -209,7 +210,8 @@ export class GroupContactsComponent implements OnChanges {
       this.filterArr.push(id);
     }
 
-    this.filteredClients = this.address ? this.address.filter(c => this.filterArr.indexOf(c.address_id) == -1) : [];
+    // this.filteredClients = this.address ? this.address.filter(c => this.filterArr.indexOf(c.address_id) == -1) : [];
+    this.filteredClients = this.address ? this.address : [];
     this.filterArr = [...new Set(this.filterArr)];
   }
 }

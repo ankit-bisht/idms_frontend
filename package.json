@@ -35,6 +35,7 @@
     "compass-mixins": "^0.12.10",
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.0.0",
+    "export-to-csv": "^0.2.1",
     "hammerjs": "^2.0.8",
     "jquery": "^3.5.1",
     "jw-angular-pagination": "^1.2.0",

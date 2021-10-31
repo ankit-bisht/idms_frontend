@@ -28,7 +28,7 @@ import { NewIndividualComponent } from './Individuals/new-individual/new-individ
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Constants } from './configuration/constants';
 import { JwPaginationModule } from 'jw-angular-pagination';
-import { MatAutocompleteModule, MatListModule, MatSortModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule, MatListModule, MatSortModule, MatTabsModule, MAT_DATE_LOCALE } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ContactsComponent } from './Individuals/contacts/contacts.component';
 import { NgxBootstrapModalComponent } from './ngx-bootstrap-modal/ngx-bootstrap-modal.component';
@@ -161,12 +161,12 @@ export const DateFormat = {
     NgSelectModule,
     MatSnackBarModule,
     NgxDatatableModule,
-    MatExpansionModule
+    MatExpansionModule,
   ],
   exports: [
     PhoneMaskDirective, SSNMaskDirective, MatMomentDateModule
   ],
-  providers: [LoginGuard, CommonService, ApiService, Configuration, Constants, { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+  providers: [LoginGuard, CommonService, ApiService, Configuration, Constants,
   ],
   bootstrap: [AppComponent]
 })

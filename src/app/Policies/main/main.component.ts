@@ -257,13 +257,13 @@ export class MainComponent implements OnChanges, OnInit, OnDestroy {
     if (this.mainForm.valid) {
       this.mainForm.value.userId = localStorage.getItem('userId');
       this.mainForm.value.application_date = this.mainForm.value.application_date ? moment(this.mainForm.value.application_date).format('MM/DD/YYYY') : '';
-      this.mainForm.value.effective_date = moment(this.mainForm.value.effective_date).format('MM/DD/YYYY');
-      this.mainForm.value.end_date = moment(this.mainForm.value.end_date).format('MM/DD/YYYY');
+      this.mainForm.value.effective_date = this.mainForm.value.application_date ?moment(this.mainForm.value.effective_date).format('MM/DD/YYYY'):'';
+      this.mainForm.value.end_date = this.mainForm.value.application_date ?moment(this.mainForm.value.end_date).format('MM/DD/YYYY'):'';
       console.log(this.savePolicies.addToPolicy(this.mainForm.value));
     }
     this.mainForm.value.application_date = this.mainForm.value.application_date ? moment(this.mainForm.value.application_date).format('MM/DD/YYYY') : '';
-    this.mainForm.value.effective_date = moment(this.mainForm.value.effective_date).format('MM/DD/YYYY');
-    this.mainForm.value.end_date = moment(this.mainForm.value.end_date).format('MM/DD/YYYY');
+    this.mainForm.value.effective_date = this.mainForm.value.application_date ?moment(this.mainForm.value.effective_date).format('MM/DD/YYYY'):'';
+    this.mainForm.value.end_date = this.mainForm.value.application_date ?moment(this.mainForm.value.end_date).format('MM/DD/YYYY'):'';
     console.log(this.savePolicies.addToPolicy(this.mainForm.value));
   }
 }
