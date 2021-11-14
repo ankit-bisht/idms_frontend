@@ -71,38 +71,27 @@ export class IndividualReportsComponent implements OnInit {
     this.individualForm = new FormGroup({
       "first_name": new FormControl('',),
       "last_name": new FormControl('',),
-      "DOB_from": new FormControl('',),
-      "DOB_to": new FormControl('',),
+      "birth_date_from": new FormControl('',),
+      "birth_date_to": new FormControl('',),
       "city": new FormControl('',),
       "zip_code": new FormControl('',),
       "client_type": new FormControl('',),
-      "expiry_month_from": new FormControl('',),
-      "expiry_month_to": new FormControl('',),
-      "expiry_year_from": new FormControl('',),
-      "expiry_year_to": new FormControl('',),
-      "status": new FormControl('',),
-      "due_from": new FormControl('',),
-      "due_to": new FormControl('',),
+      "payment_expiry_month_from": new FormControl('',),
+      "payment_expiry_month_to": new FormControl('',),
+      "payment_expiry_year_from": new FormControl('',),
+      "payment_expiry_year_to": new FormControl('',),
+      "document_status": new FormControl('',),
+      "document_type_id":new FormControl(''),
+      "document_due_date_from": new FormControl('',),
+      "document_due_date_to": new FormControl('',),
     });
-  }
-
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `http://swimlane.github.io/ngx-datatable/assets/data/company.json`);
-
-    req.onload = () => {
-      const data = JSON.parse(req.response);
-      cb(data);
-    };
-
-    req.send();
   }
 
 
   hideDocument(form: FormGroup) {
     form.controls['status'].disable();
-    form.controls['due_from'].disable();
-    form.controls['due_to'].disable();
+    form.controls['document_due_date_from'].disable();
+    form.controls['document_due_date_to'].disable();
     this.hideDocumentValue = true;
     this.allColumns = [
       { name: 'First Name', props: 'first_name', minWidth: 0 },
@@ -115,9 +104,9 @@ export class IndividualReportsComponent implements OnInit {
       { name: 'City', props: 'city', minWidth: 0 },
       { name: 'Client Type', props: 'client_type', minWidth: 0 },
       { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account_number', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
+      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account_number', minWidth: 230 }) },
+      { ...(!this.hidePaymentValue && { name: 'Expiry M/Y', props: 'expiry', minWidth: 0 }) },
+      // { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
 
       { ...(!this.hideDocumentValue && { name: 'Type', props: 'document_type_id', minWidth: 0 }) },
       { ...(!this.hideDocumentValue && { name: 'Status', props: 'status', minWidth: 0 }) },
@@ -139,10 +128,10 @@ export class IndividualReportsComponent implements OnInit {
   }
 
   hidePayment(form: FormGroup) {
-    form.controls['expiry_month_from'].disable();
-    form.controls['expiry_month_to'].disable();
-    form.controls['expiry_year_from'].disable();
-    form.controls['expiry_year_to'].disable();
+    form.controls['payment_expiry_month_from'].disable();
+    form.controls['payment_expiry_month_to'].disable();
+    form.controls['payment_expiry_year_from'].disable();
+    form.controls['payment_expiry_year_to'].disable();
     this.hidePaymentValue = true;
     this.allColumns = [
       { name: 'First Name', props: 'first_name', minWidth: 0 },
@@ -155,9 +144,8 @@ export class IndividualReportsComponent implements OnInit {
       { name: 'City', props: 'city', minWidth: 0 },
       { name: 'Client Type', props: 'client_type', minWidth: 0 },
       { ...(!this.hidePaymentValue && { name: 'Type', props: 'payment_type', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account_number', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Expiry Month', props: 'expiry_month', minWidth: 0 }) },
-      { ...(!this.hidePaymentValue && { name: 'Expiry Year', props: 'expiry_year', minWidth: 0 }) },
+      { ...(!this.hidePaymentValue && { name: 'Acct#', props: 'account_number', minWidth: 230 }) },
+      { ...(!this.hidePaymentValue && { name: 'Expiry M/Y', props: 'expiry', minWidth: 0 }) },
 
       { ...(!this.hideDocumentValue && { name: 'Type', props: 'document_type_id', minWidth: 0 }) },
       { ...(!this.hideDocumentValue && { name: 'Status', props: 'status', minWidth: 0 }) },
@@ -198,13 +186,13 @@ export class IndividualReportsComponent implements OnInit {
     this.individualForm.reset();
     this.hideDocumentValue = false;
     this.hidePaymentValue = false;
-    this.individualForm.controls['expiry_month_from'].enable();
-    this.individualForm.controls['expiry_month_to'].enable();
-    this.individualForm.controls['expiry_year_from'].enable();
-    this.individualForm.controls['expiry_year_to'].enable();
+    this.individualForm.controls['payment_expiry_year_from'].enable();
+    this.individualForm.controls['payment_expiry_year_to'].enable();
+    this.individualForm.controls['payment_expiry_month_from'].enable();
+    this.individualForm.controls['payment_expiry_month_to'].enable();
     this.individualForm.controls['status'].enable();
-    this.individualForm.controls['due_from'].enable();
-    this.individualForm.controls['due_to'].enable();
+    this.individualForm.controls['document_due_date_from'].enable();
+    this.individualForm.controls['document_due_date_to'].enable();
   }
 
   toggle(col) {
@@ -266,7 +254,7 @@ export class IndividualReportsComponent implements OnInit {
     this.myFilterTable.offset = 0;
   }
 
-  ExportToExcle(){
+  ExportToExcle() {
     const options = {
       fieldSeparator: ',',
       quoteStrings: '"',
@@ -280,9 +268,9 @@ export class IndividualReportsComponent implements OnInit {
       // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
     };
 
-  const csvExporter = new ExportToCsv(options);
+    const csvExporter = new ExportToCsv(options);
 
-  csvExporter.generateCsv(this.rows);
+    csvExporter.generateCsv(this.rows);
   }
 
 }

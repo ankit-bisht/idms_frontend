@@ -78,7 +78,7 @@
             <label class="col-sm-3 col-form-label">DOB From</label>
             <div class="col-sm-9">
               <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
-                <input matInput [matDatepicker]="picker" formControlName="DOB_from">
+                <input matInput [matDatepicker]="picker" formControlName="birth_date_from">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
@@ -90,7 +90,7 @@
             <label class="col-sm-3 col-form-label">DOB To</label>
             <div class="col-sm-9">
               <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
-                <input matInput [matDatepicker]="picker1" formControlName="DOB_to">
+                <input matInput [matDatepicker]="picker1" formControlName="birth_date_to">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
@@ -107,7 +107,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Expiry Month From</label>
             <div class="col-sm-9">
-              <select class="form-control" formControlName="expiry_month_from" (change)="hideDocument(individualForm)">
+              <select class="form-control" formControlName="payment_expiry_month_from" (change)="hideDocument(individualForm)">
                 <option [value]="1">January</option>
                 <option [value]="2">Feburary</option>
                 <option [value]="3">March</option>
@@ -128,7 +128,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Expiry Month To</label>
             <div class="col-sm-9">
-              <select class="form-control" formControlName="expiry_month_to" (change)="hideDocument(individualForm)">
+              <select class="form-control" formControlName="payment_expiry_month_to" (change)="hideDocument(individualForm)">
                 <option [value]="1">January</option>
                 <option [value]="2">Feburary</option>
                 <option [value]="3">March</option>
@@ -151,7 +151,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Expiry Year From</label>
             <div class="col-sm-9">
-              <select class="form-control" formControlName="expiry_year_from" (change)="hideDocument(individualForm)">
+              <select class="form-control" formControlName="payment_expiry_year_from" (change)="hideDocument(individualForm)">
                 <option *ngFor="let year of years" [value]="year">
                   {{year}}
                 </option>
@@ -163,7 +163,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Expiry Year To</label>
             <div class="col-sm-9">
-              <select class="form-control" formControlName="expiry_year_to">
+              <select class="form-control" formControlName="payment_expiry_year_to">
                 <option *ngFor="let year of years" [value]="year">
                   {{year}}
                 </option>
@@ -177,11 +177,23 @@
       </p>
       <div class="row">
 
-        <div class="col-md-7">
+        <div class="col-md-6">
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Status</label>
-            <div class="col-sm-8" style="margin-left: -15px;margin-bottom:20px ;max-width: 63.666667%;color: black;">
+            <div class="col-sm-9">
               <select class="form-control" formControlName="status" (change)="hidePayment(individualForm)">
+                <option value="1">Open</option>
+                <option value="0">Submitted</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Document Type</label>
+            <div class="col-sm-9">
+              <select class="form-control" formControlName="document_type_id" (change)="hidePayment(individualForm)">
                 <option *ngFor="let item of docType| keyvalue" value={{item.key}}>
                   {{item.value}}
                 </option>
@@ -232,8 +244,9 @@
         <mat-icon>table</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <button (click)="ExportToExcle()" class="btn btn-sm btn-primary float-right" style="margin-bottom: 5px;">Export table to excel</button>
-<br/>
+    <button (click)="ExportToExcle()" class="btn btn-sm btn-primary float-right" style="margin-bottom: 5px;">Export
+      table to excel</button>
+    <br />
     <table border="1" style="width: 100%;" id="tbl_exporttable_to_xls">
       <tr>
         <th colspan="2" style="text-align:'center'">Name</th>
@@ -258,8 +271,8 @@
       <input matInput (keyup)="updateFilter($event)" autocomplete="off">
     </mat-form-field>
 
-    <ngx-datatable id="reportable" class="material" [loadingIndicator]="isLoading" [rows]="rows" #datatable [headerHeight]="50"
-      [footerHeight]="50" [scrollbarH]="true" [scrollbarV]="false" [limit]="10" rowHeight="auto">
+    <ngx-datatable id="reportable" class="material" [loadingIndicator]="isLoading" [rows]="rows" #datatable
+      [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [scrollbarV]="false" [limit]="10" rowHeight="auto">
 
       <ngx-datatable-column style="font-size: 14px;color: black;" *ngFor="let col of columns" [name]="col.name"
         [minWidth]="col.minWidth" [prop]="col.props">
