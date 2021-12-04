@@ -23,7 +23,7 @@ export class IndividualsComponent implements OnInit {
   data: any = [];
   length: any = 0;
 
-  constructor(private spinner: NgxSpinnerService,private saveIndividuals: IndividualDetailServiceService, private api: ApiService, public Router: Router) {
+  constructor(private spinner: NgxSpinnerService, private saveIndividuals: IndividualDetailServiceService, private api: ApiService, public Router: Router) {
   }
 
   ngOnInit() {
@@ -50,15 +50,26 @@ export class IndividualsComponent implements OnInit {
         let users: User[] = [data.result];
         this.data = users[0];
         this.dataSource = new MatTableDataSource(this.data);
-        this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => {
+          if(sortHeaderId == "DOB"){
+            let newDate = new Date(data.DOB);
+            return newDate;
+          }
+
+          if (typeof data[sortHeaderId] === 'string') {
+            return data[sortHeaderId].toLocaleLowerCase();
+          }
+          return data[sortHeaderId];
+        };
+        this.dataSource.paginator = this.paginator;
         this.length = data.result.length;
       }
     });
   }
 
   newIndividual() {
-    this.Router.navigate(['individuals/newIndividual', {edit: 0}]);
+    this.Router.navigate(['individuals/newIndividual', { edit: 0 }]);
   }
 
   getSingleIndividual(clientId) {
@@ -77,7 +88,7 @@ export class IndividualsComponent implements OnInit {
         } else {
           edit = 2
         }
-        this.Router.navigate(['individuals/newIndividual', {edit: data.result.clientDetails[0].edit}]);
+        this.Router.navigate(['individuals/newIndividual', { edit: data.result.clientDetails[0].edit }]);
       }
     });
   }

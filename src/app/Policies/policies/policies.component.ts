@@ -82,8 +82,19 @@ export class PoliciesComponent implements OnInit {
         })
 
         this.dataSource = new MatTableDataSource(this.data);
-        this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => {
+          if(sortHeaderId == "effective_date" || sortHeaderId == "end_date"){
+            let newDate = new Date(data.DOB);
+            return newDate;
+          }
+
+          if (typeof data[sortHeaderId] === 'string') {
+            return data[sortHeaderId].toLocaleLowerCase();
+          }
+          return data[sortHeaderId];
+        };
+        this.dataSource.paginator = this.paginator;
         this.length = data.result.length;
       }
     });
