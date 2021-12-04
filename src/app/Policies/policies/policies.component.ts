@@ -84,8 +84,12 @@ export class PoliciesComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (data, sortHeaderId) => {
-          if(sortHeaderId == "effective_date" || sortHeaderId == "end_date"){
-            let newDate = new Date(data.DOB);
+          if (sortHeaderId == "effective_date") {
+            let newDate = new Date(data.effective_date);
+            return newDate;
+          }
+          if (sortHeaderId == "end_date") {
+            let newDate = new Date(data.end_date);
             return newDate;
           }
 

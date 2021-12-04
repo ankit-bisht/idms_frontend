@@ -72,7 +72,7 @@
           </ng-container>
 
           <ng-container matColumnDef="end_date">
-            <mat-header-cell *matHeaderCellDef> End Date </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="getSinglePolicy(element.policy_id)">
               {{element.end_date}}
             </mat-cell>
