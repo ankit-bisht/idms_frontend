@@ -50,7 +50,12 @@ export class GroupsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.length = data.result.length;
+        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => {
+          if (typeof data[sortHeaderId] === 'string') {
+            return data[sortHeaderId].toLocaleLowerCase();
+          }
+          return data[sortHeaderId];
+        };        this.length = data.result.length;
       }
     });
   }
