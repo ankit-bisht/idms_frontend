@@ -207,7 +207,7 @@
             <label class="col-sm-3 col-form-label">Due Date From</label>
             <div class="col-sm-9">
               <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
-                <input matInput [matDatepicker]="picker2" formControlName="due_from"
+                <input matInput [matDatepicker]="picker2" formControlName="document_due_date_from"
                   (dateChange)="hidePayment(individualForm)">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
@@ -220,7 +220,7 @@
             <label class="col-sm-3 col-form-label">Due Date To</label>
             <div class="col-sm-9">
               <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
-                <input matInput [matDatepicker]="picker3" formControlName="due_to"
+                <input matInput [matDatepicker]="picker3" formControlName="document_due_date_to"
                   (dateChange)="hidePayment(individualForm)">
                 <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                 <mat-datepicker #picker3></mat-datepicker>

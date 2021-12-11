@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from 'src/app/services/api.service';
 import { ViewEncapsulation } from '@angular/core';
 import { ExportToCsv } from 'export-to-csv';
+import * as moment from 'moment';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -81,7 +82,7 @@ export class IndividualReportsComponent implements OnInit {
       "payment_expiry_year_from": new FormControl('',),
       "payment_expiry_year_to": new FormControl('',),
       "document_status": new FormControl('',),
-      "document_type_id":new FormControl(''),
+      "document_type_id": new FormControl(''),
       "document_due_date_from": new FormControl('',),
       "document_due_date_to": new FormControl('',),
     });
@@ -219,6 +220,11 @@ export class IndividualReportsComponent implements OnInit {
     // this.spinner.show();
     this.isLoading = true;
     this.openTab = false;
+    console.log(form.value);
+    form.value.document_due_date_from = form.value.document_due_date_from && moment(form.value.document_due_date_from).format('MM/DD/YYYY');
+    form.value.document_due_date_to = form.value.document_due_date_to && moment(form.value.document_due_date_to).format('MM/DD/YYYY');
+    form.value.birth_date_from = form.value.birth_date_from && moment(form.value.birth_date_from).format('MM/DD/YYYY');
+    form.value.birth_date_to = form.value.birth_date_to && moment(form.value.birth_date_to).format('MM/DD/YYYY');
     this.api.searchClientDetaials(form.value).subscribe((data: any) => {
       if (data.responseCode === 200) {
         this.temp = [...data.result];
