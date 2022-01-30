@@ -25,6 +25,7 @@ export class GroupsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.getDetail();
     localStorage.removeItem('GroupDetails')
   }
@@ -40,7 +41,6 @@ export class GroupsComponent implements OnInit {
       userId: localStorage.getItem('userId')
     }
     this.api.getGroups(Obj).subscribe((data: any) => {
-      this.spinner.show();
       if (data.responseCode === 200) {
         setTimeout(() => {
           this.spinner.hide();

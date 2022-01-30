@@ -7,6 +7,9 @@
     border-color: #2E5496;
   }
 </style>
+<div class="template-demo" style="margin-top:10px">
+  <h1>Individual Report</h1>
+</div>
 <mat-accordion class="example-headers-align" multi>
   <mat-expansion-panel [expanded]="openTab">
     <mat-expansion-panel-header>
@@ -164,7 +167,7 @@
             <label class="col-sm-3 col-form-label">Expiry Year To</label>
             <div class="col-sm-9">
               <select class="form-control" formControlName="payment_expiry_year_to">
-                <option *ngFor="let year of years" [value]="year">
+                <option *ngFor="let year of expiry_years" [value]="year">
                   {{year}}
                 </option>
               </select>
@@ -181,7 +184,7 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Status</label>
             <div class="col-sm-9">
-              <select class="form-control" formControlName="status" (change)="hidePayment(individualForm)">
+              <select class="form-control" formControlName="document_status" (change)="hidePayment(individualForm)">
                 <option value="1">Open</option>
                 <option value="0">Submitted</option>
               </select>

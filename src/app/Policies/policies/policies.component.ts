@@ -35,6 +35,7 @@ export class PoliciesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.getDetail();
     this.carrier = JSON.parse(localStorage.getItem('carrier_data'));
     localStorage.removeItem('AgentDetails')
@@ -70,11 +71,8 @@ export class PoliciesComponent implements OnInit {
       userId: localStorage.getItem('userId')
     }
     this.api.getAllPoliciesDetails(obj).subscribe((data: any) => {
-      this.spinner.show();
       if (data.responseCode === 200) {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000);
+        this.spinner.hide();
         let users: User[] = [data.result];
         this.data = users[0];
         this.data.map((ele, key) => {

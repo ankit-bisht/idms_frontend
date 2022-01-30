@@ -25,6 +25,7 @@ export class CarriersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.getDetail();
     localStorage.removeItem('CarrierDetails')
   }
@@ -40,7 +41,6 @@ export class CarriersComponent implements OnInit {
       userId: localStorage.getItem('userId')
     }
     this.api.getCarriers(Obj).subscribe((data: any) => {
-      this.spinner.show();
       if (data.responseCode === 200) {
         setTimeout(() => {
           this.spinner.hide();

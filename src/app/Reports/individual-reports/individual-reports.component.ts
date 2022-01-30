@@ -22,6 +22,7 @@ export class IndividualReportsComponent implements OnInit {
   clientType: any;
   currentYear: number = new Date().getFullYear();
   years: number[] = [];
+  expiry_years: number[] = [];
   docType: any;
   openTab: boolean = true;
   isLoading: boolean;
@@ -64,6 +65,9 @@ export class IndividualReportsComponent implements OnInit {
     for (let i = (this.currentYear - 15); i < (this.currentYear + 15); i++) {
       this.years.push(i);
     }
+    for (let i = (this.currentYear); i < (this.currentYear + 25); i++) {
+      this.expiry_years.push(i);
+    }
     this.buildIndividualForm();
   }
 
@@ -90,7 +94,7 @@ export class IndividualReportsComponent implements OnInit {
 
 
   hideDocument(form: FormGroup) {
-    form.controls['status'].disable();
+    form.controls['document_status'].disable();
     form.controls['document_due_date_from'].disable();
     form.controls['document_due_date_to'].disable();
     this.hideDocumentValue = true;
@@ -191,7 +195,7 @@ export class IndividualReportsComponent implements OnInit {
     this.individualForm.controls['payment_expiry_year_to'].enable();
     this.individualForm.controls['payment_expiry_month_from'].enable();
     this.individualForm.controls['payment_expiry_month_to'].enable();
-    this.individualForm.controls['status'].enable();
+    this.individualForm.controls['document_statusyearsyears'].enable();
     this.individualForm.controls['document_due_date_from'].enable();
     this.individualForm.controls['document_due_date_to'].enable();
   }

@@ -27,6 +27,7 @@ export class IndividualsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.getDetail();
     localStorage.removeItem('ClientDetails')
   }
@@ -42,17 +43,14 @@ export class IndividualsComponent implements OnInit {
       userId: localStorage.getItem('userId')
     }
     this.api.getIndividuals(Obj).subscribe((data: any) => {
-      this.spinner.show();
       if (data.responseCode === 200) {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000);
+        this.spinner.hide();
         let users: User[] = [data.result];
         this.data = users[0];
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (data, sortHeaderId) => {
-          if(sortHeaderId == "DOB"){
+          if (sortHeaderId == "DOB") {
             let newDate = new Date(data.DOB);
             return newDate;
           }
