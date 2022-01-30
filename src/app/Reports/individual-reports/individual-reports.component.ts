@@ -195,7 +195,7 @@ export class IndividualReportsComponent implements OnInit {
     this.individualForm.controls['payment_expiry_year_to'].enable();
     this.individualForm.controls['payment_expiry_month_from'].enable();
     this.individualForm.controls['payment_expiry_month_to'].enable();
-    this.individualForm.controls['document_statusyearsyears'].enable();
+    this.individualForm.controls['document_status'].enable();
     this.individualForm.controls['document_due_date_from'].enable();
     this.individualForm.controls['document_due_date_to'].enable();
   }
@@ -221,10 +221,38 @@ export class IndividualReportsComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    // this.spinner.show();
+
+    console.log(form.value);
+    if (form.value.birth_date_from && !form.value.birth_date_to) {
+      alert('Please select a valid birth date range.');
+      return;
+    };
+    if (!form.value.birth_date_from && form.value.birth_date_to) {
+      alert('Please select a valid birth date range.');
+      return;
+    };
+
+    if (form.value.payment_expiry_month_from && !form.value.payment_expiry_month_to) {
+      alert('Please select a valid Payment Expiry Month.');
+      return;
+    };
+    if (!form.value.payment_expiry_month_from && form.value.payment_expiry_month_to) {
+      alert('Please select a valid Payment Expiry Month.');
+      return;
+    };
+
+    if (form.value.payment_expiry_year_from && !form.value.payment_expiry_year_to) {
+      alert('Please select a valid Payment Expiry Year.');
+      return;
+    };
+    if (!form.value.payment_expiry_year_from && form.value.payment_expiry_year_to) {
+      alert('Please select a valid Payment Expiry Year.');
+      return;
+    };
+
+    this.spinner.show();
     this.isLoading = true;
     this.openTab = false;
-    console.log(form.value);
     form.value.document_due_date_from = form.value.document_due_date_from && moment(form.value.document_due_date_from).format('MM/DD/YYYY');
     form.value.document_due_date_to = form.value.document_due_date_to && moment(form.value.document_due_date_to).format('MM/DD/YYYY');
     form.value.birth_date_from = form.value.birth_date_from && moment(form.value.birth_date_from).format('MM/DD/YYYY');
