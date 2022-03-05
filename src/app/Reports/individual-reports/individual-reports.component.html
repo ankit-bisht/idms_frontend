@@ -275,7 +275,7 @@
     </mat-form-field>
 
     <ngx-datatable id="reportable" class="material" [loadingIndicator]="isLoading" [rows]="rows" #datatable
-      [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [scrollbarV]="false" [limit]="10" rowHeight="auto">
+      [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [limit]="10" rowHeight="auto">
 
       <ngx-datatable-column style="font-size: 14px;color: black;" *ngFor="let col of columns" [name]="col.name"
         [minWidth]="col.minWidth" [prop]="col.props">

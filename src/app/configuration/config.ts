@@ -3,7 +3,7 @@ const LOCAL_SERVER = 'http://localhost:4400/api/v1/';
 
 export class Configuration {
 
-  public baseUrl = PROD_SERVER;
+  public baseUrl = LOCAL_SERVER;
   public Hmac256Secret = 'abcdefg';
   public UrlObj = {
     loginApi: this.baseUrl + "userLogin",

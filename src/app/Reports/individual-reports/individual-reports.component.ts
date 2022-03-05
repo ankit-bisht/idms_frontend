@@ -97,6 +97,7 @@ export class IndividualReportsComponent implements OnInit {
     form.controls['document_status'].disable();
     form.controls['document_due_date_from'].disable();
     form.controls['document_due_date_to'].disable();
+    form.controls['document_type_id'].disable();
     this.hideDocumentValue = true;
     this.allColumns = [
       { name: 'First Name', props: 'first_name', minWidth: 0 },
@@ -198,6 +199,7 @@ export class IndividualReportsComponent implements OnInit {
     this.individualForm.controls['document_status'].enable();
     this.individualForm.controls['document_due_date_from'].enable();
     this.individualForm.controls['document_due_date_to'].enable();
+    this.individualForm.controls['document_type_id'].enable();
   }
 
   toggle(col) {
@@ -249,6 +251,15 @@ export class IndividualReportsComponent implements OnInit {
       alert('Please select a valid Payment Expiry Year.');
       return;
     };
+
+    if (!form.value.document_due_date_from && form.value.document_due_date_to) {
+      alert('Please select a valid Document Due Date range.')
+      return;
+    }
+    if (form.value.document_due_date_from && !form.value.document_due_date_to) {
+      alert('Please select a valid Document Due Date range.')
+      return;
+    }
 
     this.spinner.show();
     this.isLoading = true;
