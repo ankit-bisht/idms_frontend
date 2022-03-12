@@ -33,7 +33,7 @@ export class PolicyReportsComponent implements OnInit {
 
   columns = [
     { name: 'Primary', props: 'first_name', minWidth: 0 },
-    { name: 'Carrier', props: 'carrier_name', minWidth: 0 },
+    { name: 'Carrier', props: 'carrier_name', minWidth: 250 },
     { name: 'Policy Number', props: 'policy_number', minWidth: 0 },
     { name: 'Product Name', props: 'product_description', minWidth: 250 },
     { name: 'Effective Date', props: 'effective_date', minWidth: 0 },
@@ -43,7 +43,7 @@ export class PolicyReportsComponent implements OnInit {
 
   allColumns = [
     { name: 'Primary', props: 'first_name', minWidth: 0 },
-    { name: 'Carrier', props: 'carrier_name', minWidth: 0 },
+    { name: 'Carrier', props: 'carrier_name', minWidth: 250 },
     { name: 'Policy Number', props: 'policy_number', minWidth: 0 },
     { name: 'Product Name', props: 'product_description', minWidth: 250 },
     { name: 'Effective Date', props: 'effective_date', minWidth: 0 },
