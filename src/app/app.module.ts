@@ -74,6 +74,7 @@ import { MatSnackBarModule } from "@angular/material";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { IndividualReportsComponent } from './Reports/individual-reports/individual-reports.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { PolicyReportsComponent } from './Reports/policy-reports/policy-reports.component';
 
 export const DateFormat = {
   parse: {
@@ -129,6 +130,7 @@ export const DateFormat = {
     PolicyDependentsComponent,
     NewCarrierCommissionComponent,
     IndividualReportsComponent,
+    PolicyReportsComponent,
   ],
   imports: [
     ModalModule.forRoot(),

@@ -35,6 +35,17 @@ export class ApiService {
 
   }
 
+  searchPolicyDetails(obj){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.searchPolicyDetails, obj, this.options);
+  }
+
   getClientRelationships(obj){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

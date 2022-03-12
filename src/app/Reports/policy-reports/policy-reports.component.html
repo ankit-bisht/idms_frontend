@@ -1,0 +1,198 @@
+<style>
+  ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #2E5496 !important;
+  }
+
+  ::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: #2E5496;
+  }
+</style>
+<div class="template-demo" style="margin-top:10px">
+  <h1>Policy Report</h1>
+</div>
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel [expanded]="openTab">
+    <mat-expansion-panel-header>
+      <mat-panel-title style="font-weight: 500;font-size: 16px;">
+        Policy Form
+      </mat-panel-title>
+      <mat-panel-description>
+        <span style="color: white;">.</span>
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ngx-spinner bdColor="rgba(0,0,0,0.21)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <form class="form-sample" (ngSubmit)="onSubmit(policyForm)" [formGroup]="policyForm"
+      style="margin: 5px;color: black;">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Policy Type</label>
+            <div class="col-sm-9">
+              <select class="form-control" formControlName="policy_type">
+                <option value="I">Individual</option>
+                <option value="G">Group</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Primary</label>
+            <div class="col-sm-9">
+              <!-- <select class="form-control" formControlName="primary">
+                <option *ngFor="let item of primary" value={{item.client_id?item.client_id:item.group_id}}>
+                  {{item.first_name?item.first_name:item.group_name}}
+                  {{item.last_name?item.last_name:''}}
+                </option>
+              </select> -->
+              <select class="form-control" formControlName="primary">
+                <option *ngFor="let item of primary" [value]=item.client_id>{{item.first_name}} {{item.last_name}}</option>
+              </select>
+              <!-- <input type="text" class="form-control" formControlName="primary" /> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Carrier</label>
+            <div class="col-sm-9">
+              <!-- <select class="form-control" formControlName="client_type">
+                <option *ngFor="let item of clientType | keyvalue" value={{item.key}}>{{item.value}}</option>
+              </select> -->
+              <select class="form-control" formControlName="carrier">
+                <option *ngFor="let item of carriers" [value]=item.carrier_id>{{item.carrier_name}}</option>
+              </select>
+              <!-- <input type="text" class="form-control" formControlName="carrier" /> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="card-description" style="margin-bottom: 2rem;font-weight: 500;font-size: medium;">
+
+      </p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Policy Number</label>
+            <div class="col-sm-9">
+              <!-- <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
+                <input matInput [matDatepicker]="picker" formControlName="birth_date_from">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field> -->
+              <input type="text" class="form-control" formControlName="policy_number" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Product Name</label>
+            <div class="col-sm-9">
+              <!-- <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
+                <input matInput [matDatepicker]="picker1" formControlName="birth_date_to">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field> -->
+              <select class="form-control" formControlName="product_name">
+                <option *ngFor="let item of products" [value]=item.product_id>{{item.product_description}}</option>
+              </select>
+              <!-- <input type="text" class="form-control" formControlName="product_name" /> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="card-description" style="margin-bottom: 2rem;font-weight: 500;font-size: medium;">
+
+      </p>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Effective Date</label>
+            <div class="col-sm-9">
+              <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
+                <input matInput [matDatepicker]="picker1" formControlName="effective_date">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">End Date</label>
+            <div class="col-sm-9">
+              <mat-form-field appearance="outline" style="width: 100%; font-size: 11px;margin-top: -6px;">
+                <input matInput [matDatepicker]="picker" formControlName="end_date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Status</label>
+            <div class="col-sm-9">
+              <select class="form-control" formControlName="status">
+                <option *ngFor="let item of constants.status | keyvalue" [value]=item.key>{{item.value}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-sm btn-primary float-right" (click)="resetReportForm()"
+        style="background-color: grey;">Reset</button>
+      <button type="submit" class="btn btn-primary float-right">Submit</button>
+    </form>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]="!openTab">
+    <mat-expansion-panel-header>
+      <mat-panel-title style="font-weight: 500;font-size: 16px;">
+        Data Table
+      </mat-panel-title>
+      <mat-panel-description>
+        <span style="color: white;">.</span>
+        <mat-icon>table</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <button (click)="ExportToExcle()" class="btn btn-sm btn-primary float-right" style="margin-bottom: 5px;">Export
+      table to excel</button>
+    <!-- <br />
+    <table border="1" style="width: 100%;" id="tbl_exporttable_to_xls">
+      <tr>
+        <th colspan="2" style="text-align:'center'">Name</th>
+        <th colspan="2" text-align="center">Biometric</th>
+        <th colspan="2" text-align="center">Contact</th>
+        <th colspan="2" text-align="center">Address</th>
+        <th text-align="center">Client Type</th>
+        <th colspan="4" text-align="center" *ngIf="!hidePaymentValue">Payment</th>
+        <th colspan="4" text-align="center" *ngIf="!hideDocumentValue">Document</th>
+      </tr>
+      <tr>
+        <td *ngFor="let col of allColumns">
+          {{ col.name }}<br />
+          <input type="checkbox" [id]="col.name" *ngIf="col.name" (click)="toggle(col)" [checked]="isChecked(col)" />
+        </td>
+      </tr>
+    </table>
+    <br /> -->
+
+    <mat-form-field appearance="outline" style="font-size: 10px">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="updateFilter($event)" autocomplete="off">
+    </mat-form-field>
+
+    <ngx-datatable id="reportable" class="material" [loadingIndicator]="isLoading" [rows]="rows" #datatable
+      [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [limit]="10" rowHeight="auto">
+
+      <ngx-datatable-column style="font-size: 14px;color: black;" *ngFor="let col of columns" [name]="col.name"
+        [minWidth]="col.minWidth" [prop]="col.props">
+
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+  </mat-expansion-panel>
+</mat-accordion>

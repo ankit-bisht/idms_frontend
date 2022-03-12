@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatAccordion } from '@angular/material';
 import { ColumnMode, DatatableComponent } from '@swimlane/ngx-datatable';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiService } from 'src/app/services/api.service';
+import { ApiService } from '../../services/api.service';
 import { ViewEncapsulation } from '@angular/core';
 import { ExportToCsv } from 'export-to-csv';
 import * as moment from 'moment';

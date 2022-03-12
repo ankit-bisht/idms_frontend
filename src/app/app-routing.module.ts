@@ -11,8 +11,9 @@ import { AgentsComponent } from './Agents/agents/agents.component';
 import { NewAgentsComponent } from './Agents/new-agents/new-agents.component';
 import { CarriersComponent } from './Carriers/carriers/carriers.component';
 import { IndividualReportsComponent } from "./Reports/individual-reports/individual-reports.component";
+import { PolicyReportsComponent } from './Reports/policy-reports/policy-reports.component';
 import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
-import { NewGroupsComponent} from './Groups/new-groups/new-groups.component';
+import { NewGroupsComponent } from './Groups/new-groups/new-groups.component';
 import { NewCarriersComponent } from './Carriers/new-carriers/new-carriers.component';
 
 const routes: Routes = [
@@ -33,10 +34,12 @@ const routes: Routes = [
   { path: 'policies', component: PoliciesComponent, canActivate: [LoginGuard] },
   { path: 'policies/newPolicies', component: NewPoliciesComponent, canActivate: [LoginGuard] },
   { path: 'agents', component: AgentsComponent, canActivate: [LoginGuard] },
-  { path: 'agents/newAgents', component:NewAgentsComponent , canActivate: [LoginGuard] },
-  { path: 'carriers/newCarriers', component:NewCarriersComponent , canActivate: [LoginGuard] },
+  { path: 'agents/newAgents', component: NewAgentsComponent, canActivate: [LoginGuard] },
+  { path: 'carriers/newCarriers', component: NewCarriersComponent, canActivate: [LoginGuard] },
   { path: 'carriers', component: CarriersComponent, canActivate: [LoginGuard] },
   { path: 'individualsReports', component: IndividualReportsComponent, canActivate: [LoginGuard] },
+  { path: 'policyReports', component: PolicyReportsComponent, canActivate: [LoginGuard] },
+
 ];
 
 @NgModule({
