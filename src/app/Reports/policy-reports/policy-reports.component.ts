@@ -33,7 +33,7 @@ export class PolicyReportsComponent implements OnInit {
 
   columns = [
     { name: 'Primary', props: 'first_name', minWidth: 0 },
-    { name: 'Carrier', props: 'last_name', minWidth: 0 },
+    { name: 'Carrier', props: 'carrier_name', minWidth: 0 },
     { name: 'Policy Number', props: 'policy_number', minWidth: 0 },
     { name: 'Product Name', props: 'product_description', minWidth: 250 },
     { name: 'Effective Date', props: 'effective_date', minWidth: 0 },
@@ -43,7 +43,7 @@ export class PolicyReportsComponent implements OnInit {
 
   allColumns = [
     { name: 'Primary', props: 'first_name', minWidth: 0 },
-    { name: 'Carrier', props: 'last_name', minWidth: 0 },
+    { name: 'Carrier', props: 'carrier_name', minWidth: 0 },
     { name: 'Policy Number', props: 'policy_number', minWidth: 0 },
     { name: 'Product Name', props: 'product_description', minWidth: 250 },
     { name: 'Effective Date', props: 'effective_date', minWidth: 0 },
@@ -249,14 +249,12 @@ export class PolicyReportsComponent implements OnInit {
     // filter our data
     const temp = this.temp.filter(function (d) {
       return d.first_name && d.first_name.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.last_name && d.last_name.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.sex && d.sex.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.phone && d.phone.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.email && d.email.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.zip && d.zip.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.city && d.city.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.client_type && d.client_type.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.DOB && d.DOB.toString().toLowerCase().indexOf(val) !== -1 || !val;
+        d.carrier_name && d.carrier_name.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.policy_number && d.policy_number.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.product_description && d.product_description.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.effective_date && d.effective_date.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.end_date && d.end_date.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.cistatusty && d.status.toString().toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     this.rows = temp;
