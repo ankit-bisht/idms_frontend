@@ -52,6 +52,7 @@ export class Configuration {
     getUserNotes:this.baseUrl+"getUserNotes",
     userNotesUpdate:this.baseUrl+"userNotesUpdate",
     searchClientDetaials:this.baseUrl + "searchClientDetaials",
-    searchPolicyDetails:this.baseUrl + "searchPolicyDetails"
+    searchPolicyDetails:this.baseUrl + "searchPolicyDetails",
+    getCommissionReports:this.baseUrl + "getCommissionReports"
   }
 }

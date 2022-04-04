@@ -58,6 +58,17 @@ export class ApiService {
 
   }
 
+  getCommissionReports(obj){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('token')
+    });
+    this.options = {
+      headers: headers
+    }
+    return this.httpClient.post(this.urlObject.UrlObj.getCommissionReports, obj, this.options);
+  }
+
   getCommissionValue(obj) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

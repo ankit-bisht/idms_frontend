@@ -1,0 +1,55 @@
+.example-action-buttons {
+  padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  height: 42px;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+  padding: 3px;
+}
+
+.ngx-datatable.material {
+  .datatable-header {
+    .datatable-header-cell {
+      font-size: 14px;
+      color: black;
+    }
+  }
+}
+
+.form-group {
+  margin-bottom: 1%;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: #2e5496 !important;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #2e5496;
+}
+
+input[type=checkbox]:after {
+  background-color: #2e5496 !important;
+}

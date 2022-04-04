@@ -15,6 +15,7 @@ import { PolicyReportsComponent } from './Reports/policy-reports/policy-reports.
 import { NewIndividualComponent } from './Individuals/new-individual/new-individual.component';
 import { NewGroupsComponent } from './Groups/new-groups/new-groups.component';
 import { NewCarriersComponent } from './Carriers/new-carriers/new-carriers.component';
+import { CommissionReportsComponent } from './Reports/commission-reports/commission-reports.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -39,7 +40,7 @@ const routes: Routes = [
   { path: 'carriers', component: CarriersComponent, canActivate: [LoginGuard] },
   { path: 'individualsReports', component: IndividualReportsComponent, canActivate: [LoginGuard] },
   { path: 'policyReports', component: PolicyReportsComponent, canActivate: [LoginGuard] },
-
+  { path: 'commssionReports', component: CommissionReportsComponent, canActivate: [LoginGuard] }
 ];
 
 @NgModule({
