@@ -25,6 +25,8 @@ export class CommissionReportsComponent implements OnInit {
   constants: any;
   products: any;
   carriers: any;
+  clients: any;
+  productList: any;
   openTab: boolean = true;
   isLoading: boolean;
   public primary = [];
@@ -46,23 +48,29 @@ export class CommissionReportsComponent implements OnInit {
   };
 
   columns = [
-    { name: 'Policy Type', props: 'product_class', minWidth: 0 },
+    { name: 'Policy Number', props: 'policy_number', minWidth: 0 },
     { name: 'First Name', props: 'first_name', minWidth: 0 },
     { name: 'Last Name', props: 'last_name', minWidth: 0 },
+    { name: 'Member Count', props: 'member_count', minWidth: 0 },
+    { name: 'Member Name', props: 'member_name', minWidth: 0 },
+    { name: 'Status', props: 'status', minWidth: 0 },
     { name: 'Carrier', props: 'carrier_name', minWidth: 250 },
-    { name: 'Application Date', props: 'application_date', minWidth: 0 },
-    { name: 'Month', props: 'month', minWidth: 0 },
-    { name: 'Year', props: 'year', minWidth: 0 },
+    { name: 'Paid Comp', props: 'commission_paid', minWidth: 0 },
+    { name: 'Expected Comp', props: 'commission_expected', minWidth: 0 },
+    { name: 'Short Over', props: 'short_over', minWidth: 0 },
   ];
 
   allColumns = [
-    { name: 'Policy Type', props: 'product_class', minWidth: 0 },
+    { name: 'Policy Number', props: 'policy_number', minWidth: 0 },
     { name: 'First Name', props: 'first_name', minWidth: 0 },
     { name: 'Last Name', props: 'last_name', minWidth: 0 },
+    { name: 'Member Count', props: 'member_count', minWidth: 0 },
+    { name: 'Member Name', props: 'member_name', minWidth: 0 },
+    { name: 'Status', props: 'status', minWidth: 0 },
     { name: 'Carrier', props: 'carrier_name', minWidth: 250 },
-    { name: 'Application Date', props: 'application_date', minWidth: 0 },
-    { name: 'Month', props: 'month', minWidth: 0 },
-    { name: 'Year', props: 'year', minWidth: 0 },
+    { name: 'Paid Comp', props: 'commission_paid', minWidth: 0 },
+    { name: 'Expected Comp', props: 'commission_expected', minWidth: 0 },
+    { name: 'Short Over', props: 'short_over', minWidth: 0 },
   ];
 
   ColumnMode = ColumnMode;
@@ -77,8 +85,29 @@ export class CommissionReportsComponent implements OnInit {
       this.years.push(i);
     }
     this.constants = JSON.parse(localStorage.getItem("policy_constants"));
+    this.clients = JSON.parse(localStorage.getItem('clients'));
     this.buildPolicyForm();
     this.setIndividial();
+  }
+
+  submitCarrier() {
+    this.productList = [];
+    this.getAllProductIds(this.policyForm.value.carrier);
+  }
+
+  getAllProductIds(id) {
+    const obj = {
+      carrierId: id,
+      userId: localStorage.getItem('userId')
+    }
+    this.spinner.show();
+    this.api.getAllProductIds(obj).subscribe((data: any) => {
+      if (data.responseCode === 200) {
+        this.spinner.hide();
+        this.productList = data.result;
+        let getClientDetail = localStorage.getItem('PoliciesDetails') ? JSON.parse(localStorage.getItem('PoliciesDetails')).policyDetails : false;
+      }
+    });
   }
 
   setIndividial() {
@@ -95,14 +124,24 @@ export class CommissionReportsComponent implements OnInit {
   buildPolicyForm(): void {
 
     this.policyForm = new FormGroup({
-      "policy_type": new FormControl('',),
+      "product_name": new FormControl('',),
       "carrier": new FormControl('',),
+      "mem_count": new FormControl(''),
+      "com_value": new FormControl(''),
       "first_name": new FormControl('',),
       "last_name": new FormControl('',),
-      "month_from": new FormControl('',),
-      "month_to": new FormControl('',),
-      "year_from": new FormControl('',),
-      "year_to": new FormControl('',),
+      "start_month_from": new FormControl('',),
+      "start_month_to": new FormControl('',),
+      "start_year_from": new FormControl('',),
+      "start_year_to": new FormControl('',),
+      "date_from": new FormControl(''),
+      "date_to": new FormControl(''),
+      // "end_month_from": new FormControl('',),
+      // "end_month_to": new FormControl('',),
+      // "end_year_from": new FormControl('',),
+      // "end_year_to": new FormControl('',),
+      "election_tier": new FormControl('',),
+      "policy_status": new FormControl('',),
     });
   }
 
@@ -149,22 +188,48 @@ export class CommissionReportsComponent implements OnInit {
   onSubmit(form: FormGroup) {
 
     console.log(form.value);
-    if (form.value.month_from && !form.value.month_to) {
+    if (form.value.start_month_from && !form.value.start_month_to) {
       alert('Please select a valid Month Range!');
       return;
     };
-    if (!form.value.month_from && form.value.month_to) {
+    if (!form.value.start_month_from && form.value.start_month_to) {
       alert('Please select a valid Month Range!');
       return;
     };
-    if (form.value.year_from && !form.value.year_to) {
+    if (form.value.start_year_from && !form.value.start_year_to) {
       alert('Please select a valid Year Range!');
       return;
     };
-    if (!form.value.year_from && form.value.year_to) {
+    if (!form.value.start_year_from && form.value.start_year_to) {
       alert('Please select a valid Year Range!');
       return;
     };
+
+    if (form.value.end_month_from && !form.value.end_month_to) {
+      alert('Please select a valid Month Range!');
+      return;
+    };
+    if (!form.value.end_month_from && form.value.end_month_to) {
+      alert('Please select a valid Month Range!');
+      return;
+    };
+    if (form.value.end_year_from && !form.value.end_year_to) {
+      alert('Please select a valid Year Range!');
+      return;
+    };
+    if (!form.value.end_year_from && form.value.end_year_to) {
+      alert('Please select a valid Year Range!');
+      return;
+    };
+
+    // if (form.value.date_from && !form.value.date_to) {
+    //   alert('Please select a valid Date Range!');
+    //   return;
+    // };
+    // if (!form.value.date_from && form.value.date_to) {
+    //   alert('Please select a valid Date Range!');
+    //   return;
+    // };
 
     this.spinner.show();
     this.isLoading = true;
@@ -174,8 +239,15 @@ export class CommissionReportsComponent implements OnInit {
     this.api.getCommissionReports(form.value).subscribe((data: any) => {
       if (data.responseCode === 200) {
         data.result.map((ele, key) => {
+          if (ele.commission_expected != null && ele.commission_paid != null) {
+            data.result[key].short_over = ele.commission_expected - ele.commission_paid
+          }
           if (ele.month) {
             data.result[key].month = this.months[ele.month];
+          }
+          if (ele.member_id != null) {
+            let client = this.clients.filter(x => x.client_id == ele.member_id)
+            data.result[key].member_name = client.length > 0 ? client[0].first_name + ' ' + client[0].last_name : ''
           }
         })
         this.temp = [...data.result];
@@ -191,16 +263,17 @@ export class CommissionReportsComponent implements OnInit {
 
   updateFilter(event) {
     const val = event.target.value.toString().toLowerCase();
-
     // filter our data
     const temp = this.temp.filter(function (d) {
-      return d.first_name && d.first_name.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.product_class && d.product_class.toString().toLowerCase().indexOf(val) !== -1 ||
+      return d.policy_number && d.policy_number.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.first_name && d.first_name.toString().toLowerCase().indexOf(val) !== -1 ||
         d.last_name && d.last_name.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.application_date && d.application_date.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.member_count && d.member_count.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.member_name && d.member_name.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.status && d.status.toString().toLowerCase().indexOf(val) !== -1 ||
         d.carrier_name && d.carrier_name.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.end_date && d.end_date.toString().toLowerCase().indexOf(val) !== -1 ||
-        d.cistatusty && d.status.toString().toLowerCase().indexOf(val) !== -1 || !val;
+        d.commission_paid && d.commission_paid.toString().toLowerCase().indexOf(val) !== -1 ||
+        d.commission_expected && d.commission_expected.toString().toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     this.rows = temp;
