@@ -40,7 +40,7 @@ const routes: Routes = [
   { path: 'carriers', component: CarriersComponent, canActivate: [LoginGuard] },
   { path: 'individualsReports', component: IndividualReportsComponent, canActivate: [LoginGuard] },
   { path: 'policyReports', component: PolicyReportsComponent, canActivate: [LoginGuard] },
-  { path: 'commssionReports', component: CommissionReportsComponent, canActivate: [LoginGuard] }
+  { path: 'commissionReports', component: CommissionReportsComponent, canActivate: [LoginGuard] }
 ];
 
 @NgModule({
